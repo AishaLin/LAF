@@ -1,0 +1,93 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+  line-height: 1;
+  height: 100%;
+  background-color: #f6f6f6;
+  color: #1e1f21;
+}
+ol, ul {
+	list-style: none;
+}
+a {
+  text-decoration: none;
+  display: block;
+  color:rgb(42, 177, 174)
+  /* color: gray; */
+}
+* {
+  box-sizing: border-box;
+}
+
+input,button,select {
+  outline: none;
+}
+img {
+  vertical-align: middle;
+}
+html {
+  height: 100%;
+}
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  position: relative;
+}
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+form {
+  padding: 20px;
+  margin-top: 60px;
+}
+form button, form h5 {
+  margin: 20px 0;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-color: hsl(211, 94%, 62%);
+  box-shadow: none;
+}
+
+/* h6 {
+  background-color: rgb(231, 95, 31);
+
+} */
+
+
+/* font-family: 'Noto Sans TC', sans-serif;
+font-family: 'Gugi', cursive;
+font-family: 'Permanent Marker', cursive;
+font-family: 'Luckiest Guy', cursive;
+font-family: 'Fredoka One', cursive;
+font-family: 'Pangolin', cursive; */
