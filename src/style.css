@@ -36,7 +36,8 @@ ol, ul {
 a {
   text-decoration: none;
   display: block;
-  color:rgb(42, 177, 174)
+  color: rgb(23, 156, 154) ;
+  /* rgb(42, 177, 174) */
   /* color: gray; */
 }
 * {
@@ -80,7 +81,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 /* h6 {
-  background-color: rgb(231, 95, 31);
+  background-color: #3f412d;
 
 } */
 

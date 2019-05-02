@@ -7,7 +7,10 @@ import {
     Route
 } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
+import { signOut } from "../actions/authActions";
+import { connect } from "react-redux";
+import firebase from "../config/fbConfig"
 import Affidavit_edit from '../components/adoption/Affidavit_edit';
 import Affidavit_approve from '../components/adoption/Affidavit_approve'
 import HomePage from './HomePage';
@@ -40,6 +43,7 @@ const SideNavForMember = styled.div`
       transition: 0.3s;
       :hover {
         color: #f1f1f1;
+        background-color: #3f412d;
       }
       @media screen and (max-height: 450px) {
         font-size: 18px;
@@ -47,25 +51,27 @@ const SideNavForMember = styled.div`
     }
     .sideNav{
         background-color: #2f3022;
-    overflow-x: hidden;
-    padding-top: 60px;
-    width: 50%;
-    height: 100vh;
-
+        overflow-x: hidden;
+        padding-top: 60px;
+        width: 30%;
+        height: 100vh;
     }
     .closebtn {
       top: 0;
       right: 25px;
       font-size: 36px;
-      margin-left: 50px;
-
-  }
-  .text ::before {
-    content: '';
-    height: 100%;
-    display: inline-block;
-    vertical-align: middle;
-  }
+      text-align: right;
+      padding-right: 50px;
+    }
+    .text {
+        padding: 20px 40px;
+        ::before {
+            content: '';
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    } 
 `;
 const ContainerWithoutNav = styled.div`
     min-height: 100vh;
@@ -86,6 +92,17 @@ class App extends React.Component {
             openMenu: !prevState['openMenu']
         }))
     }
+    signOut = () => {
+        firebase.auth().signOut()
+        .then(() =>{
+            console.log("User sign out!");
+        }).then(()=> {
+            this.openNav();
+        }).then(() =>{
+            window.location.hash = '/';
+        })
+        .catch((err => console.log('error message', err)))
+    }
     render() {
         const navStyle = {
             width: '0px'
@@ -101,7 +118,7 @@ class App extends React.Component {
                         <Link to="/memberprofile/mypetslist" className="text" onClick={this.openNav} >我領養的毛孩</Link>
                         <Link to="/memberprofile/fosterlist" className="text" onClick={this.openNav} >我送養中的毛孩</Link>
                         <Link to="/memberprofile/closingcaselist" className="text" onClick={this.openNav} >找到家的毛孩們</Link>
-                        <Link to='/' className="text" onClick={this.props.signOut} onClick={this.openNav} >登出</Link>
+                        <a className="text" onClick={this.signOut} >登出</a>
                     </div>
                     <div onClick={this.openNav} style={{flexGrow: '1'}}></div>
                 </SideNavForMember>
@@ -129,5 +146,6 @@ class App extends React.Component {
         )
     }
 }
+
 
 export default App;

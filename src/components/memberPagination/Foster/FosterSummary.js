@@ -43,7 +43,7 @@ const FosterSummary = ({ project, index }) => {
                     <p>小名：{item.nickName}</p>
                     <p>年齡：{item.age}</p>
                     <p>性別：{item.gender}</p>
-                    <p>晶片號碼：{item.microchipsNumber}</p>
+                    <p>晶片：{item.microchipsNumber}</p>
                     <p>{time}</p>
                 </div>
             </FosterSummaryContent>

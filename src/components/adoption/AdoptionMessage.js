@@ -11,8 +11,7 @@ class AdoptionMessage extends React.Component {
         phoneNumber: '',
         email: '',
         lineID: '',
-        facebook: '',
-        content: ''
+        facebook: ''
     }
     handleChange = (e) => {
         const parameters = location.hash.split("?")[1].split("&")
@@ -55,10 +54,6 @@ class AdoptionMessage extends React.Component {
                     <div className="input-field">
                         <label htmlFor="facebook">Facebook</label>
                         <textarea id="facebook" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="content">其他備註(方便聯繫的時段)</label>
-                        <textarea id="content" className="materialize-textarea" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
                         <button className="btn pink lighten-1 z-depth-0" onClick={this.handleSubmit}>送出</button>

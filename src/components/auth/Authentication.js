@@ -18,11 +18,6 @@ const Body = styled.div`
     min-height: 100vh;
     display: flex;
     padding: 30px 30px 70px 30px;
-    background: #f3f3f3; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #f3f3f3 0%, #e5e5e5 19%, #e9e9e9 31%, #ebebeb 42%, #ebebeb 42%, #e0e0e0 65%, #ebebeb 89%, #ededed 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #f3f3f3 0%,#e5e5e5 19%,#e9e9e9 31%,#ebebeb 42%,#ebebeb 42%,#e0e0e0 65%,#ebebeb 89%,#ededed 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #f3f3f3 0%,#e5e5e5 19%,#e9e9e9 31%,#ebebeb 42%,#ebebeb 42%,#e0e0e0 65%,#ebebeb 89%,#ededed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 `;
 
 const Combine = styled.div`

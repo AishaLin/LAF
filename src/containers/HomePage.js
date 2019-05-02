@@ -170,6 +170,7 @@ const Section_3 = styled.div`
                 font-size: 32px;
                 color: #fff;
                 text-shadow: 1px 1px 1px #000;
+                margin: 10px 0;
             }
             h2 {
                 font-size: 20px;

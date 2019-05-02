@@ -27,7 +27,6 @@ const ProjectDetailContainer = styled.section`
         background-color: #fff;
         border-radius: 8px;
         padding: 15px;
-        position: relative;
         -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
         -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
         box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
@@ -44,13 +43,37 @@ const ProjectDetailContainer = styled.section`
           }
         }
         .postedInformation {
+          height: 100px;
           color: grey;
-          text-align: right;
-          position: absolute;
-          bottom: 15px;
-          right: 15px;
+          position: relative;
           line-height: 1.5;
           font-size: 16px;
+          .category {
+            position: absolute;
+            background-color: #E8E7E2;
+            font-size: 12px;
+            padding: 1px 5px;
+            top: 0;
+            right: 15px;
+            color: #333333;
+          }
+          .nickName {
+            font-size: 20px;
+            color: rgb(23, 156, 154)
+          }
+          p:not(.category):not(.nickName):not(.authorPostTime) {
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #333333;
+          }
+          .authorAndPostTime {
+            width: auto;
+            position: absolute;
+            bottom: 0px;
+            right: 15px;
+            text-align: right;
+            font-size: 12px;
+          }
         }
       }
     }
@@ -59,13 +82,23 @@ const ProjectDetailContainer = styled.section`
 
     .sendMessage_btn {
       button {
-        width: 50%;
+        width: 30vw;
+        min-width: 300px;
         height: 50px;
         letter-spacing: 5px;
         color: #131313;
         border-radius: 10px;
-        margin: 10px 0;
+        margin: 30px 0 10px 0;
         font-size: 20px;
+        border: none;
+        /* background-color: #EBE7DB; */
+        :hover {
+
+        }
+        :active {
+          width: calc(30vw + 5px);
+          height: calc(50px + 5px);
+        }
       }
       
     }
@@ -76,7 +109,7 @@ const DetailInformation = styled.section`
   font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
   margin-top: 0;
-  margin-left: 20px;
+  margin-left: 40px;
     p {
       line-height: 1.8;
     }
@@ -131,24 +164,30 @@ const ProjectDetails = (props) => {
               </div>
               <hr />
               <div className='postedInformation'>
-                <div>Posted by {project.authorFirstName} {project.authorLastName} </div>
-                <div>{time}</div>
+                <p className='category'>{project.publicationCategory}</p>
+                <p className='nickName'>{project.nickName}</p>
+                <p>{project.gender}</p>
+                <p>{project.age}</p>
+                <div className='authorAndPostTime'>
+                  <div>Posted by {project.authorFirstName} {project.authorLastName} </div>
+                  <div>{time}</div>
+                </div>
               </div>
             </div>
             <DetailInformation>
-              <p><span>●</span>刊登類別：{project.publicationCategory}</p>
-              <p><span>✱</span>動物小名：{project.nickName}</p>
-              <p><span>✱</span>動物種類：{project.species}</p>
-              <p><span>✱</span>性別：{project.gender}</p>
-              <p><span>✱</span>年齡/生日：{project.age}</p>
+              {/* <p><span>●</span>刊登類別：{project.publicationCategory}</p> */}
+              {/* <p><span>✱</span>動物小名：{project.nickName}</p> */}
+              <p><span>✱</span>種類：{project.species}</p>
+              {/* <p><span>✱</span>性別：{project.gender}</p>
+              <p><span>✱</span>年齡：{project.age}</p> */}
               <p><span>✱</span>體型：{project.size}</p>
               <p><span>✱</span>體重：{project.weight}</p>
               <p><span>✱</span>品種：{project.variety}</p>
-              <p><span>✱</span>健康狀況：{project.physicalCondition}</p>
-              <p><span>✱</span>晶片號碼：{project.microchipsNumber}</p>
+              <p><span>✱</span>晶片：{project.microchipsNumber}</p>
               <p><span>✱</span>目前所在地：{project.currentLocation}</p>
               <p><span>✱</span>個性：{project.character}</p>
-              <p><span>✱</span>送養原因/其他想說的話：{project.reason}</p>
+              <p><span>✱</span>健康狀況：{project.physicalCondition}</p>
+              <p><span>✱</span>送養原因：{project.reason}</p>
               <p><span>✱</span>認養條件：{project.requirement}</p>
               <p><span>✱</span>聯絡方式：{project.connectMethods}</p>
               <div className='sendMessage_btn'>

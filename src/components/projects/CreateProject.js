@@ -90,15 +90,15 @@ class CreateProject extends Component {
                         <input type="text" id="publicationCategory" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="nickName">動物小名</label>
+                        <label htmlFor="nickName">小名</label>
                         <input type="text" id="nickName" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="species">動物種類</label>
+                        <label htmlFor="species">種類</label>
                         <textarea id="species" className="materialize-textarea" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="age">年齡/生日</label>
+                        <label htmlFor="age">年齡</label>
                         <textarea id="age" className="materialize-textarea" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
@@ -142,7 +142,7 @@ class CreateProject extends Component {
                         <textarea id="character" className="materialize-textarea" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="reason">送養原因/其他想說的話</label>
+                        <label htmlFor="reason">送養原因</label>
                         <textarea id="reason" className="materialize-textarea" onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
