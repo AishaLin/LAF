@@ -36,7 +36,7 @@ ol, ul {
 a {
   text-decoration: none;
   display: block;
-  color: rgb(23, 156, 154) ;
+  color: rgb(23, 156, 154);
   /* rgb(42, 177, 174) */
   /* color: gray; */
 }
@@ -67,7 +67,7 @@ body {
 }
 form {
   padding: 20px;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 form button, form h5 {
   margin: 20px 0;
@@ -81,7 +81,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 /* h6 {
-  background-color: #3f412d;
+  background-color: rgb(209, 207, 196);
 
 } */
 

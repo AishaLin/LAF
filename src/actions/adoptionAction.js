@@ -19,8 +19,9 @@ export const sendAdoptMessage = (sendmessage) => {
         }).then(() => {
             dispatch({ type: 'SEND_ADOPTION_MESSAGE', sendmessage });
         }).then(() => {
-            const projectID = location.hash.split("?")[1].split("&")[0].split("=")[1]
-            window.location.hash = `/project/${projectID}`;
+            window.location.hash = `/memberprofile/mypetslist`;
+            // const projectID = location.hash.split("?")[1].split("&")[0].split("=")[1]
+            // window.location.hash = `/project/${projectID}`;
         }).catch((err) => {
             dispatch({ type: 'SEND_ADOPTION_MESSAGE_ERROR', err });
             console.log("error message", err)
@@ -79,8 +80,9 @@ export const approveAffidavit = (affidavitData, projectID) => {
         const db = firebase.firestore();
         await db.collection('projects').doc(projectID).update({
             adoptionStage: 4,
+            adopterID: affidavitData.item.preAdopterStage3,
             affidavitID: affidavitData.id,
-            adopterName: affidavitData.adopterSignature,
+            adopterName: affidavitData.item.adopterSignature,
             closeCaseAt: new Date()
         }).catch(err => console.log("errorrrrrr", err))
         await db.collection('affidavit').doc(affidavitData.id).update({

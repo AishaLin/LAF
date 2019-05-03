@@ -10,15 +10,20 @@ const ProjectSummaryContent = styled.div`
     -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
     box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
     width: 100%;
+    :hover {
+            transform: translate(-2px, -2px);
+        }
     .imgContainer {
         width: 100%;
-        
         .projectPicture {
             width: 100%;
             padding-bottom: 70%;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            :hover {
+                transform: scale(1.1);
+            }
         }
     }
     .textContainer {
@@ -31,9 +36,9 @@ const ProjectSummaryContent = styled.div`
             background-color: #E8E7E2;
             font-size: 12px;
             padding: 1px 5px;
-            top: 0;
+            top: 5px;
             right: 15px;
-            color: #333333;
+            color: gray;
         }
         .nickName {
             font-size: 20px;

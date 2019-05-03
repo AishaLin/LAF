@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import 'firebase/auth';
 import firebase from "../../config/fbConfig"
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
     BrowserRouter,
     HashRouter,

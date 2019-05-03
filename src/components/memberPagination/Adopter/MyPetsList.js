@@ -114,9 +114,11 @@ class MyPetsList extends Component {
                                             <button>請與送養人聯繫接洽</button>
                                         }
                                         {item.adoptionStage === 2 && item.preAdopter === this.props.auth.uid &&
-                                            <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
-                                                <button>送養人已發出簽署切結書邀請，請點我查閱切結書內容</button>
-                                            </Link>
+                                            <button>
+                                                <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
+                                                    送養人已發出簽署切結書邀請，請點我查閱切結書內容
+                                                </Link>
+                                            </button>
                                         }
                                         {item.adoptionStage === 3 && item.preAdopterStage3 === auth.uid &&
                                             <button>待送養人簽署並回傳切結書後，就完成領養手續了！</button>

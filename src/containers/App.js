@@ -32,14 +32,13 @@ const SideNavForMember = styled.div`
     transition: 0.5s;
     display: flex;
     @media screen and (max-height: 450px) {
-      padding-top: 15px;
+      padding-top: 15px
     }   
     a {
       padding: 8px 8px 8px 20px;
       text-decoration: none;
       font-size: 25px;
       color: #818181;
-      display: block;
       transition: 0.3s;
       :hover {
         color: #f1f1f1;
@@ -55,6 +54,11 @@ const SideNavForMember = styled.div`
         padding-top: 60px;
         width: 30%;
         height: 100vh;
+        position: relative;
+        .logout {
+          position: absolute;
+          bottom: 5vh;
+        }
     }
     .closebtn {
       top: 0;
@@ -62,6 +66,20 @@ const SideNavForMember = styled.div`
       font-size: 36px;
       text-align: right;
       padding-right: 50px;
+    }
+    .memberName {
+        padding: 20px 40px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #cccbcb;
+        display: block;
+        transition: 0.3s;
+        ::before {
+            content: '';
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
     }
     .text {
         padding: 20px 40px;
@@ -115,10 +133,11 @@ class App extends React.Component {
                 <SideNavForMember style={navStyle}>
                     <div className="sideNav">
                         <a href="javascript:void(0)" className="closebtn" onClick={this.openNav} >&times;</a>
-                        <Link to="/memberprofile/mypetslist" className="text" onClick={this.openNav} >我領養的毛孩</Link>
-                        <Link to="/memberprofile/fosterlist" className="text" onClick={this.openNav} >我送養中的毛孩</Link>
-                        <Link to="/memberprofile/closingcaselist" className="text" onClick={this.openNav} >找到家的毛孩們</Link>
-                        <a className="text" onClick={this.signOut} >登出</a>
+                        <p className="memberName">Hi！{this.props.profile.firstName}</p>
+                        <Link to="/memberprofile/mypetslist" className="text" onClick={this.openNav} >查看領養清單</Link>
+                        <Link to="/memberprofile/fosterlist" className="text" onClick={this.openNav} >查看送養清單</Link>
+                        <Link to="/memberprofile/closingcaselist" className="text" onClick={this.openNav} >媒合成功清單</Link>
+                        <a className="text logout" onClick={this.signOut} >登出</a>
                     </div>
                     <div onClick={this.openNav} style={{flexGrow: '1'}}></div>
                 </SideNavForMember>
@@ -147,5 +166,11 @@ class App extends React.Component {
     }
 }
 
-
-export default App;
+const mapStateToProps = (state) => {
+    return {
+      auth: state.firebase.auth,
+      profile: state.firebase.profile
+    }
+  }
+  
+  export default connect(mapStateToProps)(App);

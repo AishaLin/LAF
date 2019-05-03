@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import firebase from "../../config/fbConfig";
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
 import Affidavit_pdf from '../../components/adoption/Affidavit_pdf'
+import AdoptionMessage from '../adoption/AdoptionMessage';
 
 const ProjectDetailContainer = styled.section`
   width: 80vw;
@@ -33,7 +31,7 @@ const ProjectDetailContainer = styled.section`
         .imgSecondContainer {
           width: 100%;
           height: auto;
-          margin: 5px auto 35px auto;
+          margin: 5px auto 20px auto;
           img {
             width: auto;
             height: auto;
@@ -53,13 +51,13 @@ const ProjectDetailContainer = styled.section`
             background-color: #E8E7E2;
             font-size: 12px;
             padding: 1px 5px;
-            top: 0;
-            right: 15px;
-            color: #333333;
+            top: 3px;
+            right: 0;
+            color: grey;
           }
           .nickName {
             font-size: 20px;
-            color: rgb(23, 156, 154)
+            color: rgb(23, 156, 154);
           }
           p:not(.category):not(.nickName):not(.authorPostTime) {
             font-size: 16px;
@@ -69,42 +67,36 @@ const ProjectDetailContainer = styled.section`
           .authorAndPostTime {
             width: auto;
             position: absolute;
-            bottom: 0px;
-            right: 15px;
+            bottom: 0;
+            right: 0;
             text-align: right;
             font-size: 12px;
           }
         }
       }
     }
-
-
-
     .sendMessage_btn {
       button {
         width: 30vw;
         min-width: 300px;
         height: 50px;
         letter-spacing: 5px;
-        color: #131313;
+        background-color: rgb(23, 156, 154);
         border-radius: 10px;
         margin: 30px 0 10px 0;
         font-size: 20px;
         border: none;
-        /* background-color: #EBE7DB; */
+        color: #FFFFFF;
         :hover {
-
+          background-color: rgb(23, 156, 154, 0.85);
         }
         :active {
-          width: calc(30vw + 5px);
-          height: calc(50px + 5px);
+          transform: translate(2px, 3px);
         }
       }
-      
     }
   }
 `;
-
 const DetailInformation = styled.section`
   font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
@@ -121,6 +113,7 @@ const DetailInformation = styled.section`
 const BouncingLoader = styled.div`
     display: flex;
     justify-content: center;
+    margin: auto 0;
     @keyframes bouncing-loader {
         to {
             opacity: 0.1;
@@ -143,75 +136,81 @@ const BouncingLoader = styled.div`
     }
 `;
 
-const ProjectDetails = (props) => {
-  const { project, auth } = props;
-  console.log(project)
-  if (project) {
-    const detailtime = project.createdAt.toDate().toString().split(" ")
-    let time = "";
-    for (let i = 0; i < 5; i++) {
-      time = time + detailtime[i] + " "
-    }
+class ProjectDetails extends Component {
+  state = {
+    messagePopup: false
+  }
+  togglePopup = () => {
+    this.setState(prevState => ({
+      messagePopup: !prevState.messagePopup
+    }));
+  }
+  render() {
+    const { project, auth } = this.props;
+    console.log(project)
+    if (project) {
+      const detailtime = project.createdAt.toDate().toString().split(" ")
+      let time = "";
+      for (let i = 0; i < 5; i++) {
+        time = time + detailtime[i] + " "
+      }
 
-    // if (!auth.uid) return <Redirect to='/signin' />
-    return (
-      <ProjectDetailContainer>
-        <div className='ProjectDetail'>
-          <div className='ProjectDetail_WithoutBtn'>
-            <div className='imgContainer'>
-              <div className='imgSecondContainer'>
-                <img src={project.fileUrl} />
-              </div>
-              <hr />
-              <div className='postedInformation'>
-                <p className='category'>{project.publicationCategory}</p>
-                <p className='nickName'>{project.nickName}</p>
-                <p>{project.gender}</p>
-                <p>{project.age}</p>
-                <div className='authorAndPostTime'>
-                  <div>Posted by {project.authorFirstName} {project.authorLastName} </div>
-                  <div>{time}</div>
+      // if (!auth.uid) return <Redirect to='/signin' />
+      return (
+        <ProjectDetailContainer>
+          {this.state.messagePopup ? <AdoptionMessage  togglePopup={ this.togglePopup.bind(this) } project= {project} /> : null}
+          <div className='ProjectDetail'>
+            <div className='ProjectDetail_WithoutBtn'>
+              <div className='imgContainer'>
+                <div className='imgSecondContainer'>
+                  <img src={project.fileUrl} />
+                </div>
+                <div className='postedInformation'>
+                  <p className='category'>{project.publicationCategory}</p>
+                  <p className='nickName'>{project.nickName}</p>
+                  <p>{project.age}</p>
+                  <p>{project.gender}</p>
+                  <div className='authorAndPostTime'>
+                    <div>Posted by {project.authorFirstName} {project.authorLastName} </div>
+                    <div>{time}</div>
+                  </div>
                 </div>
               </div>
+              <DetailInformation>
+                <p><span>✱</span>種類：{project.species}</p>
+                <p><span>✱</span>體型：{project.size}</p>
+                <p><span>✱</span>體重：{project.weight}</p>
+                <p><span>✱</span>品種：{project.variety}</p>
+                <p><span>✱</span>晶片：{project.microchipsNumber}</p>
+                <p><span>✱</span>目前所在地：{project.currentLocation}</p>
+                <p><span>✱</span>個性：{project.character}</p>
+                <p><span>✱</span>結紮狀況：{project.ligation}</p>
+                <p><span>✱</span>健康狀況：{project.physicalCondition}</p>
+                <p><span>✱</span>送養原因：{project.reason}</p>
+                <p><span>✱</span>認養條件：{project.requirement}</p>
+                <p><span>✱</span>聯絡方式：{project.connectMethods}</p>
+                <div className='sendMessage_btn'>
+                  {project.adoptionStage !== 4 && <button onClick={this.togglePopup}>與送養人聯繫</button>}
+                  {project.adoptionStage === 4 && <p>恭喜 {project.nickName} 已經找到他的長期飯票了！</p>}
+                </div>
+              </DetailInformation>
             </div>
-            <DetailInformation>
-              {/* <p><span>●</span>刊登類別：{project.publicationCategory}</p> */}
-              {/* <p><span>✱</span>動物小名：{project.nickName}</p> */}
-              <p><span>✱</span>種類：{project.species}</p>
-              {/* <p><span>✱</span>性別：{project.gender}</p>
-              <p><span>✱</span>年齡：{project.age}</p> */}
-              <p><span>✱</span>體型：{project.size}</p>
-              <p><span>✱</span>體重：{project.weight}</p>
-              <p><span>✱</span>品種：{project.variety}</p>
-              <p><span>✱</span>晶片：{project.microchipsNumber}</p>
-              <p><span>✱</span>目前所在地：{project.currentLocation}</p>
-              <p><span>✱</span>個性：{project.character}</p>
-              <p><span>✱</span>健康狀況：{project.physicalCondition}</p>
-              <p><span>✱</span>送養原因：{project.reason}</p>
-              <p><span>✱</span>認養條件：{project.requirement}</p>
-              <p><span>✱</span>聯絡方式：{project.connectMethods}</p>
-              <div className='sendMessage_btn'>
-                {project.adoptionStage !== 4 && <button><Link to={`/adoptionMessage?case=${location.hash.split("/")[2]}&from=${project.authorID}`}>與送養人聯繫</Link></button>}
-                {project.adoptionStage === 4 && <p>恭喜 {project.nickName} 已經找到他的長期飯票了！</p>}
-              </div>
-            </DetailInformation>
           </div>
-        </div>
-        {project.adoptionStage === 4 && project.adopterID === auth.uid &&
-          <Affidavit_pdf project={project} />
-        }
-      </ProjectDetailContainer>
-    )
-  } else {
-    return (
-      <BouncingLoader>
-        <div></div>
-        <div></div>
-        <div></div>
-      </BouncingLoader>
-    )
+          {project.adoptionStage === 4 && project.adopterID === auth.uid &&
+            <Affidavit_pdf project={project} />
+          }
+        </ProjectDetailContainer>
+      )
+    } else {
+      return (
+        <BouncingLoader>
+          <div></div>
+          <div></div>
+          <div></div>
+        </BouncingLoader>
+      )
+    }
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

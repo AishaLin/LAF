@@ -69,7 +69,6 @@ class Affidavit_approve extends Component {
     }
     approveAndCloseCase = () => {
         const projectID = location.hash.split("?")[1].split("&")[0].split("=")[1];
-
         this.props.dispatch(approveAffidavit(this.state, projectID))
     }
 

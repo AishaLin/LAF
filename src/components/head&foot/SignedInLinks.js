@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
 
 const SignedInLinksContent = styled.div`
-  margin-left: 270px;
+  margin-left: 200px;
   display: flex;
   text-align: center;
   align-items: center;
@@ -15,6 +15,15 @@ const SignedInLinksContent = styled.div`
     display: inline-block;
     vertical-align: middle;
   }
+  div {
+    margin-right: 5vw;
+    color: #2f3022;
+    cursor: pointer;
+    img {
+      width: 30px;
+      margin-right: 10px;
+    }
+  }
 `;
 
 class SignedInLinks extends Component {
@@ -22,8 +31,8 @@ class SignedInLinks extends Component {
   render() {
     return (
       <SignedInLinksContent>
-        <div className="btn btn-floating pink lighten-1" onClick={()=> this.props.clickMemberName()}>Hi！{this.props.profile.firstName}</div>
-        <div><Link to='/post'>我要刊登發文</Link></div>
+        <div className="btn btn-floating pink lighten-1" onClick={()=> this.props.clickMemberName()}><img src='../src/public/icon_menu.png'/>會員資訊</div>
+        <div><Link to='/post'><img src='../src/public/contract.png'/>刊登發文</Link></div>
       </SignedInLinksContent>
     )
   }

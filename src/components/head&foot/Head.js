@@ -47,11 +47,6 @@ const HeadContent = styled.div`
     transform: rotate(-90deg);
     z-index: 1000;
   }
-  li {
-    flex-grow: 1;
-    margin: 0 3vw;
-    list-style: none;
-  }
   .mainNav {
     display: flex;
     text-align: center;
@@ -62,9 +57,25 @@ const HeadContent = styled.div`
     line-height: 125px;
     background-color: #E8E7E2;
     z-index: 1000;
+    li {
+      flex-grow: 1;
+      list-style: none;
+      :hover {
+        background-color: rgb(209, 207, 196);
+      }
+      :active {
+        background-color: rgb(209, 207, 196, 0.5);
+      }
+      .comingSoon {
+        color: grey;
+      }
+    }
   }
   a {
     color: #1b1a18;
+    :active {
+      transform: translate(2px, 3px);
+    }
   }
 `;
 const Logo = styled.div`
@@ -80,7 +91,7 @@ const Logo = styled.div`
   height: 125px;
   width: 130px;
   z-index: 3000;
-  a{
+  a {
     color: #fff;
   }
 `;
@@ -112,8 +123,8 @@ class Head extends Component {
         {links}
         <ul className="mainNav">
           <li><Link to='/adoptionBoard'>認領養媒合</Link></li>
-          <li><Link to='/'>公立收容所</Link></li>
-          <li><Link to='/'>走失協尋</Link></li>
+          <li><Link to='/' className='comingSoon'>公立收容所</Link></li>
+          <li><Link to='/' className='comingSoon'>走失協尋</Link></li>
         </ul>
       </HeadContent>
     )
