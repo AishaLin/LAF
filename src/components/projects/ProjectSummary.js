@@ -10,19 +10,24 @@ const ProjectSummaryContent = styled.div`
     -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
     box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
     width: 100%;
+    transition: transform 0.3s ease-in;
     :hover {
             transform: translate(-2px, -2px);
         }
     .imgContainer {
         width: 100%;
+        overflow: hidden;
+
         .projectPicture {
             width: 100%;
             padding-bottom: 70%;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            transform: scale(1, 1);
+            transition: all 0.6s ease-out;
             :hover {
-                transform: scale(1.1);
+                transform: scale(1.1, 1.1);
             }
         }
     }

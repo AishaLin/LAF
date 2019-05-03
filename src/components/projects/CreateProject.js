@@ -1,11 +1,192 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import styled from "styled-components";
 import { createProject } from "../../actions/projectActions";
 import { createDeflate } from 'zlib';
 import firebase from "../../config/fbConfig"
 import { Redirect } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import UpLoadFile from './UpLoadFile';
+
+const CreateProjectContent = styled.div`
+    font-size: 18px;
+    height: 100%;
+    letter-spacing: 3px;
+    input, 
+    textarea {
+        outline: none;
+        padding: 8px;
+        font-size: 15px;
+        border-width: 0;
+        border-radius: 2px;
+        height: 45px;
+        margin-top: 10px;
+        -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+        -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+        box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+    }
+    .creatForm {
+        width: 80vw;
+        margin: 0 auto;
+        padding-top: 50px;
+        .list {
+            display: flex;
+            flex-grow: 1;
+            flex-wrap: wrap;
+            height: 45px;
+            background-color: #fff;
+            border-radius: 2px;
+            margin-top: 10px;
+            .eachOption {
+                border-radius: 2px;
+                flex-grow: 1;
+                text-align: center;
+                margin: 6px;
+                background-color: rgb(203, 203, 203, 0.3);
+                cursor: pointer;
+                color: #5B5566;
+                :before {
+                    content: '';
+                    height: 100%;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+            [data-item="publicationCategory"] {
+                transition: transform 0.3s ease-in;
+                :hover {
+                    background-color: rgb(245, 147, 103, 0.5);
+                }
+                :active {
+                    background-color: rgb(245, 147, 103);
+                    transform: translate(3px, 3px);
+                }
+            }
+            .hoveryellow {
+                transition: transform 0.3s ease-in;
+                :hover {
+                    background-color: rgb(252, 225, 150, 0.5);
+                }
+                :active {
+                    background-color: rgb(252, 225, 150);
+                    transform: translate(3px, 3px);
+                }
+            }
+            .hovergreen {
+                transition: transform 0.3s ease-in;
+                :hover {
+                    background-color: rgb(185, 199, 148, 0.5);
+                }
+                :active {
+                    background-color: rgb(185, 199, 148);
+                    transform: translate(3px, 3px);
+                }
+            }
+            .category_select {
+                background-color: rgb(245, 147, 103);
+                color: #fff;
+            }
+            .options_2_select {
+                background-color: rgb(252, 225, 150);
+            }
+            .options_6_select {
+                background-color: rgb(185, 199, 148);
+            }
+        }
+
+        .input-field {
+            color: rgba(160, 160, 160);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            .list {
+                display: flex;
+            }
+        } 
+        .section_1_imgAndBasic {
+            display: flex;
+            margin-top: 30px;
+            .upLoadFileContainer {
+                width: 400px;
+                height: 400px;
+                border: 10px solid #fff;
+                border-radius: 10px;
+                margin-right: 20px;
+            }
+            .basicAndSimpleOptions {
+                flex-grow: 1;
+                /* background-color: #F1E0DE; */
+                .basicInformation {
+                    display: flex;
+                    .secondContainer {
+                        display: flex;
+                        flex-wrap: wrap;
+                        flex-grow: 1;
+                        .input-field {
+                            padding: 0 15px;
+                            margin: 5px 0 30px 0;
+                        } 
+                    }
+                }
+                .simple_options_container {
+
+                    .simple_options {
+                        display: flex;
+                        flex-wrap: wrap;
+                        .options_2 {
+                            width: 50%;
+                            padding: 0 15px;
+                            display: flex;
+                            flex-direction: column;
+                            margin: 5px 0 30px 0;
+                        } 
+                    }
+                }
+            }
+        }
+        .section_2_options {
+            
+            .options_6 {
+                margin: 5px 0 30px 0;
+                .list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .eachOption {
+                        width: calc((100% - 72px) / 6);
+                        min-width: 155px;
+                    }
+                }
+            }
+        }     
+        .section_3_textArea {
+            /* background-color: rgb(226, 204, 218); */
+            .input-field {
+                margin: 20px 0 30px 0;
+                .multi-textarea {
+                    height: 100px;
+                    resize: none;
+                }
+            } 
+        }
+        button {
+            margin: 50px auto 0 auto;
+            font-size: 18px;
+            letter-spacing: 3px;
+            width: 100%;
+            max-width: 500px;
+            height: 45px;
+            border-radius: 22.5px;
+            background-color: rgb(23, 156, 154);
+            color: #fff;
+            :hover {
+                background-color: rgb(23, 156, 154, 0.85);
+            }
+            :active {
+                transform: translate(2px, 3px);
+            }
+        }
+    }
+`;
 
 class CreateProject extends Component {
     state = {
@@ -45,7 +226,9 @@ class CreateProject extends Component {
         this.setState({
             [event.target.dataset.item]: el
         })
+        console.log('elelelel', el)
         console.log('this.state', this.state)
+        return el
     }
     // 貓狗體重區間不同，為避免使用者選擇體重後才重選動物種類，另外增加判定是否須清除體重資訊，並提示重新選擇
     // 初始狀態
@@ -70,7 +253,6 @@ class CreateProject extends Component {
         } else if (this.state.species == el) {
             console.log("使用者重複點選一樣的種類，不更新資料")
         }
-        console.log('this.state', this.state)
     }
     handleChange = (e) => {
         this.setState({
@@ -103,19 +285,19 @@ class CreateProject extends Component {
             dogWeight,
             ligation
         } = this.state.options;
+
         if (!auth.uid) return <Redirect to='/authentication/signin' />
         return (
-            <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <UpLoadFile fileSelect={this.handleFileSelect} />
-                    <h5 className="grey-text text-darken-3">發文</h5>
+            <CreateProjectContent>
+                <form className='creatForm' onSubmit={this.handleSubmit}>
                     <div className="input-field">
-                        <label htmlFor="publicationCategory">刊登類別</label>
-                        <div>
+                        <label className='title' htmlFor="publicationCategory">請選擇刊登類別</label>
+                        <div className='list'>
                             {
                                 publicationCategory.map((el, index) => {
                                     return (
                                         <div
+                                            className={`eachOption ${this.state.publicationCategory === el ? 'category_select' : null}`}
                                             data-item='publicationCategory'
                                             key={index}
                                             onClick={(event) => this.setSelectedData(event, el)}
@@ -127,184 +309,220 @@ class CreateProject extends Component {
                             }
                         </div>
                     </div>
-                    <div className="input-field">
-                        <label htmlFor="nickName">小名</label>
-                        <input type="text" id="nickName" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="coatColor">毛色</label>
-                        <textarea id="coatColor" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="variety">品種</label>
-                        <textarea id="variety" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="microchipsNumber">晶片號碼</label>
-                        <textarea id="microchipsNumber" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field" id="species">
-                        <label htmlFor="species">種類</label>
-                        <div>
-                            {
-                                species.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='species'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedSpecies(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
-                            }
+                    <section className='section_1_imgAndBasic'>
+                        <div className='upLoadFileContainer'>
+                            <UpLoadFile fileSelect={this.handleFileSelect} />
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="gender">性別</label>
-                        <div>
-                            {
-                                gender.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='gender'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
+                        <div className='basicAndSimpleOptions'>
+                            <div className='basicInformation'>
+                                <div className='secondContainer'>
+                                    <div className="input-field">
+                                        <label className='title' htmlFor="nickName">小名</label>
+                                        <input type="text" id="nickName" className="simple_input" onChange={this.handleChange} />
+                                    </div>
+                                    <div className="input-field">
+                                        <label className='title' htmlFor="microchipsNumber">晶片</label>
+                                        <input type="text" id="microchipsNumber" className="simple_input" onChange={this.handleChange} />
+                                    </div>
+                                </div>
+                                <div className='secondContainer'>
+                                    <div className="input-field">
+                                        <label className='title' htmlFor="coatColor">毛色</label>
+                                        <input type="text" id="coatColor" className="simple_input" onChange={this.handleChange} />
+                                    </div>
+                                    <div className="input-field">
+                                        <label className='title' htmlFor="variety">品種</label>
+                                        <input type="text" id="variety" className="simple_input" onChange={this.handleChange} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='simple_options_container'>
+                                <div className='simple_options'>
+                                    <div className="input-field  options_2" id="species">
+                                        <label className='title' htmlFor="species">種類</label>
+                                        <div className='list'>
+                                            {
+                                                species.map((el, index) => {
+                                                    return (
+                                                        <div
+                                                            className={`eachOption hoveryellow ${this.state.species === el ? 'options_2_select' : null}`}
+                                                            data-item='species'
+                                                            key={index}
+                                                            onClick={(event) => this.setSelectedSpecies(event, el)}
+                                                        >
+                                                            {el}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
-                                    )
-                                })
-                            }
+                                    </div>
+                                    <div className="input-field options_2">
+                                        <label className='title' htmlFor="ligation">結紮狀況</label>
+                                        <div className='list'>
+                                            {
+                                                ligation.map((el, index) => {
+                                                    return (
+                                                        <div
+                                                            className={`eachOption hoveryellow ${this.state.ligation === el ? 'options_2_select' : null}`}
+                                                            data-item='ligation'
+                                                            key={index}
+                                                            onClick={(event) => this.setSelectedData(event, el)}
+                                                        >
+                                                            {el}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='simple_options'>
+                                    <div className="input-field options_2">
+                                        <label className='title' htmlFor="gender">性別</label>
+                                        <div className='list'>
+                                            {
+                                                gender.map((el, index) => {
+                                                    return (
+                                                        <div
+                                                            className={`eachOption hoveryellow ${this.state.gender === el ? 'options_2_select' : null}`}
+                                                            data-item='gender'
+                                                            key={index}
+                                                            onClick={(event) => this.setSelectedData(event, el)}
+                                                        >
+                                                            {el}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="input-field options_2">
+                                        <label className='title' htmlFor="size">體型</label>
+                                        <div className='list'>
+                                            {
+                                                size.map((el, index) => {
+                                                    return (
+                                                        <div
+                                                            className={`eachOption hoveryellow ${this.state.size === el ? 'options_2_select' : null}`}
+                                                            data-item='size'
+                                                            key={index}
+                                                            onClick={(event) => this.setSelectedData(event, el)}
+                                                        >
+                                                            {el}
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="age">年齡</label>
-                        <div>
-                            {
-                                age.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='age'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="ligation">結紮狀況</label>
-                        <div>
-                            {
-                                ligation.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='ligation'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="size">體型</label>
-                        <div>
-                            {
-                                size.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='size'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
+                    </section>
+
+                    <section className='section_2_options'>
+                        <div className="input-field options_6">
+                            <label className='title' htmlFor="age">年齡</label>
+                            <div className='list'>
+                                {
+                                    age.map((el, index) => {
+                                        return (
+                                            <div
+                                                className={`eachOption hovergreen ${this.state.age === el ? 'options_6_select' : null}`}
+                                                data-item='age'
+                                                key={index}
+                                                onClick={(event) => this.setSelectedData(event, el)}
+                                            >
+                                                {el}
+                                            </div>
+                                        )
+                                    })
                                 }
-                                )
-                            }
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="weight">體重</label>
-                        <div>
+                        <div className="input-field options_6">
+                            <label className='title' htmlFor="weight">體重</label>
                             {this.state.species === '' &&
-                                <p>請先選擇動物種類</p>
+                                <div className='hint'>
+                                    <p>請先選擇動物種類</p>
+                                </div>
                             }
-                        </div>
-                        <div>
                             {this.state.species == '貓' &&
-                                catWeight.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='weight'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
+                                <div className='list'>
+                                    {this.state.species == '貓' &&
+                                        catWeight.map((el, index) => {
+                                            return (
+                                                <div
+                                                    className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
+                                                    data-item='weight'
+                                                    key={index}
+                                                    onClick={(event) => this.setSelectedData(event, el)}
+                                                >
+                                                    {el}
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             }
-                        </div>
-                        <div>
                             {this.state.species == '狗' &&
-                                dogWeight.map((el, index) => {
-                                    return (
-                                        <div
-                                            data-item='weight'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
+                                <div className='list'>
+                                    {this.state.species == '狗' &&
+                                        dogWeight.map((el, index) => {
+                                            return (
+                                                <div
+                                                    className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
+                                                    data-item='weight'
+                                                    key={index}
+                                                    onClick={(event) => this.setSelectedData(event, el)}
+                                                >
+                                                    {el}
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             }
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="currentLocation">目前所在地</label>
-                        <textarea id="currentLocation" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="feature">特徵</label>
-                        <textarea id="feature" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="physicalCondition">健康狀況</label>
-                        <textarea id="physicalCondition" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="character">個性</label>
-                        <textarea id="character" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="reason">送養原因</label>
-                        <textarea id="reason" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="requirement">認養條件</label>
-                        <textarea id="requirement" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="connectMethods">聯絡方式</label>
-                        <textarea id="connectMethods" className="materialize-textarea" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">送出</button>
-                    </div>
+                    </section>
+
+                    <section className='section_3_textArea'>
+                        <div className="input-field">
+                            <label className='title' htmlFor="currentLocation">目前所在地</label>
+                            <input type="text" id="currentLocation" className="simple_input" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="feature">特徵</label>
+                            <input type="text" id="feature" className="simple_input" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="physicalCondition">健康狀況</label>
+                            <input type="text" id="physicalCondition" className="simple_input" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="character">個性</label>
+                            <input type="text" id="character" className="simple_input" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="reason">送養原因</label>
+                            <textarea id="reason" className="multi-textarea" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="requirement">認養條件</label>
+                            <textarea id="requirement" className="multi-textarea" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <label className='title' htmlFor="connectMethods">聯絡方式</label>
+                            <textarea id="connectMethods" className="multi-textarea" onChange={this.handleChange} />
+                        </div>
+                        <div className="input-field">
+                            <button>送出</button>
+                        </div>
+                    </section>
+
                 </form>
-            </div>
+            </CreateProjectContent>
         )
     }
 }

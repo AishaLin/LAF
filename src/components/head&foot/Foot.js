@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 const FootContent = styled.div`
   background-color: #1F1F1F;
   height: fit-content;
-  margin-top: 100px;
+  margin-top: 60px;
   text-align: center;
   small {
       color: #fff;
