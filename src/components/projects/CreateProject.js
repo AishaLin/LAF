@@ -16,7 +16,7 @@ const CreateProjectContent = styled.div`
     textarea {
         outline: none;
         padding: 8px;
-        font-size: 15px;
+        font-size: 18px;
         border-width: 0;
         border-radius: 2px;
         height: 45px;
@@ -24,6 +24,9 @@ const CreateProjectContent = styled.div`
         -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+        :focus {
+            background-color: rgb(202, 216, 218, 0.6);
+        }
     }
     .creatForm {
         width: 80vw;
@@ -190,16 +193,6 @@ const CreateProjectContent = styled.div`
 
 class CreateProject extends Component {
     state = {
-        options: {
-            size: ['大型', '中等', '小型'],
-            publicationCategory: ['私人送養', '中途送養'],
-            species: ['狗', '貓'],
-            age: ['< 6 個月', '6 個月 - 2 歲', '3 歲 - 6 歲', '7 歲 - 10 歲', '11 歲 - 14 歲', '> 15 歲'],
-            gender: ['女生', '男生'],
-            catWeight: ['< 1 kg', '1-2 kg', '3-4 kg', '5-6 kg', '7-8 kg', '> 8 kg'],
-            dogWeight: ['< 4 kg', '4-10 kg', '11-20 kg', '21-30 kg', '31-40 kg', '> 40 kg'],
-            ligation: ['已結紮', '尚未結紮'],
-        },
         ligation: '',
         publicationCategory: '',
         nickName: '',
@@ -276,16 +269,16 @@ class CreateProject extends Component {
 
     render() {
         const { auth } = this.props;
-        const { size,
-            publicationCategory,
-            species,
-            age,
-            gender,
-            catWeight,
-            dogWeight,
-            ligation
-        } = this.state.options;
-
+        const options= {
+            size: ['大型', '中等', '小型'],
+            publicationCategory: ['私人送養', '中途送養'],
+            species: ['狗', '貓'],
+            age: ['< 6 個月', '6 個月 - 2 歲', '3 歲 - 6 歲', '7 歲 - 10 歲', '11 歲 - 14 歲', '> 15 歲'],
+            gender: ['女生', '男生'],
+            catWeight: ['< 1 kg', '1-2 kg', '3-4 kg', '5-6 kg', '7-8 kg', '> 8 kg'],
+            dogWeight: ['< 4 kg', '4-10 kg', '11-20 kg', '21-30 kg', '31-40 kg', '> 40 kg'],
+            ligation: ['已結紮', '尚未結紮'],
+        };
         if (!auth.uid) return <Redirect to='/authentication/signin' />
         return (
             <CreateProjectContent>
@@ -294,7 +287,7 @@ class CreateProject extends Component {
                         <label className='title' htmlFor="publicationCategory">請選擇刊登類別</label>
                         <div className='list'>
                             {
-                                publicationCategory.map((el, index) => {
+                                options.publicationCategory.map((el, index) => {
                                     return (
                                         <div
                                             className={`eachOption ${this.state.publicationCategory === el ? 'category_select' : null}`}
@@ -342,7 +335,7 @@ class CreateProject extends Component {
                                         <label className='title' htmlFor="species">種類</label>
                                         <div className='list'>
                                             {
-                                                species.map((el, index) => {
+                                                options.species.map((el, index) => {
                                                     return (
                                                         <div
                                                             className={`eachOption hoveryellow ${this.state.species === el ? 'options_2_select' : null}`}
@@ -361,7 +354,7 @@ class CreateProject extends Component {
                                         <label className='title' htmlFor="ligation">結紮狀況</label>
                                         <div className='list'>
                                             {
-                                                ligation.map((el, index) => {
+                                                options.ligation.map((el, index) => {
                                                     return (
                                                         <div
                                                             className={`eachOption hoveryellow ${this.state.ligation === el ? 'options_2_select' : null}`}
@@ -382,7 +375,7 @@ class CreateProject extends Component {
                                         <label className='title' htmlFor="gender">性別</label>
                                         <div className='list'>
                                             {
-                                                gender.map((el, index) => {
+                                                options.gender.map((el, index) => {
                                                     return (
                                                         <div
                                                             className={`eachOption hoveryellow ${this.state.gender === el ? 'options_2_select' : null}`}
@@ -401,7 +394,7 @@ class CreateProject extends Component {
                                         <label className='title' htmlFor="size">體型</label>
                                         <div className='list'>
                                             {
-                                                size.map((el, index) => {
+                                                options.size.map((el, index) => {
                                                     return (
                                                         <div
                                                             className={`eachOption hoveryellow ${this.state.size === el ? 'options_2_select' : null}`}
@@ -426,7 +419,7 @@ class CreateProject extends Component {
                             <label className='title' htmlFor="age">年齡</label>
                             <div className='list'>
                                 {
-                                    age.map((el, index) => {
+                                    options.age.map((el, index) => {
                                         return (
                                             <div
                                                 className={`eachOption hovergreen ${this.state.age === el ? 'options_6_select' : null}`}
@@ -451,7 +444,7 @@ class CreateProject extends Component {
                             {this.state.species == '貓' &&
                                 <div className='list'>
                                     {this.state.species == '貓' &&
-                                        catWeight.map((el, index) => {
+                                        options.catWeight.map((el, index) => {
                                             return (
                                                 <div
                                                     className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
@@ -469,7 +462,7 @@ class CreateProject extends Component {
                             {this.state.species == '狗' &&
                                 <div className='list'>
                                     {this.state.species == '狗' &&
-                                        dogWeight.map((el, index) => {
+                                        options.dogWeight.map((el, index) => {
                                             return (
                                                 <div
                                                     className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}

@@ -80,10 +80,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
   box-shadow: none;
 }
 
-h6 {
-  background-color: rgb(185, 199, 148);
+/* h6 {
+  background-color: rgb(202, 216, 218);
 
-}
+} */
 
 
 /* font-family: 'Noto Sans TC', sans-serif;

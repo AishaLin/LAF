@@ -5,7 +5,9 @@ import styled from "styled-components";
 
 const MessageContainer = styled.div`
     width: 100%;
-
+    .nonSelected {
+        color: lightgrey;
+    }
     .eachRequester {
         display: flex;
         align-items: center;
@@ -56,7 +58,7 @@ class Message extends Component {
     }
     render() {
         const { requester, requesterLastName, requesterFirstName, phoneNumber, email, lineID, facebook, content, createdAt } = this.props.message.item
-        const { adoptionStage, preAdopterStage3 } = this.props.project.item;
+        const { adoptionStage,preAdopter, preAdopterStage3 } = this.props.project.item;
         //時間
         const detailtime = createdAt.toDate().toString().split(" ")
         let time = "";
@@ -66,7 +68,7 @@ class Message extends Component {
         return (
             <MessageContainer >
                 <div className='eachRequester' data-selected='adopter'>
-                    <div className="messageInformation">
+                    <div className={`messageInformation ${adoptionStage !== 1 && preAdopter !== '' && preAdopter !== requester ? 'nonSelected': null}`}>
                         <p className="requesterName">欲領養人：{requesterLastName}{requesterFirstName}</p>
                         {phoneNumber !== "" && <p >電話：{phoneNumber}</p>}
                         {email !== "" && <p>信箱：{email}</p>}
@@ -79,8 +81,8 @@ class Message extends Component {
                         {adoptionStage === 1 &&
                             <button onClick={(e)=>this.clickHandeler(e)} >選取</button>
                         }
-                        {adoptionStage === 2 &&
-                            <button onClick={() => this.props.clickcancel()}>取消重選</button>
+                        {adoptionStage === 2 && preAdopter === requester &&
+                            <button onClick={() => this.props.clickcancel()}>取消</button>
                         }
                         {adoptionStage === 3 && preAdopterStage3 === requester &&
                             <button onClick={() => this.props.clickcancel()}>取消</button>
