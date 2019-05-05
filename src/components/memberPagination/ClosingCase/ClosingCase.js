@@ -31,17 +31,22 @@ const ClosingCaseContent = styled.div`
 const DetailInformation = styled.section`
   font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
-  padding: 10px;
-    p {
+    .petName {
       text-align: center;
-      line-height: 1.8;
+      line-height: 1.6;
       font-size: 20px;
+      width: fit-content;
+      margin: 10px auto 0 auto;
+      padding: 4px 2px 0 2px;
+      letter-spacing: 2px;
+      background: url('http://www.blogfuntw.com/wp-content/uploads/underline_yelbig.gif') repeat-x bottom;
     }
     .adopter {
+      text-align: center;
       width: 100%;
       line-height: 1.5;
       position: absolute;
-      bottom: 10px;
+      bottom: 20px;
       font-size: 16px;
     }
 `;
@@ -83,7 +88,7 @@ class ClosingCase extends Component {
             <div className='projectPicture' style={{ backgroundImage: `url('${item.fileUrl}')` }}></div>
           </div>
           <DetailInformation>
-            <p>{item.nickName}</p>
+            <p className='petName'>{item.nickName}</p>
             <p className='adopter'>認養人 {this.state.affidavitData.adopterSignature}</p>
           </DetailInformation>
         </ClosingCaseContent>

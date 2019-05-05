@@ -9,12 +9,13 @@ import { Link, Redirect } from "react-router-dom"
 const ClosingCaseListContainer = styled.section`
     display: flex;
     flex-wrap: wrap;
+    margin-top: 15px;
     .eachCaseContainer {
         width: calc((100% - 120px)/4);
         margin: 0 15px 25px 15px;
         height: 350px;
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 10px;
         overflow: hidden;
         position: relative;
         -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
@@ -77,7 +78,7 @@ class ClosingCaseList extends Component {
                         {closingCaseList && closingCaseList.map((project) => {
                             const { item } = project;
                             return (
-                                <Link to={'/project/' + project.id} className='eachCaseContainer'>
+                                <Link to={'/project/' + project.id} className='eachCaseContainer' key={project.id}>
                                     <ClosingCase project={project} index={project.id} />
                                 </Link>
                             )

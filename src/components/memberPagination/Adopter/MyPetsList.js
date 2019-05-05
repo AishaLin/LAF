@@ -8,6 +8,7 @@ import { Link, Redirect } from "react-router-dom";
 const MyPetsListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
+    margin-top: 15px;
 `;
 
 const EachPetContainer = styled.section`
@@ -15,7 +16,7 @@ const EachPetContainer = styled.section`
     margin: 0 15px 25px 15px;
     height: 350px;
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: hidden;
     position: relative;
     -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
@@ -29,7 +30,7 @@ const EachPetContainer = styled.section`
         width: 100%;
         line-height: 1.5;
         position: absolute;
-        bottom: 10px;
+        bottom: 20px;
     }
 `;
 

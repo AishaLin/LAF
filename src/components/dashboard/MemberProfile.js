@@ -35,11 +35,13 @@ const MemberInformation = styled.div`
         margin-top: 30px;
         .eachList_btn {
             flex-grow: 1;
-            border: 5px solid lightgrey;
             border-radius: 20px 20px 0 0;
             height: 60px;
             letter-spacing: 5px;
             font-size: 24px;
+            -webkit-box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
+            -moz-box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
+            box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
             :before {
                 content: '';
                 height: 100%;
@@ -52,8 +54,13 @@ const MemberInformation = styled.div`
         }
     }
     .dashboard {
-        border-top: 5px solid lightgrey;
-        padding: 45px 10px;
+        border-top: 5px solid #fff;
+        padding: 35px 20px;
+        background-color: #fff;
+        -webkit-box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
+        -moz-box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
+        box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
+        z-index: 10000;
     }
 `;
 
@@ -116,16 +123,22 @@ class MemberProfile extends Component {
         const { member } = this.state;
         if (!auth.uid) return <Redirect to='/authentication/signin' />
 
-        const mypetslist = { borderBottom: '5px solid lightgrey' }
-        const fosterlist = { borderBottom: '5px solid lightgrey' }
-        const closingcaselist = { borderBottom: '5px solid lightgrey' }
+        const mypetslist = { backgroundColor: 'lightgrey', color: 'grey', zIndex: '3' }
+        const fosterlist = { backgroundColor: 'lightgrey', color: 'grey', zIndex: '2' }
+        const closingcaselist = { backgroundColor: 'lightgrey', color: 'grey', zIndex: '1' }
         let page = location.hash.split("/")[2];
         if (page === 'mypetslist') {
-            mypetslist.borderBottom = 'none'
+            mypetslist.backgroundColor = '#fff'
+            mypetslist.color = 'rgb(23, 156, 154)'
+            mypetslist.zIndex = '5'
         } else if (page === 'fosterlist') {
-            fosterlist.borderBottom = 'none'
+            fosterlist.backgroundColor = '#fff'
+            fosterlist.color = 'rgb(23, 156, 154)'
+            fosterlist.zIndex = '5'
         } else if (page === 'closingcaselist') {
-            closingcaselist.borderBottom = 'none'
+            closingcaselist.backgroundColor = '#fff'
+            closingcaselist.color = 'rgb(23, 156, 154)'
+            closingcaselist.zIndex = '5'
         }
 
         if (member !== null) {

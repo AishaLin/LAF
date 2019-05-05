@@ -31,8 +31,13 @@ const DetailInformation = styled.section`
   padding: 10px;
     p {
       text-align: center;
-      line-height: 1.8;
+      line-height: 1.6;
       font-size: 20px;
+      width: fit-content;
+      margin: 5px auto 0 auto;
+      padding: 4px 2px 0 2px;
+      letter-spacing: 2px;
+      background: url('http://www.blogfuntw.com/wp-content/uploads/underline_yelbig.gif') repeat-x bottom;
     }
 `;
 

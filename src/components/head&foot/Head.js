@@ -43,9 +43,13 @@ const HeadContent = styled.div`
     line-height: 38px;
     font-size: 18px;
     color: #fff;
-    background-color: #c74b16;
+    background-color: rgb(199, 75, 22);
     transform: rotate(-90deg);
     z-index: 1000;
+    cursor: pointer;
+    :hover {
+      background-color: rgb(199, 75, 22, 0.9);
+    }
   }
   .mainNav {
     display: flex;

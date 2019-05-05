@@ -53,11 +53,15 @@ const Section_1 = styled.div`
         left: 15%;
         font-size: 60px;
         z-index:1;
+        text-shadow: 10px 10px 10px lightgray;
     }
     .colorfullCat_picture {
         position: absolute;
         top: 20vh;
         right: 15vw;
+        -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
     }
     .circleOutline_div {
         width: 450px;
@@ -73,13 +77,20 @@ const Section_1 = styled.div`
         font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
         height: 50px;
         width: 200px;
-        background-color: #907400;
+        background-color: rgb(144, 116, 0);
         z-index: 5;
         border-radius: 25px;
         color: #fff;
         font-size: 20px;
         letter-spacing: 5px;
         border: none;
+        -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        cursor: pointer;
+        :hover {
+            background-color: rgb(144, 116, 0, 0.9);
+        }
     }
 `;
 
@@ -113,6 +124,9 @@ const Section_2 = styled.div`
             background-position: top;
             background-repeat: no-repeat;
             background-size: cover;
+            -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+            -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+            box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
         }
         h3 {
             font-size: 32px;
