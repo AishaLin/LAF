@@ -18,7 +18,7 @@ const InputArea = styled.div`
         font-size: 1rem;
         }
         .confirmBtn {
-            font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
+            font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
             color: rgb(255, 255, 255);
             width: 100%;
             height: 40px;

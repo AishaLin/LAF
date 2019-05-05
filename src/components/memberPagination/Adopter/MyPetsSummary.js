@@ -26,7 +26,7 @@ const MyPetsSummaryContent = styled.div`
   }
 `;
 const DetailInformation = styled.section`
-  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
+  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
   text-align: left;
   padding: 10px;
     p {

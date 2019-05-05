@@ -69,7 +69,7 @@ const Container = styled.div`
 const Title = styled.div`
     color: gray;
     display: flex;
-    font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     font-weight: 500;
     font-size: 26px;
     padding: 30px 20px 45px 20px;
