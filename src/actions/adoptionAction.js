@@ -80,7 +80,7 @@ export const approveAffidavit = (affidavitData, projectID) => {
         const db = firebase.firestore();
         await db.collection('projects').doc(projectID).update({
             adoptionStage: 4,
-            adopterID: affidavitData.item.preAdopterStage3,
+            adopterID: affidavitData.item.adopterID,
             affidavitID: affidavitData.id,
             adopterName: affidavitData.item.adopterSignature,
             closeCaseAt: new Date()

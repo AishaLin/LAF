@@ -69,12 +69,12 @@ class SignUp extends Component {
                         <input type="password" id="password" onChange={this.handleChange} />
                     </div>
                     <div className="inputField">
-                        <label htmlFor="firstName">名字</label>
-                        <input type="text" id="firstName" onChange={this.handleChange} />
-                    </div>
-                    <div className="inputField">
                         <label htmlFor="lastName">姓氏</label>
                         <input type="text" id="lastName" onChange={this.handleChange} />
+                    </div>
+                    <div className="inputField">
+                        <label htmlFor="firstName">名字</label>
+                        <input type="text" id="firstName" onChange={this.handleChange} />
                     </div>
                     <div className="inputField">
                         <button className="confirmBtn">送出</button>

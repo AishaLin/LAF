@@ -2,6 +2,31 @@ import React from 'react';
 import firebase from "../../config/fbConfig"
 import styled from 'styled-components';
 
+const BouncingLoader = styled.div`
+    display: flex;
+    justify-content: center;
+    @keyframes bouncing-loader {
+        to {
+            opacity: 0.1;
+            transform: translate3d(0, -1rem, 0);
+        }
+    }
+    div {
+        width: 1rem;
+        height: 1rem;
+        margin: 3rem 0.2rem;
+        background: #8385aa;
+        border-radius: 50%;
+        animation: bouncing-loader 0.6s infinite alternate;
+    }
+    div:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    div:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+`;
+
 const ProjectSummaryContent = styled.div`
     background-color: #fff;
     border-radius: 10px;
@@ -60,34 +85,55 @@ const ProjectSummaryContent = styled.div`
                 font-size: 12px;
             }
         }
+        #sucssesHint {
+            position: absolute;
+            left: 15px;
+            bottom: 20px;
+            color: lightgray;
+            border: 1px solid lightgray;
+            font-size: 12px;
+            padding: 1px 2px;
+            border-radius: 2px;
+        }
     }
 `;
 
 const ProjectSummary = ({ project, index }) => {
     //時間
-    const detailtime = project.createdAt.toDate().toString().split(" ")
-    let time = "";
-    for (let i = 0; i < 5; i++) {
-        time = time + detailtime[i] + " "
-    }
-
-    return (
-        <ProjectSummaryContent>
-            <div className='imgContainer'>
-                <div className='projectPicture' style={{ backgroundImage: `url('${project.fileUrl}')` }}></div>
-            </div>
-            <div className='textContainer'>
-                <p className='category'>{project.publicationCategory}</p>
-                <p className='nickName'>{project.nickName.toUpperCase()}</p>
-                <p>{project.age}</p>
-                <p>{project.gender}</p>
-                <div className='authorPostTimeGroup'>
-                    <p className='authorPostTime'>Posted by {project.authorFirstName} {project.authorLastName}</p>
-                    <p className='authorPostTime'>{project.createdAt.toDate().toLocaleString()}</p>
+    // const detailtime = project.createdAt.toDate().toString().split(" ")
+    // let time = "";
+    // for (let i = 0; i < 5; i++) {
+    //     time = time + detailtime[i] + " "
+    // }
+    if(project.createdAt) {
+        return (
+            <ProjectSummaryContent>
+                <div className='imgContainer'>
+                    <div className='projectPicture' style={{ backgroundImage: `url('${project.fileUrl}')` }}></div>
                 </div>
-            </div>
-        </ProjectSummaryContent>
-    )
+                <div className='textContainer'>
+                    <p className='category'>{project.publicationCategory}</p>
+                    <p className='nickName'>{project.nickName.toUpperCase()}</p>
+                    <p>{project.age}</p>
+                    <p>{project.gender}</p>
+                    <div className='authorPostTimeGroup'>
+                        <p className='authorPostTime'>Posted by {project.authorLastName} {project.authorFirstName}</p>
+                        <p className='authorPostTime'>{project.createdAt.toDate().toLocaleString()}</p>
+                    </div>
+                    {project.adoptionStage === 4 && <p id='sucssesHint'>已媒合成功</p>}
+                </div>
+            </ProjectSummaryContent>
+        )
+    } else {
+        return (
+            <BouncingLoader>
+                <div></div>
+                <div></div>
+                <div></div>
+            </BouncingLoader>
+        )
+    }
+    
 }
 
 export default ProjectSummary;
