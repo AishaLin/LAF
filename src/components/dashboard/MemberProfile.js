@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import MyPetsList from '../memberPagination/Adopter/MyPetsList';
 import FosterList from '../memberPagination/Foster/FosterList';
 import ClosingCaseList from '../memberPagination/ClosingCase/ClosingCaseList';
+import clearRecord from '../../actions/clearRecordAction'
 
 const MemberInformation = styled.div`
     width: 80%;
@@ -20,6 +21,7 @@ const MemberInformation = styled.div`
     text-align: center;
     h1 {
         font-size: 32px;
+        margin-bottom: 25px;
     }
     .memberPhoto {
         width: 150px;
@@ -93,6 +95,9 @@ class MemberProfile extends Component {
             location.reload()
         }
     }
+    componentWillUnmount() {
+        this.props.dispatch(clearRecord());
+    }
     getMemberInformation = (userID) => {
         const db = firebase.firestore();
         db.collection('users').doc(userID).get()
@@ -129,9 +134,8 @@ class MemberProfile extends Component {
             return (
                 <HashRouter>
                     <MemberInformation>
-                        <section>
+                        {/* <section>
                             <h1>會員基本資訊</h1>
-                            <hr />
                             <div>
                                 <div className="memberPhoto"></div>
                                 <div className='memberBsicInformation'>
@@ -139,7 +143,7 @@ class MemberProfile extends Component {
                                     <p>{auth.email}</p>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
                         <div className='listBtns'>
                             <Link to='/memberprofile/mypetslist' className='eachList_btn first_btn' style={mypetslist}>領養清單</Link>
                             <Link to='/memberprofile/fosterlist' className='eachList_btn' style={fosterlist}>送養清單</Link>

@@ -27,6 +27,13 @@ const getProjectData = (state = initState, action) => {
                 ...state,
                 closingCaseList: action.closingCaseList
             };
+        case 'CLEAR_RECORD':
+            return {
+                fosterList: null,
+                fostermessage: null,
+                specificProject: null,
+                closingCaseList: null
+            }
         default:
             return state
     }

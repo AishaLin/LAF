@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import styled from 'styled-components';
 import firebase from "../../../config/fbConfig";
 import MyPetsSummary from './MyPetsSummary';
-import Affidavit_pdf from '../../adoption/Affidavit_pdf';
 import { Link, Redirect } from "react-router-dom";
 
 const MyPetsListContainer = styled.div`

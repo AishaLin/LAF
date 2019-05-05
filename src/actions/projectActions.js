@@ -27,7 +27,7 @@ export const createProject = (project) => {
                         dispatch({ type: 'CREATE_PROJECT', project });
                         window.location.hash = '/adoptionBoard';
                     }).catch((err) => {
-                        dispatcj({ type: 'CREATE_PROJECT_ERROR', err });
+                        dispatch({ type: 'CREATE_PROJECT_ERROR', err });
                         console.log("add errorrrrrr",err)
                     })
                 })

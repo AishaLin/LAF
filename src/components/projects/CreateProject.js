@@ -112,9 +112,34 @@ const CreateProjectContent = styled.div`
             .upLoadFileContainer {
                 width: 400px;
                 height: 400px;
+                min-width: 300px;
+                overflow: hidden;
                 border: 10px solid #fff;
                 border-radius: 10px;
-                margin-right: 20px;
+                margin: 0 20px 30px 0;
+                -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+                -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+                box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+                position: relative;
+                background-color: rgb(203, 203, 203, 0.3);
+                .projectPicture {
+                    width: 100%;
+                    height: 100%;
+                    min-width: 100%;
+                    min-height: 100%;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+                .uploadFile_btn {
+                    position: absolute;
+                    right: 20px;
+                    bottom: 20px;
+                    cursor: pointer;
+                    :hover {
+
+                    }               
+                }
             }
             .basicAndSimpleOptions {
                 flex-grow: 1;
@@ -213,7 +238,8 @@ class CreateProject extends Component {
         adoptionStage: 0,
         adopterID: '',
         coatColor: '',
-        feature: ''
+        feature: '',
+        preImg: ''
     }
     setSelectedData = (event, el) => {
         this.setState({
@@ -264,12 +290,19 @@ class CreateProject extends Component {
         this.setState({ file: e.target.files[0] }, () => this.setFileName())
     }
     setFileName = () => {
-        this.setState({ fileName: this.state.file.name + new Date().getTime() }, () => console.log(this.state.fileName))
+        this.setState({ fileName: this.state.file.name + new Date().getTime() }, () => this.previewFile())
+    }
+    previewFile = () => {
+        let reader = new FileReader();
+        reader.readAsDataURL(this.state.file);
+        reader.onload = (readerEvent) => {
+            this.setState({ preImg: readerEvent.target.result })
+        }
     }
 
     render() {
         const { auth } = this.props;
-        const options= {
+        const options = {
             size: ['大型', '中等', '小型'],
             publicationCategory: ['私人送養', '中途送養'],
             species: ['狗', '貓'],
@@ -304,7 +337,11 @@ class CreateProject extends Component {
                     </div>
                     <section className='section_1_imgAndBasic'>
                         <div className='upLoadFileContainer'>
-                            <UpLoadFile fileSelect={this.handleFileSelect} />
+                            <div className='projectPicture' style={{ backgroundImage: `url('${this.state.preImg}')` }}></div>
+                            <label className='uploadFile_btn' htmlFor="uploadFileInput">
+                                <UpLoadFile fileSelect={this.handleFileSelect} />
+                                <img src='../../src/public/camera.png' />
+                            </label>
                         </div>
                         <div className='basicAndSimpleOptions'>
                             <div className='basicInformation'>
@@ -515,7 +552,7 @@ class CreateProject extends Component {
                     </section>
 
                 </form>
-            </CreateProjectContent>
+            </CreateProjectContent >
         )
     }
 }

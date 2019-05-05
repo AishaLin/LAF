@@ -7,6 +7,27 @@ import Message from './Message';
 import { requestAffidavit } from "../../../actions/adoptionAction";
 import { Link } from "react-router-dom";
 
+const ClickForMoreBtn = styled.div` 
+    .pullOpen {
+        position: relative;
+        height: 30px; 
+        img {
+            position: absolute;
+            right: 0;
+            width: 28px;
+            cursor: pointer;
+            -webkit-transition: -webkit-transform .4s ease-in-out;
+            -ms-transition: -ms-transform .4s ease-in-out;
+            transition: transform .4s ease-in-out;  
+            :hover {
+                transform:rotate(90deg);
+                -ms-transform:rotate(90deg);
+                -webkit-transform:rotate(90deg);
+            }
+        }
+    }
+`;
+
 const MessageListContent = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -53,7 +74,8 @@ class MessageList extends Component {
     state = {
         preAdopter: '',
         project: '',
-        preAdopterName: ''
+        preAdopterName: '',
+        messageListOpen: false
     }
     componentDidMount() {
         this.props.dispatch(asyncGetProjectAll(this.props.auth.uid));
@@ -75,57 +97,67 @@ class MessageList extends Component {
     cancel = () => {
         this.props.cancelDeal(this.props.project)
     }
+    toggleMessageList = () => {
+        let menuState = !this.state.messageListOpen;
+        this.setState({
+            messageListOpen: menuState
+        });
+    }
     closingCase = () => {
 
     }
     render() {
         const { fostermessage, project } = this.props;
         const { item } = project;
+        let messageList;
+        if (this.state.messageListOpen) {
+            messageList = <MessageListContent>
+                {fostermessage && fostermessage.map((message, index) => {
+                    const { item } = message;
+                    if (item.project === project.id) {
+                        return (
+                            <Message className="ddd"
+                                sendPreAdopter={this.sendPreAdopter}
+                                message={message}
+                                project={project}
+                                index={message.id}
+                                key={message.id}
+                                clickcancel={this.cancel}
+                                preAdopter={this.state.preAdopter}
+                            />
+                        )
+                    }
+
+                })}
+                <hr />
+                {item.adoptionStage === 0 &&
+                    <div className='adoptionStatus'>
+                        <p>目前沒有收到領養通知</p>
+                    </div>
+                }
+                {item.adoptionStage === 1 &&
+                    <div className='adoptionStatus'>
+                        <button onClick={this.requestAffidavit}>送出通知</button>
+                    </div>
+                }
+            </MessageListContent>
+        } else {
+            messageList = "";
+        }
         if (fostermessage) {
             return (
-                <MessageListContent>
-                    {fostermessage && fostermessage.map((message, index) => {
-                        const { item } = message;
-                        if (item.project === project.id) {
-                            return (
-                                <Message className="ddd"
-                                    sendPreAdopter={this.sendPreAdopter}
-                                    message={message}
-                                    project={project}
-                                    index={message.id}
-                                    key={message.id}
-                                    clickcancel={this.cancel}
-                                />
-                            )
+                <ClickForMoreBtn>
+                    <div className='pullOpen'>
+                        {item.adoptionStage === 0 &&
+                            <img src='../../src/public/more_non.png' onClick={this.toggleMessageList} />
                         }
+                        {item.adoptionStage !== 0 &&
+                            <img src='../../src/public/more.png' onClick={this.toggleMessageList} />
+                        }
+                    </div>
+                    {messageList}
+                </ClickForMoreBtn>
 
-                    })}
-                    <hr/>
-                    {item.adoptionStage === 0 &&
-                        <div className='adoptionStatus'>
-                            <p>目前沒有收到領養通知</p>
-                        </div>
-                    }
-                    {item.adoptionStage === 1 &&
-                        <div className='adoptionStatus'>
-                            <p>確認領養人後，請由上方列表選取該領養人資訊，並點擊下方按鈕，通知領養人填寫切結書</p>
-                            <button onClick={this.requestAffidavit}>送出通知</button>
-                        </div>
-                    }
-                    {item.adoptionStage === 2 &&
-                        <div className='adoptionStatus'>
-                            <button>待{item.preAdopterName}回傳切結書</button>
-                        </div>
-                    }
-                    {item.adoptionStage === 3 &&
-                        <div className='adoptionStatus'>
-                            <p>{item.preAdopterName}已回傳切結書</p>
-                            <Link to={'/approve_affidavit' + `?project=${project.id}&foster=${this.props.auth.uid}&adopter=${project.preAdopter}`}>
-                                <button>查閱內容</button>
-                            </Link>
-                        </div>
-                    }
-                </MessageListContent>
             )
         } else {
             return (

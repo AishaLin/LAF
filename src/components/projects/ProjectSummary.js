@@ -17,7 +17,6 @@ const ProjectSummaryContent = styled.div`
     .imgContainer {
         width: 100%;
         overflow: hidden;
-
         .projectPicture {
             width: 100%;
             padding-bottom: 70%;

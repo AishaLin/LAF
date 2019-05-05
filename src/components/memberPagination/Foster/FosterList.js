@@ -10,10 +10,17 @@ import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const FosterListContent = styled.div`
     padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
     section {
         background-color: #fff;
+        border-radius: 5px;
         padding: 20px;
+        width: 100%;
         margin: 20px 0;
+        -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
+        -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
+        box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
     }
 `;
 
@@ -44,7 +51,7 @@ const BouncingLoader = styled.div`
 
 class FosterList extends Component {
     componentDidMount() {
-        if(this.props.auth.uid) {
+        if (this.props.auth.uid) {
             this.props.dispatch(asyncGetProjectAll(this.props.auth.uid));
         } else {
             location.reload();
@@ -53,7 +60,8 @@ class FosterList extends Component {
     cancelDeal = (project) => {
         this.props.dispatch(cancelPreAdopter(project));
     }
-    render() {console.log(this.props.auth)
+    render() {
+        console.log(this.props.auth)
         const { fosterProjects } = this.props;
         if (!this.props.auth.uid) return <Redirect to='/authentication/signin' />
         if (fosterProjects !== null) {
@@ -65,10 +73,7 @@ class FosterList extends Component {
                             return (
                                 //之後要連接近況更新頁
                                 <section key={project.id} >
-                                    <Link to={'/project/' + project.id} >
-                                        <FosterSummary project={project} index={project.id} />
-                                    </Link>
-                                    <hr />
+                                    <FosterSummary project={project} index={project.id} />
                                     <MessageList
                                         project={project}
                                         index={project.id}
@@ -109,26 +114,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, null)(FosterList);
-
-
-// import React, { Component } from "react";
-// import FosterSummary from './FosterSummary';
-// import { Link } from "react-router-dom";
-
-// const FosterList = ({ projects }) => {
-//     console.log("ccccc",projects)
-//     return (
-//         <div className="project-list section" style={{display: 'flex', flexWrap: 'wrap'}}>
-//             {projects && projects.map((project,index) => {
-//                 return (
-//                     <Link to={'/foster_project/' + project.id + `?index=${index}`} key={project.id} >
-//                         <FosterSummary project={project} index={index}/>
-//                     </Link>
-//                 )
-//             })}
-//             {projects === null && <p>～您目前沒有送養中的毛孩～</p>}
-//         </div>
-//     )
-// }
-
-// export default FosterList;

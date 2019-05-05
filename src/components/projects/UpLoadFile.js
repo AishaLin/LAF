@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
 class UpLoadFile extends React.Component {
-    
+
     render() {
         return (
-            <div>
-                <input id="uploadFileInput" type="file" accept="image/*" onChange={(e) => this.props.fileSelect(e)} />
-            </div>
+                <input id="uploadFileInput" type="file" accept="image/*" style={{display: 'none'}} onChange={(e) => this.props.fileSelect(e)} />
         )
     }
 }

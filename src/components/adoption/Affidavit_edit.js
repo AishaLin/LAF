@@ -5,12 +5,36 @@ import 'firebase/auth';
 import { asyncGetSpecificProjectAll } from '../../actions/getData/asyncGetSpecificProject';
 import { returnAffidavit } from '../../actions/adoptionAction';
 
+const MainContainer = styled.div`
+    .completed_btn {
+        width: fit-content;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        button {
+            margin: 20px auto 0 auto;
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgb(23, 156, 154);
+            color: #FFFFFF;
+            cursor: pointer;
+            :hover {
+                background-color: rgb(23, 156, 154, 0.85);
+            }
+        }
+    }
+`;
+
 const AffidavitContent = styled.div`
     overflow: scroll;
-    margin-top: 50px;
+    margin: 50px auto;
+    width: fit-content;
     .overContainer {
         width: 900px;
-        height: 1200px;
+        height: 1250px;
         background-color: #fff;
         margin: 20px;
         line-height: 1.7;
@@ -38,10 +62,13 @@ const AffidavitContent = styled.div`
         section {
             display: flex;
             .signature_field_1 {
-                width: 30%;
+                width: 40%;
             }
             .signature_field_2 {
-                width: 70%;
+                width: 60%;
+                input {
+                    width: 400px;
+                }
             }
         }
     }
@@ -51,11 +78,17 @@ const ProjectInformation = styled.div`
     border: 1px solid #000;
     display: flex;
     flex-wrap: wrap;
+    margin: 10px 0 15px 0;
     p,
     .card-remark,
     .remarkArea {
         border: 1px solid #000;
         padding: 8px;
+        textarea {
+            width: 100%;
+            height: 100%;
+            resize: none;
+        }
     }
     .table1 {
         width: 10%;
@@ -71,6 +104,32 @@ const ProjectInformation = styled.div`
         text-align: center;
     }
 `;
+
+const BouncingLoader = styled.div`
+    display: flex;
+    justify-content: center;
+    @keyframes bouncing-loader {
+        to {
+            opacity: 0.1;
+            transform: translate3d(0, -1rem, 0);
+        }
+    }
+    div {
+        width: 1rem;
+        height: 1rem;
+        margin: 3rem 0.2rem;
+        background: #8385aa;
+        border-radius: 50%;
+        animation: bouncing-loader 0.6s infinite alternate;
+    }
+    div:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    div:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+`;
+
 
 class Affidavit_edit extends Component {
     state = {
@@ -121,7 +180,7 @@ class Affidavit_edit extends Component {
             let month = m === "Jan" ? 1 : (m === "Feb" ? 2 : (m === "Mar" ? 3 : (m === "Apr" ? 4 : (m === "May" ? 5 : (m === "Jun" ? 6 : (m === "Jul" ? 7 : (m === "Aug" ? 8 : (m === "Sep" ? 9 : (m === "Oct" ? 10 : (m === "Nov" ? 11 : 12))))))))));
             let date = detailtime[2];
             return (
-                <div>
+                <MainContainer>
                     <AffidavitContent>
                         <div className='overContainer'>
                             <div className='title'>
@@ -130,16 +189,16 @@ class Affidavit_edit extends Component {
                             </div>
                             <p>茲向 {specificProject.authorLastName}{specificProject.authorFirstName} 認養動物乙隻，詳細資料如下：</p>
                             <ProjectInformation>
-                                <p className="card-nickName table1">動物名</p><p className="table_a">{specificProject.nickName}</p>
-                                <p className="card-species table1">品種</p><p className="table_b">{specificProject.species}／{specificProject.variety}</p>
-                                <p className="card-gender table1">性別</p><p className="table_a">{specificProject.gender}</p>
-                                <p className="card-coatColor table1">毛色</p><p className="table_b">{specificProject.coatColor}</p>
-                                <p className="card-size table1">體型</p><p className="table_a">{specificProject.size}</p>
-                                <p className="card-age table1">年齡</p><p className="table_b">{specificProject.age}</p>
-                                <p className="card-feature table1">特徵</p><p className="table_a">{specificProject.feature}</p>
+                                <p className="table1">動物名</p><p className="table_a">{specificProject.nickName}</p>
+                                <p className="table1">品種</p><p className="table_b">{specificProject.species}／{specificProject.variety}</p>
+                                <p className="table1">性別</p><p className="table_a">{specificProject.gender}</p>
+                                <p className="table1">毛色</p><p className="table_b">{specificProject.coatColor}</p>
+                                <p className="table1">體型</p><p className="table_a">{specificProject.size}</p>
+                                <p className="table1">年齡</p><p className="table_b">{specificProject.age}</p>
+                                <p className="table1">特徵</p><p className="table_a">{specificProject.feature}</p>
                                 <div className="card-remark table1">備註</div>
                                 <div className="table_b remarkArea" >
-                                    <input type="text" id="remark" onChange={this.handleChange} />
+                                    <textarea type="text" id="remark" onChange={this.handleChange} />
                                 </div>
                             </ProjectInformation>
                             <p>本人願遵守以下約定：</p>
@@ -192,7 +251,7 @@ class Affidavit_edit extends Component {
                             <br />
                             <div>認養人簽署日期 中 華 民 國 {year} 年 {month} 月 {date} 日</div>
                             <hr />
-                            <div style={{color: 'lightGrey'}}>以下欄位由送養人簽閱</div>
+                            <div style={{ color: 'lightGrey' }}>以下欄位由送養人簽閱</div>
                             <section>
                                 <div className='signature_field_1'>
                                     <div>送養人（簽名）：</div>
@@ -208,13 +267,21 @@ class Affidavit_edit extends Component {
                             <div>送養人簽署日期 中 華 民 國 &nbsp;&nbsp;&nbsp;&nbsp; 年 &nbsp;&nbsp;&nbsp; 月 &nbsp;&nbsp;&nbsp; 日</div>
                         </div>
                     </AffidavitContent>
-                    <p>務必仔細閱讀切結書內容，簽署後點擊下方按鈕確認送出</p>
-                    <button onClick={this.checkCompleted}>我已仔細閱讀，並願意遵守約定</button>
-                </div>
+                    <div className='completed_btn'>
+                        <p>務必仔細閱讀切結書內容，簽署後點擊下方按鈕確認送出</p>
+                        <button onClick={this.checkCompleted}>我已仔細閱讀，並願意遵守約定</button>
+                    </div>
+                </MainContainer>
             )
         }
         else {
-            return <p>loading..</p>
+            return (
+                <BouncingLoader>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </BouncingLoader>
+            )
         }
 
     }

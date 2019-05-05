@@ -76,6 +76,19 @@ const ProjectDetailContainer = styled.section`
       }
     }
     .sendMessage_btn {
+      .successHint {
+        width: 30vw;
+        min-width: 300px;
+        height: fit-content;
+        letter-spacing: 2px;
+        border-radius: 3px;
+        margin: 30px 0 10px 0;
+        font-size: 20px;
+        border: none;
+        color: rgb(23, 156, 154);
+        padding: 10px;
+        line-height: 1.5;
+      }
       button {
         width: 30vw;
         min-width: 300px;
@@ -102,12 +115,15 @@ const DetailInformation = styled.section`
   text-align: left;
   margin-top: 0;
   margin-left: 40px;
-    p {
+    .item {
       line-height: 1.8;
+      display: flex;
     }
-    span {
+    .mark {
       color: #FCC802;
       margin: 0 10px;
+      width: 30px;
+      min-width: 30px;
     }
 `;
 const BouncingLoader = styled.div`
@@ -158,7 +174,7 @@ class ProjectDetails extends Component {
       // if (!auth.uid) return <Redirect to='/signin' />
       return (
         <ProjectDetailContainer>
-          {this.state.messagePopup ? <AdoptionMessage  togglePopup={ this.togglePopup.bind(this) } project= {project} /> : null}
+          {this.state.messagePopup ? <AdoptionMessage togglePopup={this.togglePopup.bind(this)} project={project} /> : null}
           <div className='ProjectDetail'>
             <div className='ProjectDetail_WithoutBtn'>
               <div className='imgContainer'>
@@ -177,26 +193,29 @@ class ProjectDetails extends Component {
                 </div>
               </div>
               <DetailInformation>
-                <p><span>✱</span>種類：{project.species}</p>
-                <p><span>✱</span>體型：{project.size}</p>
-                <p><span>✱</span>體重：{project.weight}</p>
-                <p><span>✱</span>品種：{project.variety}</p>
-                <p><span>✱</span>晶片：{project.microchipsNumber}</p>
-                <p><span>✱</span>目前所在地：{project.currentLocation}</p>
-                <p><span>✱</span>個性：{project.character}</p>
-                <p><span>✱</span>結紮狀況：{project.ligation}</p>
-                <p><span>✱</span>健康狀況：{project.physicalCondition}</p>
-                <p><span>✱</span>送養原因：{project.reason}</p>
-                <p><span>✱</span>認養條件：{project.requirement}</p>
-                <p><span>✱</span>聯絡方式：{project.connectMethods}</p>
+                <div className='item'><div className='mark' >✱</div><div>種類：{project.species}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>體型：{project.size}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>體重：{project.weight}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>品種：{project.variety}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>晶片：{project.microchipsNumber}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>目前所在地：{project.currentLocation}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>個性：{project.character}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>結紮狀況：{project.ligation}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>健康狀況：{project.physicalCondition}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>送養原因：{project.reason}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>認養條件：{project.requirement}</div></div>
+                <div className='item'><div className='mark' >✱</div><div>聯絡方式：{project.connectMethods}</div></div>
                 <div className='sendMessage_btn'>
                   {project.adoptionStage !== 4 && <button onClick={this.togglePopup}>與送養人聯繫</button>}
-                  {project.adoptionStage === 4 && <p>恭喜 {project.nickName} 已經找到他的長期飯票了！</p>}
+                  {project.adoptionStage === 4 && <p className='successHint'>恭喜 {project.nickName} 找到他的長期飯票了！</p>}
                 </div>
               </DetailInformation>
             </div>
           </div>
           {project.adoptionStage === 4 && project.adopterID === auth.uid &&
+            <Affidavit_pdf project={project} />
+          }
+          {project.adoptionStage === 4 && project.authorID === auth.uid &&
             <Affidavit_pdf project={project} />
           }
         </ProjectDetailContainer>

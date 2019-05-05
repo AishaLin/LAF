@@ -5,9 +5,33 @@ import firebase from "../../config/fbConfig"
 import { asyncGetSpecificProjectAll } from '../../actions/getData/asyncGetSpecificProject';
 import { approveAffidavit } from '../../actions/adoptionAction';
 
+const MainContainer = styled.div`
+    .completed_btn {
+        width: fit-content;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        button {
+            margin: 20px auto 0 auto;
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgb(23, 156, 154);
+            color: #FFFFFF;
+            cursor: pointer;
+            :hover {
+                background-color: rgb(23, 156, 154, 0.85);
+            }
+        }
+    }
+`;
+
 const AffidavitContent = styled.div`
     overflow: scroll;
-    margin-top: 50px;
+    margin: 50px auto;
+    width: fit-content;
     .overContainer {
         width: 900px;
         height: 1200px;
@@ -38,10 +62,13 @@ const AffidavitContent = styled.div`
         section {
             display: flex;
             .signature_field_1 {
-                width: 30%;
+                width: 40%;
             }
             .signature_field_2 {
-                width: 70%;
+                width: 60%;
+                input {
+                    width: 400px;
+                }
             }
         }
     }
@@ -64,6 +91,31 @@ const ProjectInformation = styled.div`
     }
     .table_b {
         width: 55%;
+    }
+`;
+
+const BouncingLoader = styled.div`
+    display: flex;
+    justify-content: center;
+    @keyframes bouncing-loader {
+        to {
+            opacity: 0.1;
+            transform: translate3d(0, -1rem, 0);
+        }
+    }
+    div {
+        width: 1rem;
+        height: 1rem;
+        margin: 3rem 0.2rem;
+        background: #8385aa;
+        border-radius: 50%;
+        animation: bouncing-loader 0.6s infinite alternate;
+    }
+    div:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    div:nth-child(3) {
+        animation-delay: 0.4s;
     }
 `;
 
@@ -129,7 +181,7 @@ class Affidavit_approve extends Component {
             let month = m === "Jan" ? 1 : (m === "Feb" ? 2 : (m === "Mar" ? 3 : (m === "Apr" ? 4 : (m === "May" ? 5 : (m === "Jun" ? 6 : (m === "Jul" ? 7 : (m === "Aug" ? 8 : (m === "Sep" ? 9 : (m === "Oct" ? 10 : (m === "Nov" ? 11 : 12))))))))));
             let date = detailtime[2];
             return (
-                <div>
+                <MainContainer>
                     <AffidavitContent>
                         <div className='overContainer'>
                             <div className='title'>
@@ -207,13 +259,21 @@ class Affidavit_approve extends Component {
                             <div>送養人簽署日期 中 華 民 國 {year} 年 {month} 月 {date} 日</div>
                         </div>
                     </AffidavitContent>
-                    <p>務必仔細閱讀切結書內容，簽署後點擊下方按鈕，就完成送養／領養手續摟！</p>
-                    <button onClick={this.checkCompleted}>確認送出</button>
-                </div>
+                    <div className='completed_btn'>
+                        <p>務必仔細閱讀切結書內容，簽署後點擊下方按鈕，就完成送養／領養手續摟！</p>
+                        <button onClick={this.checkCompleted}>確認送出</button>
+                    </div>
+                </MainContainer>
             )
         }
         else {
-            return <p>loading..</p>
+            return (
+                <BouncingLoader>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </BouncingLoader>
+            )
         }
 
     }
