@@ -52,10 +52,8 @@ const MemberInformation = styled.div`
         }
     }
     .dashboard {
-        border: 5px solid lightgrey;
-        border-radius: 0 0 10px 10px;
-        border-top: none;
-        padding: 35px 20px;
+        border-top: 5px solid lightgrey;
+        padding: 45px 10px;
     }
 `;
 

@@ -11,23 +11,25 @@ const MyPetsListContainer = styled.div`
 `;
 
 const EachPetContainer = styled.section`
-    width: 50%;
-    height: 320px;
-    display: flex;
-    justify-content: center;
-    
-    .secondContainer {
-       width: 95%;
-       height: 90%;
-       background-color: #fff;
-       padding: 20px;
+    width: calc((100% - 120px)/4);
+    margin: 0 15px 25px 15px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+    -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in;
+    :hover {
+        transform: translate(-2px, -2px);
     }
-    button {
-        height: 16%;
+    .adoptionStage {
         width: 100%;
-        margin-top: 10px;
-        background-color: #FCE196;
-        border-radius: 10px;
+        line-height: 1.5;
+        position: absolute;
+        bottom: 10px;
     }
 `;
 
@@ -105,27 +107,25 @@ class MyPetsList extends Component {
                             const { item } = project
                             return (
                                 <EachPetContainer key={project.id} >
-                                    <div className='secondContainer'>
                                         <Link to={'/project/' + project.id} >
                                             <MyPetsSummary project={project} index={project.id} />
                                         </Link>
                                         {item.adoptionStage === 1 && item.preAdopter !== this.props.auth.uid &&
-                                            <button>請與送養人聯繫接洽</button>
+                                            <p className='adoptionStage'>請與送養人聯繫接洽</p>
                                         }
                                         {item.adoptionStage === 2 && item.preAdopter === this.props.auth.uid &&
-                                            <button>
+                                            <p className='adoptionStage'>送養人已發出簽署切結書邀請
                                                 <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
-                                                    送養人已發出簽署切結書邀請，請點我查閱切結書內容
+                                                    查閱切結書內容
                                                 </Link>
-                                            </button>
+                                            </p>
                                         }
                                         {item.adoptionStage === 3 && item.preAdopterStage3 === auth.uid &&
-                                            <button>待送養人簽署並回傳切結書後，就完成領養手續了！</button>
+                                            <p className='adoptionStage'>待送養人簽署並回傳切結書後，就完成領養手續了！</p>
                                         }
                                         {item.adoptionStage === 4 &&
-                                            <button>與原飼主分享近況</button>
+                                            <p className='adoptionStage' style={{color:'rgb(23, 156, 154)'}}>定期與原飼主分享近況</p>
                                         }
-                                    </div>
                                 </EachPetContainer>
                             )
                         })}

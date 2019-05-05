@@ -9,16 +9,17 @@ import { Link } from "react-router-dom";
 
 const ClickForMoreBtn = styled.div` 
     .pullOpen {
-        position: relative;
-        height: 30px; 
+        display: flex;
+        justify-content: flex-end;
+        height: 60px; 
         img {
-            position: absolute;
-            right: 0;
             width: 28px;
+            height: 28px;
+            margin: auto 0;
             cursor: pointer;
-            -webkit-transition: -webkit-transform .4s ease-in-out;
-            -ms-transition: -ms-transform .4s ease-in-out;
-            transition: transform .4s ease-in-out;  
+            -webkit-transition: -webkit-transform .3s ease-in-out;
+            -ms-transition: -ms-transform .3s ease-in-out;
+            transition: transform .3s ease-in-out;  
             :hover {
                 transform:rotate(90deg);
                 -ms-transform:rotate(90deg);
@@ -35,12 +36,25 @@ const MessageListContent = styled.div`
         display: flex;
         width: 100%;
         padding: 5px;
+        justify-content: flex-end;
         p {
-            flex-grow: 1;
-            text-align: left;
+            text-align: right;
         }
         button {
-            min-width: 100px;
+            padding: 10px 20px;
+            min-width: fit-content;
+            border-radius: 5px;
+            font-size: 16px;
+            letter-spacing: 3px;
+            background-color: rgb(23, 156, 154);
+            border: none;
+            color: #FFFFFF;
+            :hover {
+                background-color: rgb(23, 156, 154, 0.85);
+            }
+            :active {
+                transform: translate(2px, 3px);
+            }
         }
     }
 `;

@@ -5,26 +5,34 @@ import Affidavit_pdf from "../../adoption/Affidavit_pdf";
 
 const MyPetsSummaryContent = styled.div`
   display: flex;
-  background-color: #fff;
-  height: 100%;
+  flex-direction: column;
+  color: rgb(57, 61, 82);
   .imgContainer {
-    height: 200px;
-    width: 200px;
-    img {
-      height: auto;
-      width: auto;
-      max-height: 100%;
-      max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: grey;
+    .projectPicture {
+      width: 100%;
+      padding-bottom: 80%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transform: scale(1, 1);
+      transition: all 0.6s ease-out;
+      :hover {
+          transform: scale(1.1, 1.1);
+      }
     }
   }
 `;
 const DetailInformation = styled.section`
   font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
-  margin-top: 0;
-  margin-left: 20px;
+  padding: 10px;
     p {
+      text-align: center;
       line-height: 1.8;
+      font-size: 20px;
     }
 `;
 
@@ -41,15 +49,10 @@ const MyPetsSummary = ({ project, index }) => {
   return (
     <MyPetsSummaryContent>
       <div className="imgContainer">
-        <img src={item.fileUrl} index={index} />
+        <div className='projectPicture' style={{ backgroundImage: `url('${item.fileUrl}')` }}></div>
       </div>
       <DetailInformation>
-        <p>小名：{item.nickName}</p>
-        <p>種類：{item.species}</p>
-        <p>性別：{item.gender}</p>
-        <p>年齡：{item.age}</p>
-        <p>品種：{item.variety}</p>
-        <p>晶片：{item.microchipsNumber}</p>
+        <p>{item.nickName}</p>
       </DetailInformation>
     </MyPetsSummaryContent>
   )

@@ -11,14 +11,16 @@ const MessageContainer = styled.div`
         padding: 5px;
         width: 100%;
         margin: 2px 0;
+        background-color: rgb(203, 203, 203, 0.1);
+        border-radius: 3px;
         .selected {
             border: 3px solid black;
         }
         :hover {
-            background-color: rgb(232, 231, 226, 0.4);
+            background-color: rgb(232, 231, 226);
         }
         :active {
-            background-color: rgb(232, 231, 226);
+            background-color: rgb(232, 231, 226, 0.4);
         }
         .messageInformation {
             display: flex;
@@ -27,7 +29,7 @@ const MessageContainer = styled.div`
             .contactMethods {
                 display: flex;
                 flex-wrap: wrap;
-                width: calc(100% - 340px);
+                width: calc(100% - 300px);
             }
             p {
                 width: 200px;
@@ -42,7 +44,17 @@ const MessageContainer = styled.div`
             }
         }
         .button {
-            min-width: 50px;
+            min-width: fit-content;
+            button {
+                cursor: pointer;
+                border-width: 0;
+                background-color: none;
+                color: rgb(194, 193, 189);
+                background-color: transparent;
+                :hover {
+                    color: red;
+                }
+            }
         }
     }
     .nonSelected {
@@ -50,7 +62,6 @@ const MessageContainer = styled.div`
     }
     .selectedColor {
         background-color: rgb(232, 231, 226);
-        border-radius: 3px;
     }
 `;
 
@@ -62,17 +73,25 @@ class Message extends Component {
         preAdopterName: this.props.message.item.requesterLastName + this.props.message.item.requesterFirstName
     }
     clickHandeler = (e) => {
-        document.querySelectorAll('.eachRequester').forEach(el => {
-            el.classList.remove('selectedColor')
+        this.clearSelectedColor().then(() => {
+            if (this.props.project.item.adoptionStage === 1) {
+                this.setState({
+                    preAdopter: this.props.message.item.requester
+                }, () => this.selectPreAdopter());
+                console.log("this.state", this.state)
+            } else {
+                return
+            }
         })
-        if (this.props.project.item.adoptionStage === 1) {
-            this.setState({
-                preAdopter: this.props.message.item.requester
-            }, () => this.selectPreAdopter());
-            console.log("this.state", this.state)
-        } else {
-            return
-        }
+        e.currentTarget.classList.add('selectedColor');
+    }
+    clearSelectedColor = () => {
+        return new Promise((resolve, reject) => {
+            document.querySelectorAll('.eachRequester').forEach(el => {
+                el.classList.remove('selectedColor')
+            })
+            resolve();
+        })
     }
     selectPreAdopter = () => {
         this.props.sendPreAdopter(this.state);
@@ -89,8 +108,8 @@ class Message extends Component {
         console.log('this.props.preAdopter', this.props.preAdopter)
         return (
             <MessageContainer >
-                <div className={`eachRequester ${requester === this.props.preAdopter ? 'selectedColor' : null}`} data-selected='adopter' onClick={(e) => this.clickHandeler(e)} >
-                    <div className={`messageInformation ${adoptionStage !== 1 && preAdopter !== '' && preAdopter !== requester ? 'nonSelected' : null}`}>
+                <div className='eachRequester' data-selected='adopter' onClick={(e) => this.clickHandeler(e)}>
+                    <div className={`messageInformation ${adoptionStage !== 1 && preAdopter !== '' && preAdopter !== requester ? 'nonSelected' : null}`} >
                         <div className='contactMethods'>
                             <p className="requesterName">欲領養人：{requesterLastName}{requesterFirstName}</p>
                             {phoneNumber !== "" && <p >電話：{phoneNumber}</p>}
@@ -98,7 +117,7 @@ class Message extends Component {
                             {lineID !== "" && <p>Line ID：{lineID}</p>}
                             {facebook !== "" && <p>Facebook：{facebook}</p>}
                         </div>
-                        <p className="requestTime">{createdAt.toDate().toLocaleString()}</p>
+                        <p className="requestTime" >{createdAt.toDate().toLocaleString()}</p>
                     </div>
                     <div className='button'>
                         {adoptionStage === 2 && preAdopter === requester &&

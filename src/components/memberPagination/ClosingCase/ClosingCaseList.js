@@ -10,9 +10,20 @@ const ClosingCaseListContainer = styled.section`
     display: flex;
     flex-wrap: wrap;
     .eachCaseContainer {
-        width: 50%;
-        height: 320px;
-        justify-content: center;
+        width: calc((100% - 120px)/4);
+        margin: 0 15px 25px 15px;
+        height: 350px;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+        -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+        box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease-in;
+        :hover {
+            transform: translate(-2px, -2px);
+        }
         .eachCase {
             width: 95%;
             height: 90%;
@@ -66,11 +77,9 @@ class ClosingCaseList extends Component {
                         {closingCaseList && closingCaseList.map((project) => {
                             const { item } = project;
                             return (
-                                <div key={project.id} className="eachCaseContainer">
-                                    <Link to={'/project/' + project.id} className='eachCase'>
-                                        <ClosingCase project={project} index={project.id} />
-                                    </Link>
-                                </div>
+                                <Link to={'/project/' + project.id} className='eachCaseContainer'>
+                                    <ClosingCase project={project} index={project.id} />
+                                </Link>
                             )
                         })}
                     </ClosingCaseListContainer>

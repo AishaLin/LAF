@@ -12,8 +12,8 @@ const ProjectSummaryContent = styled.div`
     width: 100%;
     transition: transform 0.3s ease-in;
     :hover {
-            transform: translate(-2px, -2px);
-        }
+        transform: translate(-2px, -2px);
+    }
     .imgContainer {
         width: 100%;
         overflow: hidden;

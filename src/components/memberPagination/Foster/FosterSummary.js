@@ -29,6 +29,7 @@ const FosterSummaryContent = styled.div`
         position: relative;
         .projectBasicInformation {
             position: relative;
+            font-size: 18px;
             .postedTime {
                 position: absolute;
                 top: 0;
@@ -39,6 +40,16 @@ const FosterSummaryContent = styled.div`
         .adoptionStatus {
             position: absolute;
             bottom: 0;
+            display: flex;
+            width: 100%;
+            div {
+                flex-grow: 1;
+            }
+            span {
+                background-color: rgb(252, 225, 150, 0.4);
+                padding: 1px 2px;
+                border-radius: 3px;
+            }
         }
     }
 `;
@@ -70,7 +81,7 @@ const FosterSummary = ({ project, index }) => {
                     </div>
                     {item.adoptionStage === 0 &&
                         <div className='adoptionStatus'>
-                            <p>目前沒有收到領養通知</p>
+                            <p style={{color: '#9397AA'}}>目前沒有收到領養通知</p>
                         </div>
                     }
                     {item.adoptionStage === 1 &&
@@ -85,7 +96,7 @@ const FosterSummary = ({ project, index }) => {
                     }
                     {item.adoptionStage === 3 &&
                         <div className='adoptionStatus'>
-                            <p><span>{item.preAdopterName}</span> 已回傳切結書</p>
+                            <div><span>{item.preAdopterName}</span> 已回傳切結書</div>
                             <Link to={'/approve_affidavit' + `?project=${project.id}&foster=${project.authorID}&adopter=${project.preAdopter}`}>
                                 <button>查閱內容</button>
                             </Link>

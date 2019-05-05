@@ -9,7 +9,6 @@ import { Link, Redirect } from "react-router-dom";
 import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const FosterListContent = styled.div`
-    padding: 20px;
     display: flex;
     flex-wrap: wrap;
     section {
