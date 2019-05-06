@@ -79,8 +79,8 @@ textarea.materialize-textarea:focus:not([readonly]) {
   border-color: hsl(211, 94%, 62%);
   box-shadow: none;
 }
-/* 
-h6 {
-  background-color: rgb(199, 75, 22);
 
-} */
+h6 {
+  background-color: rgb(160, 157, 157);
+
+}

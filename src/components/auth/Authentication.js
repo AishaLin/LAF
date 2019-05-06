@@ -31,34 +31,35 @@ const Combine = styled.div`
 `;
 
 const Back = styled.div`
-    -webkit-box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
-    -moz-box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
-    box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
-    height: 30px;
+    -webkit-box-shadow: 6px 11px 30px -4px rgba(102,100,102,0.2);
+    -moz-box-shadow: 6px 11px 30px -4px rgba(102,100,102,0.2);
+    box-shadow: 6px 11px 30px -4px rgba(102,100,102,0.2);
+    height: 40px;
     width: 100px;
     margin: auto;
     border-radius: 2px;
-    background-color: #ec407a;
+    background-color: rgb(160, 160, 160, 0.9);
     position: absolute;
     top: 38px;
-    right: -15px;
-    transform: skewX(-15deg);
+    right: -8px;
+    transform: skewX(-5deg);
     :hover {
-        right: -25px;
+        right: -15px;
         transition: 0.2s;
+        background-color: grey;
     }
     div {
         text-align: center;
         color: rgba(255, 255, 255);
         font-size: 16px;
-        margin-top: 6px;
+        line-height: 40px;
     }
 `;
 
 const Container = styled.div`
-    -webkit-box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
-    -moz-box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
-    box-shadow: 6px 11px 30px -4px rgba(102,100,102,1);
+    -webkit-box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
+    -moz-box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
+    box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
     height: fit-content;
     width: 100%;
     margin: auto;

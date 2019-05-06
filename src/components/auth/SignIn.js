@@ -15,9 +15,18 @@ const InputArea = styled.div`
     }
     .inputField {
         margin: 10px 0;
+        display: flex;
+        flex-direction: column;
         label {
         color: #9e9e9e;
         font-size: 1rem;
+        }
+        input {
+            outline: none;
+            border: none;
+            border-bottom: 1px solid lightgrey;
+            height: 40px;
+            font-size: 16px;
         }
         .confirmBtn {
             font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
@@ -27,6 +36,8 @@ const InputArea = styled.div`
             border-radius: 18px;
             background-color: hsl(211, 94%, 62%);
             margin-top: 40px;
+            font-size: 18px;
+            letter-spacing: 3px;
             cursor: pointer;
             :hover {
                 background-color: hsl(211, 93%, 55%);
