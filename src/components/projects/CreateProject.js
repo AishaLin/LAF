@@ -7,6 +7,7 @@ import firebase from "../../config/fbConfig"
 import { Redirect } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import UpLoadFile from './UpLoadFile';
+let camera = require('../../public/camera.png')
 
 const CreateProjectContent = styled.div`
     font-size: 18px;
@@ -215,6 +216,31 @@ const CreateProjectContent = styled.div`
         }
     }
 `;
+const BouncingLoader = styled.div`
+    display: flex;
+    justify-content: center;
+    @keyframes bouncing-loader {
+        to {
+            opacity: 0.1;
+            transform: translate3d(0, -1rem, 0);
+        }
+    }
+    div {
+        width: 1rem;
+        height: 1rem;
+        margin: 3rem 0.2rem;
+        background: #8385aa;
+        border-radius: 50%;
+        animation: bouncing-loader 0.6s infinite alternate;
+    }
+    div:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    div:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+`;
+
 
 class CreateProject extends Component {
     state = {
@@ -239,7 +265,8 @@ class CreateProject extends Component {
         adopterID: '',
         coatColor: '',
         feature: '',
-        preImg: ''
+        preImg: '',
+        isLoading: false
     }
     setSelectedData = (event, el) => {
         this.setState({
@@ -283,7 +310,9 @@ class CreateProject extends Component {
         if (!this.state.fileName) {
             return alert('請上傳一張照片')
         } else {
-            this.props.dispatch(createProject(this.state));
+            this.setState({
+                isLoading: true
+            }, () => this.props.dispatch(createProject(this.state)))
         }
     }
     handleFileSelect = (e) => {
@@ -313,154 +342,19 @@ class CreateProject extends Component {
             ligation: ['已結紮', '尚未結紮'],
         };
         if (!auth.uid) return <Redirect to='/authentication/signin' />
-        return (
-            <CreateProjectContent>
-                <form className='creatForm' onSubmit={this.handleSubmit}>
-                    <div className="input-field">
-                        <label className='title' htmlFor="publicationCategory">請選擇刊登類別</label>
-                        <div className='list'>
-                            {
-                                options.publicationCategory.map((el, index) => {
-                                    return (
-                                        <div
-                                            className={`eachOption ${this.state.publicationCategory === el ? 'category_select' : null}`}
-                                            data-item='publicationCategory'
-                                            key={index}
-                                            onClick={(event) => this.setSelectedData(event, el)}
-                                        >
-                                            {el}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                    <section className='section_1_imgAndBasic'>
-                        <div className='upLoadFileContainer'>
-                            <div className='projectPicture' style={{ backgroundImage: `url('${this.state.preImg}')` }}></div>
-                            <label className='uploadFile_btn' htmlFor="uploadFileInput">
-                                <UpLoadFile fileSelect={this.handleFileSelect} />
-                                <img src='../../src/public/camera.png' />
-                            </label>
-                        </div>
-                        <div className='basicAndSimpleOptions'>
-                            <div className='basicInformation'>
-                                <div className='secondContainer'>
-                                    <div className="input-field">
-                                        <label className='title' htmlFor="nickName">小名</label>
-                                        <input type="text" id="nickName" className="simple_input" onChange={this.handleChange} />
-                                    </div>
-                                    <div className="input-field">
-                                        <label className='title' htmlFor="microchipsNumber">晶片</label>
-                                        <input type="text" id="microchipsNumber" className="simple_input" onChange={this.handleChange} />
-                                    </div>
-                                </div>
-                                <div className='secondContainer'>
-                                    <div className="input-field">
-                                        <label className='title' htmlFor="coatColor">毛色</label>
-                                        <input type="text" id="coatColor" className="simple_input" onChange={this.handleChange} />
-                                    </div>
-                                    <div className="input-field">
-                                        <label className='title' htmlFor="variety">品種</label>
-                                        <input type="text" id="variety" className="simple_input" onChange={this.handleChange} />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='simple_options_container'>
-                                <div className='simple_options'>
-                                    <div className="input-field  options_2" id="species">
-                                        <label className='title' htmlFor="species">種類</label>
-                                        <div className='list'>
-                                            {
-                                                options.species.map((el, index) => {
-                                                    return (
-                                                        <div
-                                                            className={`eachOption hoveryellow ${this.state.species === el ? 'options_2_select' : null}`}
-                                                            data-item='species'
-                                                            key={index}
-                                                            onClick={(event) => this.setSelectedSpecies(event, el)}
-                                                        >
-                                                            {el}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="input-field options_2">
-                                        <label className='title' htmlFor="ligation">結紮狀況</label>
-                                        <div className='list'>
-                                            {
-                                                options.ligation.map((el, index) => {
-                                                    return (
-                                                        <div
-                                                            className={`eachOption hoveryellow ${this.state.ligation === el ? 'options_2_select' : null}`}
-                                                            data-item='ligation'
-                                                            key={index}
-                                                            onClick={(event) => this.setSelectedData(event, el)}
-                                                        >
-                                                            {el}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='simple_options'>
-                                    <div className="input-field options_2">
-                                        <label className='title' htmlFor="gender">性別</label>
-                                        <div className='list'>
-                                            {
-                                                options.gender.map((el, index) => {
-                                                    return (
-                                                        <div
-                                                            className={`eachOption hoveryellow ${this.state.gender === el ? 'options_2_select' : null}`}
-                                                            data-item='gender'
-                                                            key={index}
-                                                            onClick={(event) => this.setSelectedData(event, el)}
-                                                        >
-                                                            {el}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="input-field options_2">
-                                        <label className='title' htmlFor="size">體型</label>
-                                        <div className='list'>
-                                            {
-                                                options.size.map((el, index) => {
-                                                    return (
-                                                        <div
-                                                            className={`eachOption hoveryellow ${this.state.size === el ? 'options_2_select' : null}`}
-                                                            data-item='size'
-                                                            key={index}
-                                                            onClick={(event) => this.setSelectedData(event, el)}
-                                                        >
-                                                            {el}
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className='section_2_options'>
-                        <div className="input-field options_6">
-                            <label className='title' htmlFor="age">年齡</label>
+        if (auth.uid && !this.state.isLoading) {
+            return (
+                <CreateProjectContent>
+                    <form className='creatForm' onSubmit={this.handleSubmit}>
+                        <div className="input-field">
+                            <label className='title' htmlFor="publicationCategory">請選擇刊登類別</label>
                             <div className='list'>
                                 {
-                                    options.age.map((el, index) => {
+                                    options.publicationCategory.map((el, index) => {
                                         return (
                                             <div
-                                                className={`eachOption hovergreen ${this.state.age === el ? 'options_6_select' : null}`}
-                                                data-item='age'
+                                                className={`eachOption ${this.state.publicationCategory === el ? 'category_select' : null}`}
+                                                data-item='publicationCategory'
                                                 key={index}
                                                 onClick={(event) => this.setSelectedData(event, el)}
                                             >
@@ -471,21 +365,132 @@ class CreateProject extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="input-field options_6">
-                            <label className='title' htmlFor="weight">體重</label>
-                            {this.state.species === '' &&
-                                <div className='hint'>
-                                    <p>請先選擇動物種類</p>
+                        <section className='section_1_imgAndBasic'>
+                            <div className='upLoadFileContainer'>
+                                <div className='projectPicture' style={{ backgroundImage: `url('${this.state.preImg}')` }}></div>
+                                <label className='uploadFile_btn' htmlFor="uploadFileInput">
+                                    <UpLoadFile fileSelect={this.handleFileSelect} />
+                                    <img src={camera} />
+                                </label>
+                            </div>
+                            <div className='basicAndSimpleOptions'>
+                                <div className='basicInformation'>
+                                    <div className='secondContainer'>
+                                        <div className="input-field">
+                                            <label className='title' htmlFor="nickName">小名</label>
+                                            <input type="text" id="nickName" className="simple_input" onChange={this.handleChange} />
+                                        </div>
+                                        <div className="input-field">
+                                            <label className='title' htmlFor="microchipsNumber">晶片</label>
+                                            <input type="text" id="microchipsNumber" className="simple_input" onChange={this.handleChange} />
+                                        </div>
+                                    </div>
+                                    <div className='secondContainer'>
+                                        <div className="input-field">
+                                            <label className='title' htmlFor="coatColor">毛色</label>
+                                            <input type="text" id="coatColor" className="simple_input" onChange={this.handleChange} />
+                                        </div>
+                                        <div className="input-field">
+                                            <label className='title' htmlFor="variety">品種</label>
+                                            <input type="text" id="variety" className="simple_input" onChange={this.handleChange} />
+                                        </div>
+                                    </div>
                                 </div>
-                            }
-                            {this.state.species == '貓' &&
+                                <div className='simple_options_container'>
+                                    <div className='simple_options'>
+                                        <div className="input-field  options_2" id="species">
+                                            <label className='title' htmlFor="species">種類</label>
+                                            <div className='list'>
+                                                {
+                                                    options.species.map((el, index) => {
+                                                        return (
+                                                            <div
+                                                                className={`eachOption hoveryellow ${this.state.species === el ? 'options_2_select' : null}`}
+                                                                data-item='species'
+                                                                key={index}
+                                                                onClick={(event) => this.setSelectedSpecies(event, el)}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="input-field options_2">
+                                            <label className='title' htmlFor="ligation">結紮狀況</label>
+                                            <div className='list'>
+                                                {
+                                                    options.ligation.map((el, index) => {
+                                                        return (
+                                                            <div
+                                                                className={`eachOption hoveryellow ${this.state.ligation === el ? 'options_2_select' : null}`}
+                                                                data-item='ligation'
+                                                                key={index}
+                                                                onClick={(event) => this.setSelectedData(event, el)}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='simple_options'>
+                                        <div className="input-field options_2">
+                                            <label className='title' htmlFor="gender">性別</label>
+                                            <div className='list'>
+                                                {
+                                                    options.gender.map((el, index) => {
+                                                        return (
+                                                            <div
+                                                                className={`eachOption hoveryellow ${this.state.gender === el ? 'options_2_select' : null}`}
+                                                                data-item='gender'
+                                                                key={index}
+                                                                onClick={(event) => this.setSelectedData(event, el)}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="input-field options_2">
+                                            <label className='title' htmlFor="size">體型</label>
+                                            <div className='list'>
+                                                {
+                                                    options.size.map((el, index) => {
+                                                        return (
+                                                            <div
+                                                                className={`eachOption hoveryellow ${this.state.size === el ? 'options_2_select' : null}`}
+                                                                data-item='size'
+                                                                key={index}
+                                                                onClick={(event) => this.setSelectedData(event, el)}
+                                                            >
+                                                                {el}
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className='section_2_options'>
+                            <div className="input-field options_6">
+                                <label className='title' htmlFor="age">年齡</label>
                                 <div className='list'>
-                                    {this.state.species == '貓' &&
-                                        options.catWeight.map((el, index) => {
+                                    {
+                                        options.age.map((el, index) => {
                                             return (
                                                 <div
-                                                    className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
-                                                    data-item='weight'
+                                                    className={`eachOption hovergreen ${this.state.age === el ? 'options_6_select' : null}`}
+                                                    data-item='age'
                                                     key={index}
                                                     onClick={(event) => this.setSelectedData(event, el)}
                                                 >
@@ -495,65 +500,107 @@ class CreateProject extends Component {
                                         })
                                     }
                                 </div>
-                            }
-                            {this.state.species == '狗' &&
-                                <div className='list'>
-                                    {this.state.species == '狗' &&
-                                        options.dogWeight.map((el, index) => {
-                                            return (
-                                                <div
-                                                    className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
-                                                    data-item='weight'
-                                                    key={index}
-                                                    onClick={(event) => this.setSelectedData(event, el)}
-                                                >
-                                                    {el}
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            }
-                        </div>
-                    </section>
+                            </div>
+                            <div className="input-field options_6">
+                                <label className='title' htmlFor="weight">體重</label>
+                                {this.state.species === '' &&
+                                    <div className='hint'>
+                                        <p>請先選擇動物種類</p>
+                                    </div>
+                                }
+                                {this.state.species == '貓' &&
+                                    <div className='list'>
+                                        {this.state.species == '貓' &&
+                                            options.catWeight.map((el, index) => {
+                                                return (
+                                                    <div
+                                                        className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
+                                                        data-item='weight'
+                                                        key={index}
+                                                        onClick={(event) => this.setSelectedData(event, el)}
+                                                    >
+                                                        {el}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                }
+                                {this.state.species == '狗' &&
+                                    <div className='list'>
+                                        {this.state.species == '狗' &&
+                                            options.dogWeight.map((el, index) => {
+                                                return (
+                                                    <div
+                                                        className={`eachOption hovergreen ${this.state.weight === el ? 'options_6_select' : null}`}
+                                                        data-item='weight'
+                                                        key={index}
+                                                        onClick={(event) => this.setSelectedData(event, el)}
+                                                    >
+                                                        {el}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </section>
 
-                    <section className='section_3_textArea'>
-                        <div className="input-field">
-                            <label className='title' htmlFor="currentLocation">目前所在地</label>
-                            <input type="text" id="currentLocation" className="simple_input" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="feature">特徵</label>
-                            <input type="text" id="feature" className="simple_input" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="physicalCondition">健康狀況</label>
-                            <input type="text" id="physicalCondition" className="simple_input" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="character">個性</label>
-                            <input type="text" id="character" className="simple_input" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="reason">送養原因</label>
-                            <textarea id="reason" className="multi-textarea" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="requirement">認養條件</label>
-                            <textarea id="requirement" className="multi-textarea" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <label className='title' htmlFor="connectMethods">聯絡方式</label>
-                            <textarea id="connectMethods" className="multi-textarea" onChange={this.handleChange} />
-                        </div>
-                        <div className="input-field">
-                            <button>送出</button>
-                        </div>
-                    </section>
+                        <section className='section_3_textArea'>
+                            <div className="input-field">
+                                <label className='title' htmlFor="currentLocation">目前所在地</label>
+                                <input type="text" id="currentLocation" className="simple_input" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="feature">特徵</label>
+                                <input type="text" id="feature" className="simple_input" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="physicalCondition">健康狀況</label>
+                                <input type="text" id="physicalCondition" className="simple_input" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="character">個性</label>
+                                <input type="text" id="character" className="simple_input" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="reason">送養原因</label>
+                                <textarea id="reason" className="multi-textarea" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="requirement">認養條件</label>
+                                <textarea id="requirement" className="multi-textarea" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label className='title' htmlFor="connectMethods">聯絡方式</label>
+                                <textarea id="connectMethods" className="multi-textarea" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <button>送出</button>
+                            </div>
+                        </section>
 
-                </form>
-            </CreateProjectContent >
-        )
+                    </form>
+                </CreateProjectContent >
+            )
+        } else if (this.state.isLoading) {
+            return (
+                <BouncingLoader>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </BouncingLoader>
+            )
+        } else {
+            return (
+                <BouncingLoader>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </BouncingLoader>
+            )
+        }
     }
 }
 

@@ -29,6 +29,7 @@ export const createProject = (project) => {
                     }).catch((err) => {
                         dispatch({ type: 'CREATE_PROJECT_ERROR', err });
                         console.log("add errorrrrrr",err)
+                        alert('圖片上傳有誤，請壓縮或重新選擇其他圖片，或洽網頁維護者 aishalin314@gmail.com 謝謝！')
                     })
                 })
             })
