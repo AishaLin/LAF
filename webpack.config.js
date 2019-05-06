@@ -14,7 +14,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react', ],
+                        presets: ['@babel/preset-env', '@babel/preset-react',],
                         plugins: ['@babel/plugin-proposal-class-properties']
                     }
                 }
@@ -24,6 +24,17 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader'
+                ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
                 ]
             }
         ]

@@ -5,7 +5,9 @@ import 'firebase/auth';
 import { asyncGetProjectAll } from '../../../actions/getData/asyncGetProjectAll';
 import Message from './Message';
 import { requestAffidavit } from "../../../actions/adoptionAction";
-import { Link } from "react-router-dom";
+let more = require('../../../../src/public/more.png');
+let more_non = require('../../../../src/public/more_non.png');
+
 
 const ClickForMoreBtn = styled.div` 
     .pullOpen {
@@ -163,10 +165,10 @@ class MessageList extends Component {
                 <ClickForMoreBtn>
                     <div className='pullOpen'>
                         {item.adoptionStage === 0 &&
-                            <img src='../../src/public/more_non.png' onClick={this.toggleMessageList} />
+                            <img src={more_non} onClick={this.toggleMessageList} />
                         }
                         {item.adoptionStage !== 0 &&
-                            <img src='../../src/public/more.png' onClick={this.toggleMessageList} />
+                            <img src={more} onClick={this.toggleMessageList} />
                         }
                     </div>
                     {messageList}
