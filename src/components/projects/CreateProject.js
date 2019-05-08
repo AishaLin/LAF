@@ -3,16 +3,28 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { createProject } from "../../actions/projectActions";
 import { createDeflate } from 'zlib';
-import firebase from "../../config/fbConfig"
 import { Redirect } from "react-router-dom";
-import { Link } from 'react-router-dom';
 import UpLoadFile from './UpLoadFile';
+import Loader from '../head&foot/Loader';
+import {device} from '../../media queries/deviceName'
 let camera = require('../../public/camera.png')
 
-const CreateProjectContent = styled.div`
+const CreateProjectContent = styled.form`
     font-size: 18px;
     height: 100%;
     letter-spacing: 3px;
+    width: 70vw;
+    margin: 0 auto;
+    padding-top: 50px;
+    @media ${device.desktop} {
+        width: 80vw;
+    }
+    @media ${device.laptopL} {
+        width: 95vw;
+    }
+    @media ${device.laptop} {
+        width: 95vw;
+    }
     input, 
     textarea {
         outline: none;
@@ -21,6 +33,7 @@ const CreateProjectContent = styled.div`
         border-width: 0;
         border-radius: 2px;
         height: 45px;
+        min-width: 200px;
         margin-top: 10px;
         -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
@@ -29,10 +42,12 @@ const CreateProjectContent = styled.div`
             background-color: rgb(202, 216, 218, 0.6);
         }
     }
-    .creatForm {
-        width: 80vw;
-        margin: 0 auto;
-        padding-top: 50px;
+    .input-field {
+        color: rgba(160, 160, 160);
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 0 15px;
         .list {
             display: flex;
             flex-grow: 1;
@@ -46,157 +61,144 @@ const CreateProjectContent = styled.div`
                 flex-grow: 1;
                 text-align: center;
                 margin: 6px;
+                line-height: 33px;
                 background-color: rgb(203, 203, 203, 0.3);
                 cursor: pointer;
                 color: #5B5566;
-                :before {
-                    content: '';
-                    height: 100%;
-                    display: inline-block;
-                    vertical-align: middle;
+                transition: transform 0.3s ease-in;
+                :active {
+                    transform: translate(3px, 3px);
                 }
             }
             [data-item="publicationCategory"] {
-                transition: transform 0.3s ease-in;
                 :hover {
                     background-color: rgb(245, 147, 103, 0.5);
                 }
                 :active {
                     background-color: rgb(245, 147, 103);
-                    transform: translate(3px, 3px);
                 }
             }
             .hoveryellow {
-                transition: transform 0.3s ease-in;
                 :hover {
                     background-color: rgb(252, 225, 150, 0.5);
                 }
                 :active {
                     background-color: rgb(252, 225, 150);
-                    transform: translate(3px, 3px);
                 }
             }
             .hovergreen {
-                transition: transform 0.3s ease-in;
                 :hover {
                     background-color: rgb(185, 199, 148, 0.5);
                 }
                 :active {
                     background-color: rgb(185, 199, 148);
-                    transform: translate(3px, 3px);
                 }
             }
             .category_select {
                 background-color: rgb(245, 147, 103);
                 color: #fff;
             }
-            .options_2_select {
+            .options_2_select,
+            .options_3_select {
                 background-color: rgb(252, 225, 150);
             }
             .options_6_select {
                 background-color: rgb(185, 199, 148);
             }
         }
-
-        .input-field {
-            color: rgba(160, 160, 160);
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            .list {
-                display: flex;
+    } 
+    .section_1_imgAndBasic {
+        display: flex;
+        margin-top: 30px;
+        .upLoadFileContainer {
+            width: 400px;
+            height: 400px;
+            min-width: 300px;
+            overflow: hidden;
+            border: 10px solid #fff;
+            border-radius: 10px;
+            margin: 0 35px 30px 15px;
+            -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+            -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+            box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+            position: relative;
+            background-color: rgb(203, 203, 203, 0.3);
+            .projectPicture {
+                width: 100%;
+                height: 100%;
+                min-width: 100%;
+                min-height: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
             }
-        } 
-        .section_1_imgAndBasic {
-            display: flex;
-            margin-top: 30px;
-            .upLoadFileContainer {
-                width: 400px;
-                height: 400px;
-                min-width: 300px;
-                overflow: hidden;
-                border: 10px solid #fff;
-                border-radius: 10px;
-                margin: 0 20px 30px 0;
-                -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-                -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-                box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-                position: relative;
-                background-color: rgb(203, 203, 203, 0.3);
-                .projectPicture {
-                    width: 100%;
-                    height: 100%;
-                    min-width: 100%;
-                    min-height: 100%;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                }
-                .uploadFile_btn {
-                    position: absolute;
-                    right: 20px;
-                    bottom: 20px;
-                    cursor: pointer;
-                    :hover {
-
-                    }               
-                }
-            }
-            .basicAndSimpleOptions {
-                flex-grow: 1;
-                /* background-color: #F1E0DE; */
-                .basicInformation {
-                    display: flex;
-                    .secondContainer {
-                        display: flex;
-                        flex-wrap: wrap;
-                        flex-grow: 1;
-                        .input-field {
-                            padding: 0 15px;
-                            margin: 5px 0 30px 0;
-                        } 
-                    }
-                }
-                .simple_options_container {
-
-                    .simple_options {
-                        display: flex;
-                        flex-wrap: wrap;
-                        .options_2 {
-                            width: 50%;
-                            padding: 0 15px;
-                            display: flex;
-                            flex-direction: column;
-                            margin: 5px 0 30px 0;
-                        } 
-                    }
-                }
+            .uploadFile_btn {
+                position: absolute;
+                right: 20px;
+                bottom: 20px;
+                cursor: pointer;
+                :hover {
+                    right: 25px;
+                    bottom: 25px;
+                }               
             }
         }
-        .section_2_options {
-            
-            .options_6 {
-                margin: 5px 0 30px 0;
-                .list {
+        .basicAndSimpleOptions {
+            flex-grow: 1;
+            .basicInformation {
+                display: flex;
+                flex-wrap: wrap;
+                .secondContainer {
                     display: flex;
                     flex-wrap: wrap;
-                    .eachOption {
-                        width: calc((100% - 72px) / 6);
-                        min-width: 155px;
+                    flex-grow: 1;
+                    .input-field {
+                        margin: 5px 0 30px 0;
+                    } 
+                }
+            }
+            .simple_options_container {
+
+                .simple_options {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .options_2 {
+                        width: 50%;
+                        min-width: 285px;
+                        padding: 0 15px;
+                        display: flex;
+                        flex-direction: column;
+                        margin: 5px 0 30px 0;
+                    } 
+                }
+            }
+        }
+    }
+    .section_2_options {
+        .options_6 {
+            margin: 5px 0 30px 0;
+            .list {
+                display: flex;
+                flex-wrap: wrap;
+                height: fit-content;
+                .eachOption {
+                    width: calc((100% - 72px) / 6);
+                    min-width: 155px;
+                    @media ${device.laptop} {
+                        width: calc((100% - 36px) / 3);
                     }
                 }
             }
-        }     
-        .section_3_textArea {
-            /* background-color: rgb(226, 204, 218); */
-            .input-field {
-                margin: 20px 0 30px 0;
-                .multi-textarea {
-                    height: 100px;
-                    resize: none;
-                }
-            } 
         }
+    }     
+    .section_3_textArea {
+        .input-field {
+            margin: 20px 0 30px 0;
+            .multi-textarea {
+                height: 100px;
+                resize: none;
+            }
+        } 
         button {
             margin: 50px auto 0 auto;
             font-size: 18px;
@@ -216,31 +218,6 @@ const CreateProjectContent = styled.div`
         }
     }
 `;
-const BouncingLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    @keyframes bouncing-loader {
-        to {
-            opacity: 0.1;
-            transform: translate3d(0, -1rem, 0);
-        }
-    }
-    div {
-        width: 1rem;
-        height: 1rem;
-        margin: 3rem 0.2rem;
-        background: #8385aa;
-        border-radius: 50%;
-        animation: bouncing-loader 0.6s infinite alternate;
-    }
-    div:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    div:nth-child(3) {
-        animation-delay: 0.4s;
-    }
-`;
-
 
 class CreateProject extends Component {
     state = {
@@ -272,15 +249,13 @@ class CreateProject extends Component {
         this.setState({
             [event.target.dataset.item]: el
         })
-        console.log('elelelel', el)
-        console.log('this.state', this.state)
         return el
     }
     // 貓狗體重區間不同，為避免使用者選擇體重後才重選動物種類，另外增加判定是否須清除體重資訊，並提示重新選擇
-    // 初始狀態
-    // 尚未選擇體重，在種類間切換
-    // 已選擇體重後切換種類
-    // 重複點選同一種類
+    // 1.初始狀態
+    // 2.尚未選擇體重，在種類間切換
+    // 3.已選擇體重後切換種類
+    // 4.重複點選同一種類
     setSelectedSpecies = (event, el) => {
         if (this.state.species === '') {
             this.setState({
@@ -339,13 +314,12 @@ class CreateProject extends Component {
             gender: ['女生', '男生'],
             catWeight: ['< 1 kg', '1-2 kg', '3-4 kg', '5-6 kg', '7-8 kg', '> 8 kg'],
             dogWeight: ['< 4 kg', '4-10 kg', '11-20 kg', '21-30 kg', '31-40 kg', '> 40 kg'],
-            ligation: ['已結紮', '尚未結紮'],
+            ligation: ['已結紮', '未結紮'],
         };
         if (!auth.uid) return <Redirect to='/authentication/signin' />
         if (auth.uid && !this.state.isLoading) {
             return (
-                <CreateProjectContent>
-                    <form className='creatForm' onSubmit={this.handleSubmit}>
+                <CreateProjectContent  onSubmit={this.handleSubmit}>
                         <div className="input-field">
                             <label className='title' htmlFor="publicationCategory">請選擇刊登類別</label>
                             <div className='list'>
@@ -464,7 +438,7 @@ class CreateProject extends Component {
                                                     options.size.map((el, index) => {
                                                         return (
                                                             <div
-                                                                className={`eachOption hoveryellow ${this.state.size === el ? 'options_2_select' : null}`}
+                                                                className={`eachOption hoveryellow ${this.state.size === el ? 'options_3_select' : null}`}
                                                                 data-item='size'
                                                                 key={index}
                                                                 onClick={(event) => this.setSelectedData(event, el)}
@@ -580,26 +554,10 @@ class CreateProject extends Component {
                                 <button>送出</button>
                             </div>
                         </section>
-
-                    </form>
                 </CreateProjectContent >
             )
-        } else if (this.state.isLoading) {
-            return (
-                <BouncingLoader>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </BouncingLoader>
-            )
         } else {
-            return (
-                <BouncingLoader>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </BouncingLoader>
-            )
+            return <Loader />
         }
     }
 }

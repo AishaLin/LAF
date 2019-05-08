@@ -34,8 +34,6 @@ export const createProject = (project) => {
                 })
             })
             .catch((err) => { console.log("err.message", err) })
-
-        
     }
 };
 

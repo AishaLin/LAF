@@ -80,3 +80,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
   box-shadow: none;
 }
 
+h4 {
+  color: rgb(165, 156, 107);
+}

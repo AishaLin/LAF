@@ -27,18 +27,20 @@ const InputArea = styled.div`
             font-size: 16px;
         }
         .confirmBtn {
-            font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
             color: rgb(255, 255, 255);
             width: 100%;
             height: 40px;
             border-radius: 18px;
-            background-color: hsl(211, 94%, 62%);
+            background-color: rgb(156, 150, 114);
             margin-top: 40px;
             font-size: 18px;
             letter-spacing: 3px;
+            -webkit-box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
+            -moz-box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
+            box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
             cursor: pointer;
             :hover {
-                background-color: hsl(211, 93%, 55%);
+                background-color: rgb(156, 150, 114, 0.8);
             }
             :active {
                 width: 98%;

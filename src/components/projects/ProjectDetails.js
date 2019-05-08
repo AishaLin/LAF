@@ -8,6 +8,7 @@ import 'firebase/auth';
 import 'firebase/storage';
 import Affidavit_pdf from '../../components/adoption/Affidavit_pdf'
 import AdoptionMessage from '../adoption/AdoptionMessage';
+import Loader from '../head&foot/Loader';
 
 const ProjectDetailContainer = styled.section`
   width: 80vw;
@@ -111,7 +112,6 @@ const ProjectDetailContainer = styled.section`
   }
 `;
 const DetailInformation = styled.section`
-  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
   margin-top: 0;
   margin-left: 40px;
@@ -124,31 +124,6 @@ const DetailInformation = styled.section`
       margin: 0 10px;
       width: 30px;
       min-width: 30px;
-    }
-`;
-const BouncingLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: auto 0;
-    @keyframes bouncing-loader {
-        to {
-            opacity: 0.1;
-            transform: translate3d(0, -1rem, 0);
-        }
-    }
-    div {
-        width: 1rem;
-        height: 1rem;
-        margin: 3rem 0.2rem;
-        background: #8385aa;
-        border-radius: 50%;
-        animation: bouncing-loader 0.6s infinite alternate;
-    }
-    div:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    div:nth-child(3) {
-        animation-delay: 0.4s;
     }
 `;
 
@@ -221,13 +196,7 @@ class ProjectDetails extends Component {
         </ProjectDetailContainer>
       )
     } else {
-      return (
-        <BouncingLoader>
-          <div></div>
-          <div></div>
-          <div></div>
-        </BouncingLoader>
-      )
+      return <Loader />
     }
   }
 }

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
 import { connect } from "react-redux";
-import RenderToLayer from 'material-ui/internal/RenderToLayer';
+import {device} from '../../media queries/deviceName';
 
 const HeadContent = styled.div`
   display: flex;
   position: relative;
-  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 18px;
   justify-content: space-between;
@@ -98,19 +97,12 @@ const Logo = styled.div`
   a {
     color: #fff;
   }
+  @media ${device.laptopL} {
+    position: inherit;
+  }
 `;
 
-
-//13B5B1
-// FCE196
-// 90CFC1
-// B9C794
-// F59367
-// C4AF94
-// E8E7E2
-
 class Head extends Component {
-
   scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -141,6 +133,4 @@ const mapStateToProps = (state) => {
     profile: state.firebase.profile
   }
 }
-
 export default connect(mapStateToProps)(Head);
-

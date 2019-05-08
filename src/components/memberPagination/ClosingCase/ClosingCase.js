@@ -29,7 +29,6 @@ const ClosingCaseContent = styled.div`
 `;
 
 const DetailInformation = styled.section`
-  font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', 'sans-serif';
   text-align: left;
     .petName {
       text-align: center;

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import firebase from "../../config/fbConfig"
 import { asyncGetSpecificProjectAll } from '../../actions/getData/asyncGetSpecificProject';
 import { approveAffidavit } from '../../actions/adoptionAction';
+import Loader from '../head&foot/Loader'
 
 const MainContainer = styled.div`
     .completed_btn {
@@ -91,31 +92,6 @@ const ProjectInformation = styled.div`
     }
     .table_b {
         width: 55%;
-    }
-`;
-
-const BouncingLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    @keyframes bouncing-loader {
-        to {
-            opacity: 0.1;
-            transform: translate3d(0, -1rem, 0);
-        }
-    }
-    div {
-        width: 1rem;
-        height: 1rem;
-        margin: 3rem 0.2rem;
-        background: #8385aa;
-        border-radius: 50%;
-        animation: bouncing-loader 0.6s infinite alternate;
-    }
-    div:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    div:nth-child(3) {
-        animation-delay: 0.4s;
     }
 `;
 
@@ -267,13 +243,7 @@ class Affidavit_approve extends Component {
             )
         }
         else {
-            return (
-                <BouncingLoader>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </BouncingLoader>
-            )
+            return <Loader />
         }
 
     }

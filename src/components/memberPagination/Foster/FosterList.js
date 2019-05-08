@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { asyncGetProjectAll } from '../../../actions/getData/asyncGetProjectAll';
 import FosterSummary from './FosterSummary';
 import MessageList from '../contactProcess/MessageList'
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const FosterListContent = styled.div`
@@ -20,31 +20,6 @@ const FosterListContent = styled.div`
         -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
         -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
         box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
-    }
-`;
-
-const BouncingLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    @keyframes bouncing-loader {
-        to {
-            opacity: 0.1;
-            transform: translate3d(0, -1rem, 0);
-        }
-    }
-    div {
-        width: 1rem;
-        height: 1rem;
-        margin: 3rem 0.2rem;
-        background: #8385aa;
-        border-radius: 50%;
-        animation: bouncing-loader 0.6s infinite alternate;
-    }
-    div:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    div:nth-child(3) {
-        animation-delay: 0.4s;
     }
 `;
 
@@ -92,13 +67,7 @@ class FosterList extends Component {
             }
         }
         else {
-            return (
-                <BouncingLoader>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </BouncingLoader>
-            )
+            return <Loader />
         }
     }
 }

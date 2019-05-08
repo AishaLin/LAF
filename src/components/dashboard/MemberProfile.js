@@ -14,6 +14,7 @@ import MyPetsList from '../memberPagination/Adopter/MyPetsList';
 import FosterList from '../memberPagination/Foster/FosterList';
 import ClosingCaseList from '../memberPagination/ClosingCase/ClosingCaseList';
 import clearRecord from '../../actions/clearRecordAction'
+import Loader from "../head&foot/Loader";
 
 const MemberInformation = styled.div`
     width: 80%;
@@ -22,13 +23,6 @@ const MemberInformation = styled.div`
     h1 {
         font-size: 32px;
         margin-bottom: 25px;
-    }
-    .memberPhoto {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: 5px solid #fff;
-        margin: 10px auto 20px auto;
     }
     .listBtns {
         display: flex;
@@ -61,31 +55,6 @@ const MemberInformation = styled.div`
         -moz-box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
         box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
         z-index: 10000;
-    }
-`;
-
-const BouncingLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    @keyframes bouncing-loader {
-        to {
-            opacity: 0.1;
-            transform: translate3d(0, -1rem, 0);
-        }
-    }
-    div {
-        width: 1rem;
-        height: 1rem;
-        margin: 3rem 0.2rem;
-        background: #8385aa;
-        border-radius: 50%;
-        animation: bouncing-loader 0.6s infinite alternate;
-    }
-    div:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-    div:nth-child(3) {
-        animation-delay: 0.4s;
     }
 `;
 
@@ -145,16 +114,6 @@ class MemberProfile extends Component {
             return (
                 <HashRouter>
                     <MemberInformation>
-                        {/* <section>
-                            <h1>會員基本資訊</h1>
-                            <div>
-                                <div className="memberPhoto"></div>
-                                <div className='memberBsicInformation'>
-                                    <p>{member.lasttName}{member.firstName}</p>
-                                    <p>{auth.email}</p>
-                                </div>
-                            </div>
-                        </section> */}
                         <div className='listBtns'>
                             <Link to='/memberprofile/mypetslist' className='eachList_btn first_btn' style={mypetslist}>領養清單</Link>
                             <Link to='/memberprofile/fosterlist' className='eachList_btn' style={fosterlist}>送養清單</Link>
@@ -171,13 +130,7 @@ class MemberProfile extends Component {
                 </HashRouter>
             )
         } else {
-            return (
-                <BouncingLoader>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </BouncingLoader>
-            )
+            return <Loader />
         }
     }
 }
@@ -187,5 +140,4 @@ const mapStateToProps = (state) => {
         auth: state.firebase.auth
     }
 }
-
 export default connect(mapStateToProps, null)(MemberProfile)

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import '../style.css'
 
 const HomePageContent = styled.div`
-    font-family: 'Permanent Marker', cursive;
     letter-spacing: 5px;
     line-height: 1.5;
     .virticleLine1 {
@@ -38,7 +37,6 @@ const Section_1 = styled.div`
     position: relative;
     height: 100vh; 
     .rightColorBlock {
-        /* background-image: url("../src/public/${props => props.part1 ? 'grass-dog-cat.jpg' : (props.part2 ? 'IMG_3690.jpg' : '154072.jpg')}"); */
         position: absolute;
         top: -4px;
         right: 0px;
@@ -48,6 +46,7 @@ const Section_1 = styled.div`
         background-color: #E8E7E2;
     }
     .slogan {
+        font-family: 'Permanent Marker', cursive;
         position: absolute;
         top: 60px;
         left: 15%;
@@ -74,7 +73,6 @@ const Section_1 = styled.div`
         position: absolute;
         left: 15%;
         top: 45vh;
-        font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
         height: 50px;
         width: 200px;
         background-color: rgb(144, 116, 0);
@@ -106,7 +104,6 @@ const Section_2 = styled.div`
         z-index: 2000;
     }
     .mainContent {
-        font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
         position: absolute;
         top: 8%;
         left: 12%;
@@ -153,7 +150,6 @@ const Section_3 = styled.div`
         padding-top: 100px;
         padding-bottom: 100px;
         text-align: center;
-        font-family: 'Neue Helvetica W01', 'AXIS Font Japanese W55', 'Helvetica Neue', sans-serif;
         font-size: 32px;
         position: relative;
         .textInSiteParallaxArea {
