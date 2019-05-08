@@ -143,7 +143,7 @@ class App extends React.Component {
                 </SideNavForMember>
                 <ContainerWithoutNav>
                     <div className="mainContent">
-                        <Head clickMemberName={this.openNav} />
+                        {/* <Head clickMemberName={this.openNav} /> */}
                         <Switch>
                             <Route exact path="/" component={HomePage} />
                             <Route path="/adoptionBoard" component={Dashboard} />
