@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { device } from '../media queries/deviceName';
 import '../style.css'
 
 const HomePageContent = styled.div`
@@ -13,22 +14,40 @@ const HomePageContent = styled.div`
         width: 130px;
         border-right: 1px solid lightGrey;
         z-index: -10;
+        @media ${device.laptop} {
+            width: 100px;
+        }
+        @media ${device.tablet} {
+            width: 80px;
+        }
     }
     .topSideFixedLine {
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 125px;
-    border-bottom: 1px solid lightgrey;
-    z-index: -10;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 125px;
+        border-bottom: 1px solid lightgrey;
+        z-index: -10;
+        @media ${device.laptop} {
+            height: 95px;
+        }
+        @media ${device.tablet} {
+            height: 75px;
+        }
     }
     .bottomSideFixedLine {
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 575px;
-    border-bottom: 1px solid lightgrey;
-    z-index: -10;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 575px;
+        border-bottom: 1px solid lightgrey;
+        z-index: -10;
+        @media ${device.laptopL} {
+            height: 545px;
+        }
+        @media ${device.tablet} {
+            height: 525px;
+        }
     }
 `;
 
@@ -68,6 +87,12 @@ const Section_1 = styled.div`
         border: 1px solid lightgrey;
         border-radius: 50%;
         margin-left: -95px;
+        @media ${device.laptop} {
+            margin-left: -125px;
+        }
+        @media ${device.tablet} {
+            margin-left: -145px;
+        }
     }
     .aboutMe_btn {
         position: absolute;
@@ -243,17 +268,29 @@ const Section_3 = styled.div`
     } 
 `;
 
-
 class HomePage extends React.Component {
+    state = {
+        windowWidth: ''
+    }
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    updateWindowDimensions = () => {
+        this.setState({ windowWidth: window.innerWidth });
+    }
     scrollToAboutMe = () => {
         document.querySelector("#aboutMe").scrollIntoView({ behavior: 'smooth' });
     }
     render() {
         return (
             <HomePageContent>
-                <div className="virticleLine1"></div>
-                <div className="topSideFixedLine"></div>
-                <div className="bottomSideFixedLine"></div>
+                {this.state.windowWidth >= 768 && <div className="virticleLine1"></div>}
+                {this.state.windowWidth >= 768 && <div className="topSideFixedLine"></div>}
+                {this.state.windowWidth >= 768 && <div className="bottomSideFixedLine"></div>}
                 <Section_1>
                     <div className="rightColorBlock"></div>
                     <div className="slogan">
@@ -311,5 +348,4 @@ class HomePage extends React.Component {
         );
     }
 }
-
 export default HomePage;

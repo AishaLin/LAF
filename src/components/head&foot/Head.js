@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import SignedInLinks from './SignedInLinks';
-import SignedOutLinks from './SignedOutLinks';
+import SignedInLinks_web from './SignedInLinks';
+import SignedOutLinks_web from './SignedOutLinks';
+import SignedInLinks_mobile from './SignedInLinks_Mobile';
+import SignedOutLinks_mobile from './SignedOutLinks.Mobile';
 import { connect } from "react-redux";
-import {device} from '../../media queries/deviceName';
+import { device } from '../../media queries/deviceName';
 
 const HeadContent = styled.div`
   display: flex;
@@ -14,6 +16,18 @@ const HeadContent = styled.div`
   justify-content: space-between;
   height: 125px;
   align-items: center;
+  @media ${device.laptop} {
+    height: 95px;
+    font-size: 16px;
+  }
+  @media ${device.tablet} {
+    height: 75px;
+    font-size: 16px;
+  }
+  @media ${device.mobileL} {
+    justify-content: center;
+    height: 50px;
+  }
   :before {
     content : "";
     position: absolute;
@@ -32,7 +46,7 @@ const HeadContent = styled.div`
     width   : 100vw;
     border-bottom: 1px solid lightgrey;
   }
-  .scrollToTopBtn {
+  .scrollToTop {
     position: fixed;
     top: 32vh;
     right: -40px;
@@ -50,6 +64,13 @@ const HeadContent = styled.div`
       background-color: rgb(199, 75, 22, 0.9);
     }
   }
+  .menuIcon_mobile {
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    top: 5px;
+    z-index: 5500;
+  }
   .mainNav {
     display: flex;
     text-align: center;
@@ -60,6 +81,12 @@ const HeadContent = styled.div`
     line-height: 125px;
     background-color: #E8E7E2;
     z-index: 1000;
+    @media ${device.laptop} {
+      line-height: 95px;
+    }
+    @media ${device.tablet} {
+      line-height: 75px;
+    }
     li {
       flex-grow: 1;
       list-style: none;
@@ -97,12 +124,38 @@ const Logo = styled.div`
   a {
     color: #fff;
   }
-  @media ${device.laptopL} {
+  @media ${device.laptop} {
     position: inherit;
+    width: 100px;
+    height: 100%;
+    line-height: 95px;
+  }
+  @media ${device.tablet} {
+    width: 80px;
+    font-size: 28px;
+    line-height: 75px;
+  }
+  @media ${device.mobileL} {
+    justify-content: center;
+    width: 100vw;
+    line-height: 50px;
   }
 `;
 
 class Head extends Component {
+  state = {
+    windowWidth: ''
+  }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  updateWindowDimensions = () => {
+    this.setState({ windowWidth: window.innerWidth });
+  }
   scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -111,17 +164,22 @@ class Head extends Component {
   }
   render() {
     const { auth, profile } = this.props;
-    const links = auth.uid ? <SignedInLinks profile={profile} clickMemberName={()=>this.props.clickMemberName()}/> : <SignedOutLinks className="signedOutLinks" />
+    const Authlinks_web = auth.uid ? <SignedInLinks_web profile={profile} clickMemberIcon={() => this.props.clickMemberIcon()} /> : <SignedOutLinks_web />
+    const Authlinks_mobile = auth.uid ? <SignedInLinks_mobile profile={profile} /> : <SignedOutLinks_mobile />
     return (
       <HeadContent>
         <Logo><Link to='/'>Laf</Link></Logo>
-        <div className="scrollToTopBtn" onClick={this.scrollToTop}>back to top.</div>
-        {links}
-        <ul className="mainNav">
-          <li><Link to='/adoptionBoard'>認領養媒合</Link></li>
-          <li><Link to='/' className='comingSoon'>公立收容所</Link></li>
-          <li><Link to='/' className='comingSoon'>走失協尋</Link></li>
-        </ul>
+        {this.state.windowWidth > 1024 && <div className="scrollToTop" onClick={this.scrollToTop}>back to top.</div>}
+        {this.state.windowWidth > 768 && Authlinks_web}
+        {this.state.windowWidth > 425 &&
+          <ul className="mainNav">
+            <li><Link to='/adoptionBoard'>認領養媒合</Link></li>
+            <li><Link to='/' className='comingSoon'>公立收容所</Link></li>
+            <li><Link to='/' className='comingSoon'>走失協尋</Link></li>
+          </ul>
+        }
+        {this.state.windowWidth <=425 && <img src='../src/public/menu.png' className='menuIcon_mobile' onClick={()=> this.props.clickMemberIcon_mobile()}/>}
+        {this.state.windowWidth <= 768 && Authlinks_mobile}
       </HeadContent>
     )
   }

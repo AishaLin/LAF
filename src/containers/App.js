@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link, NavLink, Redirect } from 'react-router-dom';
-import { signOut } from "../actions/authActions";
 import { connect } from "react-redux";
 import firebase from "../config/fbConfig"
 import Affidavit_edit from '../components/adoption/Affidavit_edit';
@@ -34,62 +33,70 @@ const SideNavForMember = styled.div`
     @media screen and (max-height: 450px) {
       padding-top: 15px
     }   
-    a {
-      padding: 8px 8px 8px 20px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      transition: 0.3s;
-      :hover {
-        color: #f1f1f1;
-        background-color: #3f412d;
-      }
-      @media screen and (max-height: 450px) {
-        font-size: 18px;
-      }
-    }
-    .sideNav{
-        background-color: #2f3022;
+    .sideNav{       
         overflow-x: hidden;
+        position: relative;
+        a {
+            color: #818181;
+            text-decoration: none;
+            transition: 0.3s;
+            width: 100%;
+            :hover {
+                color: #f1f1f1;
+            }
+            ::before {
+                content: '';
+                height: 100%;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+    .sideNav.web {
         padding-top: 60px;
         width: 30%;
         height: 100vh;
-        position: relative;
+        background-color: #2f3022;
         .logout {
-          position: absolute;
-          bottom: 5vh;
+            position: absolute;
+            bottom: 5vh;
         }
+        a, .memberName {
+            padding: 20px 40px;
+            font-size: 25px;
+            min-width: 250px;
+        }
+        a:hover {
+            background-color: #3f412d;
+        }
+    }
+    .sideNav.mobile {
+        width: 100vw;
+        height: fit-content;
+        background-color: rgb(31, 31, 31);
+        margin-top: 50px;
+        .logout {
+            position: inherit;
+        }
+        a,.memberName {
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 16px;
+        } 
+        a:active {
+            color: #f1f1f1;
+            background-color: rgb(38, 38, 38);
+        }
+    }
+    .memberName {
+        color: #cccbcb;
     }
     .closebtn {
       top: 0;
       right: 25px;
       font-size: 36px;
       text-align: right;
-      padding-right: 50px;
     }
-    .memberName {
-        padding: 20px 40px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #cccbcb;
-        display: block;
-        transition: 0.3s;
-        ::before {
-            content: '';
-            height: 100%;
-            display: inline-block;
-            vertical-align: middle;
-        }
-    }
-    .text {
-        padding: 20px 40px;
-        ::before {
-            content: '';
-            height: 100%;
-            display: inline-block;
-            vertical-align: middle;
-        }
-    } 
 `;
 const ContainerWithoutNav = styled.div`
     min-height: 100vh;
@@ -103,47 +110,89 @@ const ContainerWithoutNav = styled.div`
 
 class App extends React.Component {
     state = {
-        openMenu: false
+        windowWidth: '',
+        openMenu: false,
+        openMenu_mobile: false
+    }
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    updateWindowDimensions = () => {
+        this.setState({ windowWidth: window.innerWidth });
     }
     openNav = () => {
         this.setState((prevState) => ({
             openMenu: !prevState['openMenu']
         }))
     }
+    openNav_mobile = () => {
+        this.setState((prevState) => ({
+            openMenu_mobile: !prevState['openMenu_mobile']
+        }))
+    }
     signOut = () => {
         firebase.auth().signOut()
-        .then(() =>{
-            console.log("User sign out!");
-        }).then(()=> {
-            this.openNav();
-        }).then(() =>{
-            window.location.hash = '/';
-        })
-        .catch((err => console.log('error message', err)))
+            .then(() => {
+                console.log("User sign out!");
+            }).then(() => {
+                this.setState({
+                    openMenu: false,
+                    openMenu_mobile: false
+                })
+            }).then(() => {
+                window.location.hash = '/';
+            })
+            .catch((err => console.log('error message', err)))
     }
     render() {
         const navStyle = {
-            width: '0px'
+            width: '0px',
+            flexDirection: 'row'
+        };
+        const navStyle_mobile = {
+            height: '0px',
+            flexDirection: 'column'
         };
         if (this.state.openMenu === true) {
             navStyle.width = '100vw'
         }
+        if (this.state.openMenu_mobile === true) {
+            navStyle_mobile.height = '100vh'
+        }
         return (
             <HashRouter >
-                <SideNavForMember style={navStyle}>
-                    <div className="sideNav">
-                        <a href="javascript:void(0)" className="closebtn" onClick={this.openNav} >&times;</a>
-                        <p className="memberName">Hi！{this.props.profile.firstName}</p>
-                        <Link to="/memberprofile/mypetslist" className="text" onClick={this.openNav} >查看領養清單</Link>
-                        <Link to="/memberprofile/fosterlist" className="text" onClick={this.openNav} >查看送養清單</Link>
-                        <Link to="/memberprofile/closingcaselist" className="text" onClick={this.openNav} >媒合成功清單</Link>
-                        <a className="text logout" onClick={this.signOut} >登出</a>
-                    </div>
-                    <div onClick={this.openNav} style={{flexGrow: '1'}}></div>
-                </SideNavForMember>
+                {this.state.windowWidth > 768 &&
+                    <SideNavForMember style={navStyle}>
+                        <div className="sideNav web">
+                            <a href="javascript:void(0)" className="closebtn" onClick={this.openNav} >&times;</a>
+                            <p className="memberName">Hi！{this.props.profile.firstName}</p>
+                            <Link to="/memberprofile/mypetslist" onClick={this.openNav} >查看領養清單</Link>
+                            <Link to="/memberprofile/fosterlist" onClick={this.openNav} >查看送養清單</Link>
+                            <Link to="/memberprofile/closingcaselist" onClick={this.openNav} >媒合成功清單</Link>
+                            <a className="logout" onClick={this.signOut} >登出</a>
+                        </div>
+                        <div onClick={this.openNav} style={{ flexGrow: '1' }}></div>
+                    </SideNavForMember>
+                }
+                {this.state.windowWidth <= 425 &&
+                    <SideNavForMember style={navStyle_mobile}>
+                        <div className="sideNav mobile">
+                            <p className="memberName text">Hi！{this.props.profile.firstName}</p>
+                            <Link to='/adoptionBoard'  onClick={this.openNav_mobile} >認領養媒合</Link>
+                            <Link to='/'  onClick={this.openNav_mobile} >公立收容所</Link>
+                            <Link to='/'  onClick={this.openNav_mobile} >走失協尋</Link>
+                            <a className="logout" onClick={this.signOut} >登出</a>
+                        </div>
+                        <div onClick={this.openNav_mobile} style={{ flexGrow: '1' }}></div>
+                    </SideNavForMember>
+                }
                 <ContainerWithoutNav>
                     <div className="mainContent">
-                        {/* <Head clickMemberName={this.openNav} /> */}
+                        <Head clickMemberIcon={this.openNav} clickMemberIcon_mobile={this.openNav_mobile} />
                         <Switch>
                             <Route exact path="/" component={HomePage} />
                             <Route path="/adoptionBoard" component={Dashboard} />
@@ -168,9 +217,9 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-      auth: state.firebase.auth,
-      profile: state.firebase.profile
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
     }
-  }
-  
-  export default connect(mapStateToProps)(App);
+}
+
+export default connect(mapStateToProps)(App);

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
+import { device } from '../../media queries/deviceName';
 
 const SignedOutLinksContent = styled.ul`
   margin-left: 200px;
   display: flex;
   text-align: center;
+  @media ${device.laptop} {
+    flex-grow: 1;
+    margin-left: 0;
+  }
   li {
     flex-grow: 1;
     margin: 0 3vw;
@@ -13,7 +18,7 @@ const SignedOutLinksContent = styled.ul`
   }
 `;
 
-class SignedOutLinks extends React.Component {
+class SignedOutLinks_web extends React.Component {
 
   render() {
     return (
@@ -24,6 +29,4 @@ class SignedOutLinks extends React.Component {
     )
   }
 }
-
-export default SignedOutLinks;
-
+export default SignedOutLinks_web;

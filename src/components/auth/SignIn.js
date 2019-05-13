@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { signIn } from "../../actions/authActions";
 import { Redirect } from "react-router-dom";
+import { device } from "../../media queries/deviceName";
 import '../../style.css'
 
 const InputArea = styled.div`
@@ -12,6 +12,9 @@ const InputArea = styled.div`
     margin: auto;
     form {
         margin: 0;
+        @media ${device.mobileL} {
+            padding: 0;
+        }
     }
     .inputField {
         margin: 10px 0;
@@ -32,7 +35,7 @@ const InputArea = styled.div`
             color: rgb(255, 255, 255);
             width: 100%;
             height: 40px;
-            border-radius: 18px;
+            border-radius: 5px;
             background-color: rgb(156, 150, 114);
             margin-top: 40px;
             font-size: 18px;

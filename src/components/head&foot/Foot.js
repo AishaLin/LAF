@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
+import { device } from '../../media queries/deviceName';
 
 const FootContent = styled.div`
   background-color: #1F1F1F;
   height: fit-content;
   margin-top: 60px;
   text-align: center;
+  @media ${device.tablet} {
+    padding-bottom: 50px; 
+  }
   small {
-      color: #fff;
+      color: rgb(203, 203, 203);
       display: flex;
       width: fit-content;
       margin: 0 auto 10px auto;
-      font-size: 16px;
+      font-size: 12px;
   }
 `;
 const Logo = styled.div`
@@ -26,8 +30,12 @@ const Logo = styled.div`
   width: 50px;
   z-index: 5000;
   margin: 0 auto;
+  @media ${device.tablet} {
+    font-size: 20px; 
+    height: 40px;
+  }
   a{
-    color: #fff;
+    color: rgb(203, 203, 203);
   }
 `;
 

@@ -12,6 +12,7 @@ import { Redirect } from "react-router-dom";
 import '../../style.css'
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import { device } from "../../media queries/deviceName";
 
 const Container = styled.div`
     -webkit-box-shadow: 6px 11px 10px -4px rgba(102,100,102,0.2);
@@ -23,6 +24,10 @@ const Container = styled.div`
     margin: 5vh auto 0px auto;
     border-radius: 10px;
     background-color: #fff;
+    @media ${device.mobileL} {
+        width: 90vw;
+        min-width: 300px;
+    }
     .title {
         color: gray;
         display: flex;

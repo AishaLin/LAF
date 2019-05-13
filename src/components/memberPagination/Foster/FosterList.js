@@ -6,6 +6,7 @@ import { asyncGetProjectAll } from '../../../actions/getData/asyncGetProjectAll'
 import FosterSummary from './FosterSummary';
 import MessageList from '../contactProcess/MessageList'
 import { Redirect } from "react-router-dom";
+import Loader from '../../head&foot/Loader'
 import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const FosterListContent = styled.div`
@@ -17,9 +18,7 @@ const FosterListContent = styled.div`
         padding: 20px;
         width: 100%;
         margin: 20px 0;
-        -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
-        -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
-        box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.3);
+        border: 1px solid rgb(203, 203, 203, 0.5);
     }
 `;
 
@@ -38,7 +37,7 @@ class FosterList extends Component {
         console.log(this.props.auth)
         const { fosterProjects } = this.props;
         if (!this.props.auth.uid) return <Redirect to='/authentication/signin' />
-        if (fosterProjects !== null) {
+        if (fosterProjects) {
             if (fosterProjects.length > 0) {
                 return (
                     <FosterListContent>

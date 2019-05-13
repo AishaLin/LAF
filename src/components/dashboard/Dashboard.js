@@ -8,7 +8,6 @@ import ProjectList from '../projects/ProjectList';
 class Dashboard extends Component {
     render() {
         const { projects } = this.props;
-        console.log("99999", projects)
         if (projects !== undefined) {
             return (
                 <div className="dashboard container" >
@@ -18,7 +17,6 @@ class Dashboard extends Component {
         } else {
             return <Loader />
         }
-
     }
 }
 

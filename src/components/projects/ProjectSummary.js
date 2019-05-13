@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Loader from '../head&foot/Loader';
+import {device} from '../../media queries/deviceName';
 
 const ProjectSummaryContent = styled.div`
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 16px;
     overflow: hidden;
-    -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
-    -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
-    box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
+    box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
     width: 100%;
     transition: transform 0.3s ease-in;
     :hover {
@@ -69,17 +70,22 @@ const ProjectSummaryContent = styled.div`
             font-size: 12px;
             padding: 1px 2px;
             border-radius: 2px;
+            letter-spacing: 0px;
+            @media ${device.laptop} {
+                left: inherit;
+                right: 15px;
+                bottom: 55px;
+            }
+            @media ${device.mobileL} {
+                right: inherit;
+                left: 15px;
+                bottom: 20px;
+            }
         }
     }
 `;
 
 const ProjectSummary = ({ project, index }) => {
-    //時間
-    // const detailtime = project.createdAt.toDate().toString().split(" ")
-    // let time = "";
-    // for (let i = 0; i < 5; i++) {
-    //     time = time + detailtime[i] + " "
-    // }
     if(project.createdAt) {
         return (
             <ProjectSummaryContent>

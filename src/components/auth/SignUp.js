@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signUp } from "../../actions/authActions";
 import styled from 'styled-components';
+import { device } from "../../media queries/deviceName";
 
 const InputArea = styled.div`
     width: 80%;
@@ -10,6 +11,9 @@ const InputArea = styled.div`
     margin: auto;
     form {
         margin: 0;
+        @media ${device.mobileL} {
+            padding: 0;
+        }
     }
     .inputField {
         margin: 10px 0;
@@ -30,7 +34,7 @@ const InputArea = styled.div`
             color: rgb(255, 255, 255);
             width: 100%;
             height: 40px;
-            border-radius: 18px;
+            border-radius: 5px;
             background-color: rgb(156, 150, 114);
             margin-top: 40px;
             font-size: 18px;

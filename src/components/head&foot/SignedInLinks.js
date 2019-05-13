@@ -3,12 +3,17 @@ import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { device } from '../../media queries/deviceName';
 
 const SignedInLinksContent = styled.div`
-  margin-left: 200px;
+  margin-left: 180px;
   display: flex;
   text-align: center;
   align-items: center;
+  @media ${device.laptop} {
+    flex-grow: 1;
+    margin-left: 25px;
+  }
   .text ::before {
     content: '';
     height: 100%;
@@ -16,23 +21,39 @@ const SignedInLinksContent = styled.div`
     vertical-align: middle;
   }
   div {
-    margin-right: 5vw;
+    margin-right: 65px;
     color: #2f3022;
     cursor: pointer;
     img {
       width: 30px;
       margin-right: 10px;
+      @media ${device.laptop} {
+        width: 25px;
+      }
+    }
+    @media ${device.laptopL} {
+      margin: 0 25px 0 0;
+      justify-content: center;
     }
   }
 `;
 
-class SignedInLinks extends Component {
-  
+class SignedInLinks_web extends Component {
+
   render() {
     return (
       <SignedInLinksContent>
-        <div className="btn btn-floating pink lighten-1" onClick={()=> this.props.clickMemberName()}><img src='../src/public/icon_menu.png'/>會員資訊</div>
-        <div><Link to='/post'><img src='../src/public/contract.png'/>刊登發文</Link></div>
+        <div
+          onClick={() => this.props.clickMemberIcon()}>
+          <img
+            src='../src/public/user.png'
+            className='memberIcon' />會員
+        </div>
+        <div>
+          <Link to='/post'>
+            <img src='../src/public/contract.png' />刊登
+          </Link>
+        </div>
       </SignedInLinksContent>
     )
   }
@@ -43,6 +64,5 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => dispatch(signOut())
   }
 }
-
-export default connect(null, mapDispatchToProps)(SignedInLinks);
+export default connect(null, mapDispatchToProps)(SignedInLinks_web);
 

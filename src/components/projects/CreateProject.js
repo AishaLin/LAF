@@ -38,9 +38,6 @@ const CreateProjectContent = styled.form`
         height: 45px;
         min-width: 200px;
         margin-top: 10px;
-        -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-        -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-        box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         :focus {
             background-color: rgb(202, 216, 218, 0.6);
         }

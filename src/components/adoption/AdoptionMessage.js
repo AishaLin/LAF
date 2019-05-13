@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import styled from 'styled-components';
 import { sendAdoptMessage } from "../../actions/adoptionAction";
+import { device } from "../../media queries/deviceName";
 
 const MessagePopup = styled.div`
     position: fixed;
@@ -15,7 +16,7 @@ const MessagePopup = styled.div`
     color: #1e1f21;
     .input-field {
         width: 40vw;
-        min-width: 500px;
+        min-width: 400px;
         height: auto;
         max-height: 90vh;
         background-color: #fff;
@@ -23,6 +24,10 @@ const MessagePopup = styled.div`
         border-radius: 5px;
         padding: 10px;
         overflow: scroll;
+        @media ${device.tablet} {
+            width: 96vw;
+            min-width: 300px;
+        }
         .closebtn {
             text-align: right;
             margin-right: 10px;
