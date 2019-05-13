@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'firebase/auth';
 import { asyncGetProjectAll } from '../../../actions/getData/asyncGetProjectAll';
 import Message from './Message';
+import { device } from "../../../media queries/deviceName";
 import Loader from '../../head&foot/Loader'
 import { requestAffidavit } from "../../../actions/adoptionAction";
 let more = require('../../../../src/public/more.png');
@@ -52,6 +53,9 @@ const MessageListContent = styled.div`
             background-color: rgb(23, 156, 154);
             border: none;
             color: #FFFFFF;
+            @media ${device.tablet} {
+                font-size: 14px;
+            }
             :hover {
                 background-color: rgb(23, 156, 154, 0.85);
             }

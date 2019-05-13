@@ -5,25 +5,41 @@ import firebase from "../../../config/fbConfig";
 import MyPetsSummary from './MyPetsSummary';
 import { Link, Redirect } from "react-router-dom";
 import Loader from "../../head&foot/Loader";
+import { device } from "../../../media queries/deviceName";
 
 const MyPetsListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-top: 15px;
+    @media ${device.mobileL} {
+        justify-content: center;
+    }
 `;
 
 const EachPetContainer = styled.section`
     width: calc((100% - 120px)/4);
+    height: calc((100vw - 120px)/4);
     margin: 0 15px 25px 15px;
-    height: 350px;
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    -webkit-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
-    -moz-box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
-    box-shadow: 5px 5px 13px -1px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
     transition: transform 0.3s ease-in;
+    @media ${device.laptop} {
+        width: calc((100% - 90px)/3);
+        height: calc(100vw/3);
+    }
+    @media ${device.tablet} {
+        width: calc((100% - 60px)/2);
+        height: calc(100vw/2 + 30px);
+    }
+    @media ${device.mobileL} {
+        width: 80%;
+        height: 80vw;
+    }
     :hover {
         transform: translate(-2px, -2px);
     }

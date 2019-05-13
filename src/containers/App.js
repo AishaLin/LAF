@@ -22,6 +22,7 @@ import AdoptionMessage from "../components/adoption/AdoptionMessage";
 import MemberProfile from "../components/dashboard/MemberProfile";
 import Head from "../components/head&foot/Head";
 import Foot from "../components/head&foot/Foot";
+import { device } from "../media queries/deviceName";
 
 const SideNavForMember = styled.div`
     position: fixed;
@@ -72,15 +73,15 @@ const SideNavForMember = styled.div`
     }
     .sideNav.mobile {
         width: 100vw;
-        height: fit-content;
+        height: calc(100vh - 48px);
         background-color: rgb(31, 31, 31);
-        margin-top: 50px;
+        padding-top: 50px;
         .logout {
             position: inherit;
         }
         a,.memberName {
             text-align: center;
-            padding: 10px 20px;
+            padding: 30px 20px;
             font-size: 16px;
         } 
         a:active {
@@ -105,6 +106,9 @@ const ContainerWithoutNav = styled.div`
     transition: margin-left .5s;
     .mainContent {
         flex-grow: 1;
+        @media ${device.mobileL} {
+            padding-top: 50px;
+        }
     }
 `;
 
@@ -123,6 +127,12 @@ class App extends React.Component {
     }
     updateWindowDimensions = () => {
         this.setState({ windowWidth: window.innerWidth });
+    }
+    initialNav = () => {
+        console.log("0000000", this.state)
+        this.setState({
+            openMenu_mobile: false
+        })
     }
     openNav = () => {
         this.setState((prevState) => ({
@@ -180,19 +190,18 @@ class App extends React.Component {
                 }
                 {this.state.windowWidth <= 425 &&
                     <SideNavForMember style={navStyle_mobile}>
-                        <div className="sideNav mobile">
-                            <p className="memberName text">Hi！{this.props.profile.firstName}</p>
-                            <Link to='/adoptionBoard'  onClick={this.openNav_mobile} >認領養媒合</Link>
-                            <Link to='/'  onClick={this.openNav_mobile} >公立收容所</Link>
-                            <Link to='/'  onClick={this.openNav_mobile} >走失協尋</Link>
-                            <a className="logout" onClick={this.signOut} >登出</a>
+                        <div className="sideNav mobile" onClick={this.openNav_mobile} >
+                            {this.props.auth.uid && <p className="memberName text">Hi！{this.props.profile.firstName}</p>}
+                            <Link to='/adoptionBoard'>認領養媒合</Link>
+                            <Link to='/'>公立收容所</Link>
+                            <Link to='/'>走失協尋</Link>
+                            {this.props.auth.uid && <a className="logout" onClick={this.signOut} >登出</a>}
                         </div>
-                        <div onClick={this.openNav_mobile} style={{ flexGrow: '1' }}></div>
                     </SideNavForMember>
                 }
                 <ContainerWithoutNav>
                     <div className="mainContent">
-                        <Head clickMemberIcon={this.openNav} clickMemberIcon_mobile={this.openNav_mobile} />
+                        <Head clickMemberIcon={this.openNav} clickMemberIcon_mobile={this.openNav_mobile} initialNav_mobile={this.initialNav}/>
                         <Switch>
                             <Route exact path="/" component={HomePage} />
                             <Route path="/adoptionBoard" component={Dashboard} />

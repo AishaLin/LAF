@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { cancelPreAdopter } from "../../../actions/adoptionAction";
-import firebase from "../../../config/fbConfig"
+import { device } from "../../../media queries/deviceName";
 import styled from "styled-components";
 
 const MessageContainer = styled.div`
@@ -13,6 +12,9 @@ const MessageContainer = styled.div`
         margin: 2px 0;
         background-color: rgb(203, 203, 203, 0.1);
         border-radius: 3px;
+        @media ${device.tablet} {
+            font-size: 14px;
+        }
         .selected {
             border: 3px solid black;
         }
@@ -26,21 +28,38 @@ const MessageContainer = styled.div`
             display: flex;
             flex-wrap: wrap;
             flex-grow: 1;
+            @media ${device.mobileL} {
+                flex-direction: column;
+            }
             .contactMethods {
                 display: flex;
+                flex-grow: 1;
                 flex-wrap: wrap;
                 width: calc(100% - 300px);
+                @media ${device.mobileL} {
+                    width: 100%;
+                }
             }
             p {
                 width: 200px;
                 padding-right: 10px;
                 text-align: left;
                 line-height: 1.7;
+                @media ${device.mobileL} {
+                    width: 100%;
+                }
             }
             .requestTime {
                 text-align: right;
-                width: 300px;
+                width: 150px;
                 color: #fff;
+                @media ${device.tablet} {
+                    width: 130px;
+                }
+                @media ${device.mobileL} {
+                    text-align: left;
+                    width: 100%;
+                }
             }
         }
         .button {
@@ -70,7 +89,18 @@ class Message extends Component {
         selected: false,
         preAdopter: '',
         project: this.props.message.item.project,
-        preAdopterName: this.props.message.item.requesterLastName + this.props.message.item.requesterFirstName
+        preAdopterName: this.props.message.item.requesterLastName + this.props.message.item.requesterFirstName,
+        windowWidth: ''
+    }
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    updateWindowDimensions = () => {
+        this.setState({ windowWidth: window.innerWidth });
     }
     clickHandeler = (e) => {
         this.clearSelectedColor().then(() => {
@@ -99,12 +129,9 @@ class Message extends Component {
     render() {
         const { requester, requesterLastName, requesterFirstName, phoneNumber, email, lineID, facebook, content, createdAt } = this.props.message.item
         const { adoptionStage, preAdopter, preAdopterStage3 } = this.props.project.item;
-        //時間
-        const detailtime = createdAt.toDate().toString().split(" ")
-        let time = "";
-        for (let i = 0; i < 5; i++) {
-            time = time + detailtime[i] + " "
-        }
+        const postedtime = createdAt.toDate().toLocaleString()
+        const postedtime_mobile = postedtime.split(" ")[0]
+
         console.log('this.props.preAdopter', this.props.preAdopter)
         return (
             <MessageContainer >
@@ -117,7 +144,8 @@ class Message extends Component {
                             {lineID !== "" && <p>Line ID：{lineID}</p>}
                             {facebook !== "" && <p>Facebook：{facebook}</p>}
                         </div>
-                        <p className="requestTime" >{createdAt.toDate().toLocaleString()}</p>
+                        {this.state.windowWidth >= 768 && <p className="requestTime" >{postedtime}</p>}
+                        {this.state.windowWidth < 768 && <p className="requestTime" >{postedtime_mobile}</p>}
                     </div>
                     <div className='button'>
                         {adoptionStage === 2 && preAdopter === requester &&

@@ -52,6 +52,9 @@ const InputArea = styled.div`
                 height: 38px;
             }
         }
+        .errorHint {
+            color: red;
+        }
     }
 `;
 
@@ -85,7 +88,7 @@ class SignIn extends Component {
                     </div>
                     <div className="inputField">
                         <button className="confirmBtn">確認</button>
-                        <div className="red-text center">
+                        <div className="errorHint">
                             {authError ? <p>{authError}</p> : null}
                         </div>
                     </div>

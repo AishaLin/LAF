@@ -298,7 +298,7 @@ class HomePage extends React.Component {
                         <h1>Lost and Found</h1>
                     </div>
                     <img className="colorfullCat_picture" src="../src/public/colorful-cat.jpeg" />
-                    <div className="circleOutline_div"></div>
+                    {this.state.windowWidth > 425 &&<div className="circleOutline_div"></div>}
                     <button className="aboutMe_btn" onClick={this.scrollToAboutMe}>關於我們</button>
                 </Section_1>
                 <Section_2>

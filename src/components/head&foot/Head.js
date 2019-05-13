@@ -27,6 +27,8 @@ const HeadContent = styled.div`
   @media ${device.mobileL} {
     justify-content: center;
     height: 50px;
+    z-index: 5500;
+    position: fixed;
   }
   :before {
     content : "";
@@ -36,6 +38,9 @@ const HeadContent = styled.div`
     height  : 2px;
     width   : 42vw;
     border-bottom: 2px solid lightgrey;
+    @media ${device.mobileL} {
+      display: none;
+    }
   }
   :after {
     content : "";
@@ -45,6 +50,9 @@ const HeadContent = styled.div`
     height  : 1px;
     width   : 100vw;
     border-bottom: 1px solid lightgrey;
+    @media ${device.mobileL} {
+      display: none;
+    }
   }
   .scrollToTop {
     position: fixed;
@@ -65,7 +73,7 @@ const HeadContent = styled.div`
     }
   }
   .menuIcon_mobile {
-    position: absolute;
+    position: fixed;
     right: 10px;
     width: 40px;
     top: 5px;
@@ -124,8 +132,10 @@ const Logo = styled.div`
   a {
     color: #fff;
   }
-  @media ${device.laptop} {
+  @media ${device.laptopL} {
     position: inherit;
+  }
+  @media ${device.laptop} {
     width: 100px;
     height: 100%;
     line-height: 95px;
@@ -138,7 +148,9 @@ const Logo = styled.div`
   @media ${device.mobileL} {
     justify-content: center;
     width: 100vw;
+    height: 50px;
     line-height: 50px;
+    z-index: 5500;
   }
 `;
 
@@ -165,7 +177,7 @@ class Head extends Component {
   render() {
     const { auth, profile } = this.props;
     const Authlinks_web = auth.uid ? <SignedInLinks_web profile={profile} clickMemberIcon={() => this.props.clickMemberIcon()} /> : <SignedOutLinks_web />
-    const Authlinks_mobile = auth.uid ? <SignedInLinks_mobile profile={profile} /> : <SignedOutLinks_mobile />
+    const Authlinks_mobile = auth.uid ? <SignedInLinks_mobile profile={profile} initialNav={() => this.props.initialNav_mobile()}/> : <SignedOutLinks_mobile initialNav={() => this.props.initialNav_mobile()}/>
     return (
       <HeadContent>
         <Logo><Link to='/'>Laf</Link></Logo>

@@ -15,27 +15,40 @@ import FosterList from '../memberPagination/Foster/FosterList';
 import ClosingCaseList from '../memberPagination/ClosingCase/ClosingCaseList';
 import clearRecord from '../../actions/clearRecordAction'
 import Loader from "../head&foot/Loader";
+import { device } from "../../media queries/deviceName";
 
 const MemberInformation = styled.div`
-    width: 80%;
-    margin: 50px auto 20px auto;
+    width: 75%;
+    margin: 40px auto 20px auto;
     text-align: center;
-    h1 {
-        font-size: 32px;
-        margin-bottom: 25px;
+    @media ${device.laptop} {
+        width: 90%;
+    }
+    @media ${device.mobileL} {
+        margin-top: 0;
     }
     .listBtns {
         display: flex;
         margin-top: 30px;
+        @media ${device.mobileL} {
+            flex-direction: column;
+        }
         .eachList_btn {
             flex-grow: 1;
             border-radius: 20px 20px 0 0;
             height: 60px;
             letter-spacing: 5px;
             font-size: 24px;
-            -webkit-box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
-            -moz-box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
-            box-shadow: 15px 0px 10px -10px rgba(0,0,0,0.14);
+            -webkit-box-shadow: 10px 0px 10px -10px rgba(0,0,0,0.1);
+            -moz-box-shadow: 10px 0px 10px -10px rgba(0,0,0,0.1);
+            box-shadow: 10px 0px 10px -10px rgba(0,0,0,0.1);
+            @media ${device.laptop} {
+                font-size: 20px;
+                height: 45px;
+            }
+            @media ${device.mobileL} {
+                border-radius: 0;
+            }
             :before {
                 content: '';
                 height: 100%;
@@ -44,6 +57,9 @@ const MemberInformation = styled.div`
             }
             :not(.first_btn) {
                 margin-left: -5px;
+                @media ${device.mobileL} {
+                    margin-left: 0;
+                }
             }
         }
     }
@@ -51,9 +67,9 @@ const MemberInformation = styled.div`
         border-top: 5px solid #fff;
         padding: 35px 20px;
         background-color: #fff;
-        -webkit-box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
-        -moz-box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
-        box-shadow: 15px 10px 10px -10px rgba(0,0,0,0.14);
+        -webkit-box-shadow: 10px 10px 10px -10px rgba(0,0,0,0.1);
+        -moz-box-shadow: 10px 10px 10px -10px rgba(0,0,0,0.1);
+        box-shadow: 10px 10px 10px -10px rgba(0,0,0,0.1);
         z-index: 10000;
     }
 `;

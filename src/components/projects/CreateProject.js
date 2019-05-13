@@ -220,6 +220,9 @@ const CreateProjectContent = styled.form`
         }
     }     
     .section_3_textArea {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         .input-field {
             margin: 20px 0 30px 0;
             .multi-textarea {
@@ -232,7 +235,7 @@ const CreateProjectContent = styled.form`
             font-size: 18px;
             letter-spacing: 3px;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             height: 45px;
             border-radius: 22.5px;
             background-color: rgb(23, 156, 154);

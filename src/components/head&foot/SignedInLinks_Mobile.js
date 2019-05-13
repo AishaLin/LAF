@@ -8,7 +8,8 @@ const SignedInLinksContent = styled.div`
   z-index: 5000;
   background-color: #fff;
   position: fixed;
-  bottom: 0;
+  bottom: -2px;
+  left: 0;
   display: flex;
   text-align: center;
   align-items: center;
@@ -37,13 +38,18 @@ class SignedInLinks_mobile extends Component {
     return (
       <SignedInLinksContent>
         <div>
-          <Link to='/memberprofile/mypetslist'>
+          <Link to='/memberprofile/mypetslist'
+            onClick={() => this.props.initialNav()}>
             <img
               src='../src/public/user.png'
               className='memberIcon' />會員
           </Link>
         </div>
-        <div><Link to='/post'><img src='../src/public/contract.png' />刊登</Link></div>
+        <div>
+          <Link to='/post'
+            onClick={() => this.props.initialNav()}>
+            <img src='../src/public/contract.png' />刊登
+          </Link></div>
       </SignedInLinksContent>
     )
   }
