@@ -7,7 +7,6 @@ import {device} from '../../media queries/deviceName'
 const ProjectListContent = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     width: 80vw;
     max-width: 1200px;
     margin: 60px auto 20px auto;
@@ -19,6 +18,9 @@ const ProjectListContent = styled.div`
     }
     @media ${device.tablet} {
         width: 95vw;
+    }
+    @media ${device.mobileL} {
+        justify-content: center;
     }
     .eachProjectFrame {
         width: calc((100% - 12%) / 3 );
