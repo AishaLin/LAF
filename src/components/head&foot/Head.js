@@ -7,6 +7,7 @@ import SignedInLinks_mobile from './SignedInLinks_Mobile';
 import SignedOutLinks_mobile from './SignedOutLinks.Mobile';
 import { connect } from "react-redux";
 import { device } from '../../media queries/deviceName';
+let menu = require('../../../src/public/menu.png');
 
 const HeadContent = styled.div`
   display: flex;
@@ -183,6 +184,7 @@ class Head extends Component {
         <Logo><Link to='/'>Laf</Link></Logo>
         {this.state.windowWidth > 1024 && <div className="scrollToTop" onClick={this.scrollToTop}>back to top.</div>}
         {this.state.windowWidth > 768 && Authlinks_web}
+        {this.state.windowWidth > 425 && this.state.windowWidth <= 768 && <SignedInLinks_web/>}
         {this.state.windowWidth > 425 &&
           <ul className="mainNav">
             <li><Link to='/adoptionBoard'>認領養媒合</Link></li>
@@ -190,7 +192,7 @@ class Head extends Component {
             <li><Link to='/' className='comingSoon'>走失協尋</Link></li>
           </ul>
         }
-        {this.state.windowWidth <=425 && <img src='../src/public/menu.png' className='menuIcon_mobile' onClick={()=> this.props.clickMemberIcon_mobile()}/>}
+        {this.state.windowWidth <=425 && <img src={menu} className='menuIcon_mobile' onClick={()=> this.props.clickMemberIcon_mobile()}/>}
         {this.state.windowWidth <= 768 && Authlinks_mobile}
       </HeadContent>
     )

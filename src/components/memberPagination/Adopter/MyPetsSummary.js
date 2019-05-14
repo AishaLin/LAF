@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import firebase from "../../../config/fbConfig"
-import Affidavit_pdf from "../../adoption/Affidavit_pdf";
+import { device } from "../../../media queries/deviceName";
 
 const MyPetsSummaryContent = styled.div`
   display: flex;
@@ -37,6 +36,12 @@ const DetailInformation = styled.section`
       padding: 4px 2px 0 2px;
       letter-spacing: 2px;
       background: url('http://www.blogfuntw.com/wp-content/uploads/underline_yelbig.gif') repeat-x bottom;
+      @media ${device.tablet} {
+        font-size: 18px;
+      }
+      @media ${device.mobileL} {
+        font-size: 16px;
+      }
     }
 `;
 

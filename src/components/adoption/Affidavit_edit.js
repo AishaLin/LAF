@@ -4,15 +4,22 @@ import { connect } from "react-redux";
 import 'firebase/auth';
 import { asyncGetSpecificProjectAll } from '../../actions/getData/asyncGetSpecificProject';
 import { returnAffidavit } from '../../actions/adoptionAction';
-import Loader from '../head&foot/Loader'
+import Loader from '../head&foot/Loader';
+import { device } from "../../media queries/deviceName";
 
 const MainContainer = styled.div`
+    width: 95vw;
+    margin: 0 auto;
     .completed_btn {
         width: fit-content;
         margin: 0 auto;
         display: flex;
+        text-align: center;
         flex-direction: column;
         justify-content: center;
+        @media ${device.mobileL} {
+            font-size: 14px;
+        }
         button {
             margin: 20px auto 0 auto;
             width: 300px;
@@ -22,6 +29,9 @@ const MainContainer = styled.div`
             background-color: rgb(23, 156, 154);
             color: #FFFFFF;
             cursor: pointer;
+            @media ${device.mobileL} {
+                font-size: 14px;
+            }
             :hover {
                 background-color: rgb(23, 156, 154, 0.85);
             }
@@ -32,23 +42,28 @@ const MainContainer = styled.div`
 const AffidavitContent = styled.div`
     overflow: scroll;
     margin: 50px auto;
-    width: fit-content;
     .overContainer {
         width: 900px;
         height: 1250px;
         background-color: #fff;
-        margin: 20px;
+        margin: 20px auto;
         line-height: 1.7;
         font-size: 16px;
         padding: 30px 20px;
-        -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-        -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
-        box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+        -webkit-box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.1);
+        -moz-box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.1);
+        box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.1);
+        @media ${device.mobileL} {
+            font-size: 14px;
+        }
         .title {
             margin-bottom: 10px;
             h3 {
                 font-size: 18px;
                 font-weight: bold;
+                @media ${device.mobileL} {
+                    font-size: 16px;
+                }
             }
         }
         ul {

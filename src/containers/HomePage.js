@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { device } from '../media queries/deviceName';
-import '../style.css'
+import '../style.css';
+let colorfulCat = require('../public/colorfulCat.jpeg');
 
 const HomePageContent = styled.div`
     letter-spacing: 5px;
@@ -63,6 +64,9 @@ const Section_1 = styled.div`
         width: 58vw;
         z-index: -11;
         background-color: #E8E7E2;
+        @media ${device.laptop} {
+            height: 90vh;
+        }
     }
     .slogan {
         font-family: 'Permanent Marker', cursive;
@@ -72,6 +76,15 @@ const Section_1 = styled.div`
         font-size: 60px;
         z-index:1;
         text-shadow: 10px 10px 10px lightgray;
+        @media ${device.tablet} {
+            font-size: 40px;
+        }
+        @media ${device.mobileL} {
+            font-size: 32px;
+        }
+        @media ${device.mobileS} {
+            top: 25px;
+        }
     }
     .colorfullCat_picture {
         position: absolute;
@@ -80,6 +93,13 @@ const Section_1 = styled.div`
         -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
         -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
         box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+        @media ${device.laptop} {
+            width: 70vw;
+            top: 25vh;
+        }
+        @media ${device.mobileS} {
+            top: 30vh;
+        }
     }
     .circleOutline_div {
         width: 450px;
@@ -100,9 +120,9 @@ const Section_1 = styled.div`
         top: 45vh;
         height: 50px;
         width: 200px;
+        border-radius: 25px;
         background-color: rgb(144, 116, 0);
         z-index: 5;
-        border-radius: 25px;
         color: #fff;
         font-size: 20px;
         letter-spacing: 5px;
@@ -114,13 +134,30 @@ const Section_1 = styled.div`
         :hover {
             background-color: rgb(144, 116, 0, 0.9);
         }
+        @media ${device.laptop} {
+            top: 80vh;
+        }
+        @media ${device.mobileL} {
+            top: 70vh;
+            font-size: 14px;
+            height: 30px;
+            width: 100px;
+            border-radius: 15px;
+            letter-spacing: 2px;
+        }
+        @media ${device.mobileS} {
+            top: 75vh;
+        }
     }
 `;
 
 const Section_2 = styled.div`
     margin-top: 150px;
     position: relative;
-    height: 52vw; 
+    height: 52vw;
+    @media ${device.mobileL} {
+        height: 100vh;
+    } 
     .leftColorBlock {
         position: absolute;
         height: 90%; 
@@ -136,8 +173,16 @@ const Section_2 = styled.div`
         width: 80%;
         z-index: 2000;
         padding-top: 30px;
-        .shelterPicture {
+        @media ${device.laptop} {
             height: 80%;
+        }
+        @media ${device.mobileL} {
+            height: 100%;
+            top: 0;
+            left: 10%;
+        }
+        .shelterPicture {
+            height: 90%;
             width: 60%;
             margin-top: 40px;
             margin-left: 10%;
@@ -149,27 +194,64 @@ const Section_2 = styled.div`
             -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
             -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
             box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+            @media ${device.laptop} {
+                height: 100%;
+                width: 70%;
+            }
+            @media ${device.mobileL} {
+                width: 85vw;
+                height: calc(85vw * 0.7);
+                margin: 40px auto 0 auto;
+                -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);
+                -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);
+                box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.15);
+            }
         }
         h3 {
             font-size: 32px;
             margin-bottom: 20px;
+            @media ${device.tablet} {
+                font-size: 24px;
+            }
+            @media ${device.mobileL} {
+                font-size: 18px;
+            }
         }
         span,p {
             font-size: 20px;
             margin-bottom: 10px;
+            @media ${device.tablet} {
+                font-size: 16px;
+            }
+            @media ${device.mobileL} {
+                font-size: 14px;
+            }
         }
     }
 `;
 
 const Section_3 = styled.div`
-    margin-top: 180px;
+    margin-top: 220px;
+    @media ${device.laptop} {
+        margin-top: 400px;
+    }
+    @media ${device.mobileL} {
+        margin-top: 100px;
+    }
     .parallax { 
-        height: 80vh;
+        height: 600px;
         background-image: url("../src/public/grass-dog-cat.jpg");
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        @media ${device.tablet} {
+            height: 450px;
+        }
+        @media ${device.mobileL} {
+            background-attachment: scroll;
+            height: 550px;
+        }
     }
     .scrollArea {
         padding-top: 100px;
@@ -177,14 +259,29 @@ const Section_3 = styled.div`
         text-align: center;
         font-size: 32px;
         position: relative;
+        @media ${device.tablet} {
+            font-size: 28px;
+        }
+        @media ${device.mobileL} {
+            font-size: 20px;
+        }
         .textInSiteParallaxArea {
             text-align: center;
-            position: absolute;
-            top: 20vh;
-            left: 0;
+            margin: -550px 0 150px 0;
             height: 50vh;
             width: 100%;
-            margin-top: calc(-100px - 65vh);
+            @media ${device.laptopL} {
+                margin: -520px 0 150px 0;
+            }
+            @media ${device.laptopL} {
+                margin: -520px 0 100px 0;
+            }
+            @media ${device.tablet} {
+                margin: -480px 0 50px 0;
+            }
+            @media ${device.mobileL} {
+                margin: -580px 0 250px 0;
+            }
             .textAboutShelter {
                 display: flex;
                 justify-content: center;
@@ -195,27 +292,54 @@ const Section_3 = styled.div`
                 .keepcenter {
                     height: fit-content;
                 }
+                @media ${device.tablet} {
+                    padding: 25px 0;
+                }
             }
             h3 {
                 font-size: 22px;
                 color: #fff;
                 text-shadow: 1px 1px 1px #000;
+                @media ${device.tablet} {
+                    font-size: 18px;
+                }
+                @media ${device.mobileL} {
+                    font-size: 16px;
+                }
             }
             h1 {
                 font-size: 32px;
                 color: #fff;
                 text-shadow: 1px 1px 1px #000;
                 margin: 10px 0;
+                @media ${device.tablet} {
+                    font-size: 26px;
+                }
+                @media ${device.mobileL} {
+                    font-size: 20px;
+                }
             }
             h2 {
                 font-size: 20px;
                 color: #444444;
+                @media ${device.tablet} {
+                    font-size: 16px;
+                }
+                @media ${device.mobileL} {
+                    font-size: 14px;
+                }
             }
             h6 {
                 font-size: 16px;
                 background-color: none;
                 padding-top: 15px;
                 color: #c74b16;
+                @media ${device.tablet} {
+                    font-size: 14px;
+                }
+                @media ${device.mobileL} {
+                    font-size: 13px;
+                }
             }
         }
         .contactToShelter {
@@ -237,6 +361,20 @@ const Section_3 = styled.div`
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
+                @media ${device.laptop} {
+                    margin: 20px 30px;
+                    width: 30vw;
+                    height: 20vw;
+                }
+                @media ${device.tablet} {
+                    margin: 25px;
+                    width: 38vw;
+                    height: 27vw;
+                    font-size: 24px;
+                }
+                @media ${device.mobileL} {
+                    font-size: 18px;
+                }
                 ::before {
                     content:'';
                     display: inline-block;
@@ -297,7 +435,7 @@ class HomePage extends React.Component {
                         <h1>Love and Find</h1>
                         <h1>Lost and Found</h1>
                     </div>
-                    <img className="colorfullCat_picture" src="../src/public/colorful-cat.jpeg" />
+                    <img className="colorfullCat_picture" src={colorfulCat} />
                     {this.state.windowWidth > 425 &&<div className="circleOutline_div"></div>}
                     <button className="aboutMe_btn" onClick={this.scrollToAboutMe}>關於我們</button>
                 </Section_1>

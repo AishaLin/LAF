@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import firebase from "../../config/fbConfig"
+import firebase from "../../config/fbConfig";
+import { device } from "../../media queries/deviceName";
 
 const AffidavitContent = styled.div`
     overflow: scroll;
@@ -16,11 +17,17 @@ const AffidavitContent = styled.div`
         -webkit-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         -moz-box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
         box-shadow: 2px 6px 19px -4px rgba(0,0,0,0.14);
+        @media ${device.mobileL} {
+            font-size: 14px;
+        }
         .title {
             margin-bottom: 10px;
             h3 {
                 font-size: 18px;
                 font-weight: bold;
+                @media ${device.mobileL} {
+                    font-size: 16px;
+                }
             }
         }
         ul {

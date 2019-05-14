@@ -48,6 +48,7 @@ const MemberInformation = styled.div`
             }
             @media ${device.mobileL} {
                 border-radius: 0;
+                font-size: 18px;
             }
             :before {
                 content: '';

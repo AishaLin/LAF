@@ -7,9 +7,9 @@ const SignedOutLinksContent = styled.ul`
   margin-left: 200px;
   display: flex;
   text-align: center;
-  @media ${device.laptop} {
+  @media ${device.laptopL} {
     flex-grow: 1;
-    margin-left: 0;
+    margin-left: 0px;
   }
   li {
     flex-grow: 1;

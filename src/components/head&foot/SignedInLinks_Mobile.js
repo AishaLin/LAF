@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+let contract = require('../../../src/public/contract.png');
+let user = require('../../../src/public/user.png');
 
 const SignedInLinksContent = styled.div`
   z-index: 5000;
@@ -41,14 +43,14 @@ class SignedInLinks_mobile extends Component {
           <Link to='/memberprofile/mypetslist'
             onClick={() => this.props.initialNav()}>
             <img
-              src='../src/public/user.png'
+              src={user}
               className='memberIcon' />會員
           </Link>
         </div>
         <div>
           <Link to='/post'
             onClick={() => this.props.initialNav()}>
-            <img src='../src/public/contract.png' />刊登
+            <img src={contract} />刊登
           </Link></div>
       </SignedInLinksContent>
     )

@@ -39,6 +39,7 @@ const EachPetContainer = styled.section`
     @media ${device.mobileL} {
         width: 80%;
         height: 80vw;
+        font-size: 14px;
     }
     :hover {
         transform: translate(-2px, -2px);

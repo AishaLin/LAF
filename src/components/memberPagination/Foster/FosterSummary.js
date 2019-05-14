@@ -42,6 +42,9 @@ const FosterSummaryContent = styled.div`
             position: relative;
             font-size: 18px;
             @media ${device.tablet} {
+                font-size: 18px;
+            }
+            @media ${device.mobileL} {
                 font-size: 16px;
             }
             .postedTime {

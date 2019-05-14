@@ -7,9 +7,9 @@ const ProjectSummaryContent = styled.div`
     background-color: #fff;
     border-radius: 16px;
     overflow: hidden;
-    -webkit-box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
-    -moz-box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
-    box-shadow: 3px 5px 13px -1px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
     width: 100%;
     transition: transform 0.3s ease-in;
     :hover {
