@@ -2,7 +2,6 @@ import firebase from "../config/fbConfig"
 
 export const createProject = (project) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
-        //make async call to database
         const firestore = getFirestore(); //初始化
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;

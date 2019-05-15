@@ -31,8 +31,33 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
+                        // options: {
+                        //     name: '[path][name].[ext]'
+                        // }
+                    },
+                    {
+                        loader: 'url-loader',
                         options: {
-                            limit: 8192
+                            limit: 8192,
+                        }
+                    },
+                    {
+                        loader: 'image-webpack-loader', //加入image-webpack-loader設定
+                        options: {
+                            mozjpeg: { //jpg
+                                progressive: true,
+                                quality: 65 //品質
+                            },
+                            optipng: { //png
+                                enabled: false,
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            },
+                            gifsicle: { //gif
+                                interlaced: false,
+                            }
                         }
                     }
                 ]

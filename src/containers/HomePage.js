@@ -186,7 +186,7 @@ const Section_2 = styled.div`
             width: 60%;
             margin-top: 40px;
             margin-left: 10%;
-            background-image: url("../src/public/nature-girl-kid-puppy-dog-cute-680162-pxhere.com.jpg");
+            background-image: url("../src/public/GirlPuppyDog.jpg");
             background-attachment: scroll;
             background-position: top;
             background-repeat: no-repeat;
@@ -240,7 +240,7 @@ const Section_3 = styled.div`
     }
     .parallax { 
         height: 600px;
-        background-image: url("../src/public/grass-dog-cat.jpg");
+        background-image: url("../src/public/grassDogCat.jpg");
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
@@ -391,16 +391,16 @@ const Section_3 = styled.div`
                 }
             }
             .north {
-                background-image: url("../src/public/Shelter_north.jpg");
+                background-image: url("../src/public/ShelterNorth.jpg");
             }
             .central {
-                background-image: url("../src/public/Shelter_central.jpeg");
+                background-image: url("../src/public/ShelterCentral.jpeg");
             }
             .east {
-                background-image: url("../src/public/Shelter_east.jpg");
+                background-image: url("../src/public/ShelterEast.jpg");
             }
             .south {
-                background-image: url("../src/public/Shelter_south.jpg");
+                background-image: url("../src/public/ShelterSouth.jpg");
             }
         }
     } 
