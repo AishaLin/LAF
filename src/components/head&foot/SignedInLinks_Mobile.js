@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
-let contract = require('../../../src/public/contract.png');
-let user = require('../../../src/public/user.png');
+let contract = require('../../public/contract.png');
+let user = require('../../public/user.png');
 
 const SignedInLinksContent = styled.div`
   z-index: 5000;

@@ -7,7 +7,7 @@ import SignedInLinks_mobile from './SignedInLinks_Mobile';
 import SignedOutLinks_mobile from './SignedOutLinks.Mobile';
 import { connect } from "react-redux";
 import { device } from '../../media queries/deviceName';
-let menu = require('../../../src/public/menu.png');
+let menu = require('../../public/menu.png');
 
 const HeadContent = styled.div`
   display: flex;

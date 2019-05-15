@@ -30,12 +30,6 @@ module.exports = {
                 test: /\.(png|jpg|gif|jpeg)$/i,
                 use: [
                     {
-                        loader: 'file-loader',
-                        // options: {
-                        //     name: '[path][name].[ext]'
-                        // }
-                    },
-                    {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import firebase from "../../config/fbConfig"
 import { device } from '../../media queries/deviceName';
-let contract = require('../../../src/public/contract.png');
-let user = require('../../../src/public/user.png');
+let contract = require('../../public/contract.png');
+let user = require('../../public/user.png');
 
 const SignedInLinksContent = styled.div`
   .web {

@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { device } from '../media queries/deviceName';
 import '../style.css';
-let colorfulCat = require('../public/colorfulCat.jpeg');
+let GirlPuppyDog = require("../public/GirlPuppyDog.jpg");
+let grassDogCat = require('../public/grassDogCat.jpg');
+let colorfulCat = require('../../src/public/colorfulCat.jpeg');
+let ShelterNorth = require('../public/ShelterNorth.jpg');
+let ShelterCentral = require('../public/ShelterCentral.jpeg');
+let ShelterEast = require('../public/ShelterEast.jpg');
+let ShelterSouth = require('../public/ShelterSouth.jpg');
 
 const HomePageContent = styled.div`
     letter-spacing: 5px;
@@ -186,7 +192,7 @@ const Section_2 = styled.div`
             width: 60%;
             margin-top: 40px;
             margin-left: 10%;
-            background-image: url("../src/public/GirlPuppyDog.jpg");
+            background-image: url(${GirlPuppyDog});
             background-attachment: scroll;
             background-position: top;
             background-repeat: no-repeat;
@@ -240,7 +246,7 @@ const Section_3 = styled.div`
     }
     .parallax { 
         height: 600px;
-        background-image: url("../src/public/grassDogCat.jpg");
+        background-image: url(${grassDogCat});
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
@@ -391,16 +397,16 @@ const Section_3 = styled.div`
                 }
             }
             .north {
-                background-image: url("../src/public/ShelterNorth.jpg");
+                background-image: url(${ShelterNorth});
             }
             .central {
-                background-image: url("../src/public/ShelterCentral.jpeg");
+                background-image: url(${ShelterCentral});
             }
             .east {
-                background-image: url("../src/public/ShelterEast.jpg");
+                background-image: url(${ShelterEast});
             }
             .south {
-                background-image: url("../src/public/ShelterSouth.jpg");
+                background-image: url(${ShelterSouth});
             }
         }
     } 

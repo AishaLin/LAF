@@ -7,8 +7,8 @@ import Message from './Message';
 import { device } from "../../../media queries/deviceName";
 import Loader from '../../head&foot/Loader'
 import { requestAffidavit } from "../../../actions/adoptionAction";
-let more = require('../../../../src/public/more.png');
-let more_non = require('../../../../src/public/more_non.png');
+let more = require('../../../public/more.png');
+let more_non = require('../../../public/more_non.png');
 
 
 const ClickForMoreBtn = styled.div` 

@@ -104,10 +104,10 @@ class MyPetsList extends Component {
                                         <Link to={'/project/' + project.id} >
                                             <MyPetsSummary project={project} index={project.id} />
                                         </Link>
-                                        {item.adoptionStage === 1 && item.preAdopter !== this.props.auth.uid &&
+                                        {item.adoptionStage !== 4 && item.preAdopter !== auth.uid &&
                                             <p className='adoptionStage'>請與送養人聯繫接洽</p>
                                         }
-                                        {item.adoptionStage === 2 && item.preAdopter === this.props.auth.uid &&
+                                        {item.adoptionStage === 2 && item.preAdopter === auth.uid &&
                                             <p className='adoptionStage'>送養人已發出簽署切結書邀請
                                                 <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
                                                     查閱切結書內容
@@ -117,7 +117,7 @@ class MyPetsList extends Component {
                                         {item.adoptionStage === 3 && item.preAdopterStage3 === auth.uid &&
                                             <p className='adoptionStage'>待送養人簽署並回傳切結書後，就完成領養手續了！</p>
                                         }
-                                        {item.adoptionStage === 4 &&
+                                        {item.adoptionStage === 4 && item.adopterID === auth.uid &&
                                             <p className='adoptionStage' style={{color:'rgb(23, 156, 154)'}}>定期與原飼主分享近況</p>
                                         }
                                 </EachPetContainer>
@@ -144,53 +144,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, null)(MyPetsList);
-
-// {notifiedProject && notifiedProject.map((project) => {
-//     const { item } = project
-//     if (item.adoptionStage !== 4) {
-//         return (
-//             <section key={project.id} >
-//                 <Link to={'/project/' + project.id} >
-//                     <MyPetsSummary project={project} index={project.id} />
-//                 </Link>
-//                 {item.adoptionStage === 1 || item.adoptionStage === 2 && item.preAdopter !== this.props.auth.uid && <button>快與送養人接洽相親時間唷！</button>}
-//                 {item.adoptionStage === 2 && item.preAdopter === this.props.auth.uid &&
-//                     <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
-//                         <button>送養人已發出簽署切結書邀請，請點我查閱切結書內容</button>
-//                     </Link>
-//                 }
-//                 {item.adoptionStage === 3 && <button>待送養人簽署並回傳切結書後，就完成領養手續了！</button>}
-//             </section>
-//         )
-//     }
-// })}
-// {notifiedProject && notifiedProject.map((project) => {
-//     const { item } = project
-//     if (item.adoptionStage === 4) {
-//         //時間
-//         const detailtime = item.createdAt.toDate().toString().split(" ")
-//         let time = "";
-//         for (let i = 0; i < 5; i++) {
-//             time = time + detailtime[i] + " "
-//         }
-//         return (
-//             //之後要連接近況更新頁
-//             <section key={project.id} >
-//                 <Link to={'/project/' + project.id} >
-//                     <MyPetsSummary project={project} index={project.id} />
-//                 </Link>
-//                 {item.adoptionStage === 4 &&
-//                     <div className="card-action gret lighten-4 grey-text">
-//                         <div>刊登日期 {time} — 結案日期 {time}</div>
-//                         <Affidavit_pdf project={project} />
-//                     </div>
-//                 }
-//             </section>
-//         )
-//     }
-//     else if (notifiedProject === null) {
-//         return (
-//             <p>快快找到命中注定的毛孩 帶他回家：）</p>
-//         )
-//     }
-// })}
