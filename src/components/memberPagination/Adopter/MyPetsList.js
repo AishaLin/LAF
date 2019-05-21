@@ -6,6 +6,7 @@ import MyPetsSummary from './MyPetsSummary';
 import { Link, Redirect } from "react-router-dom";
 import Loader from "../../head&foot/Loader";
 import { device } from "../../../media queries/deviceName";
+import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const MyPetsListContainer = styled.div`
     display: flex;
@@ -18,7 +19,7 @@ const MyPetsListContainer = styled.div`
 
 const EachPetContainer = styled.section`
     width: calc((100% - 120px)/4);
-    height: calc((100vw - 120px)/4);
+    height: calc((100vw - 80px)/4);
     margin: 0 15px 25px 15px;
     background-color: #fff;
     border-radius: 10px;
@@ -28,13 +29,17 @@ const EachPetContainer = styled.section`
     -moz-box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
     box-shadow: 0px 0px 13px -1px rgba(0,0,0,0.1);
     transition: transform 0.3s ease-in;
+    @media ${device.laptopL} {
+        width: calc((100% - 90px)/3);
+        height: calc((100vw - 80px)/3);
+    }
     @media ${device.laptop} {
         width: calc((100% - 90px)/3);
-        height: calc(100vw/3);
+        height: calc(100vw/3 + 20px);
     }
     @media ${device.tablet} {
         width: calc((100% - 60px)/2);
-        height: calc(100vw/2 + 30px);
+        height: calc(100vw/2 + 40px);
     }
     @media ${device.mobileL} {
         width: 80%;
@@ -49,6 +54,14 @@ const EachPetContainer = styled.section`
         line-height: 1.5;
         position: absolute;
         bottom: 20px;
+        padding: 0 10px;
+        @media ${device.tablet} {
+            font-size: 14px;
+        }
+        span{
+            cursor: pointer;
+            color: rgb(23, 156, 154);
+        }
     }
 `;
 
@@ -68,23 +81,31 @@ class MyPetsList extends Component {
         let list = []
         db.collection('adoptionMessage').where("requester", "==", userid).orderBy('createdAt').get()
             .then(w => {
-                console.log(w)
                 if (w.empty) {
                     this.setState({ projects: [] })
                 } else {
                     w.forEach((eachM) => {
                         db.collection('projects').doc(eachM.data().project).get()
                             .then((doc) => {
-                                list.push({ id: doc.id, item: doc.data() })
+                                list.push({ id: doc.id, item: doc.data(), messageID: eachM.id })
                             })
                             .then(() => {
-                                this.setState((prevState) => ({
+                                this.setState({
                                     projects: list
-                                }))
+                                })
                             })
                             .catch(err => console.log("errorrrrrr", err))
                     })
                 }
+            })
+    }
+    removeFromAdoptionList =(messageID) =>{
+        const db = firebase.firestore();
+        db.collection('adoptionMessage').doc(messageID).delete()
+            .then(() => {
+                location.reload();
+            }).catch((err) => {
+                console.log("error message", err)
             })
     }
     render() {
@@ -101,25 +122,28 @@ class MyPetsList extends Component {
                             const { item } = project
                             return (
                                 <EachPetContainer key={project.id} >
-                                        <Link to={'/project/' + project.id} >
-                                            <MyPetsSummary project={project} index={project.id} />
-                                        </Link>
-                                        {item.adoptionStage !== 4 && item.preAdopter !== auth.uid &&
-                                            <p className='adoptionStage'>請與送養人聯繫接洽</p>
-                                        }
-                                        {item.adoptionStage === 2 && item.preAdopter === auth.uid &&
-                                            <p className='adoptionStage'>送養人已發出簽署切結書邀請
+                                    <Link to={'/project/' + project.id} >
+                                        <MyPetsSummary project={project} index={project.id} />
+                                    </Link>
+                                    {item.adoptionStage !== 4 && item.preAdopter !== auth.uid &&
+                                        <p className='adoptionStage'>請與送養人聯繫接洽</p>
+                                    }
+                                    {item.adoptionStage === 2 && item.preAdopter === auth.uid &&
+                                        <p className='adoptionStage'>送養人已發出簽署切結書邀請
                                                 <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
-                                                    查閱切結書內容
+                                                查閱切結書內容
                                                 </Link>
-                                            </p>
-                                        }
-                                        {item.adoptionStage === 3 && item.preAdopterStage3 === auth.uid &&
-                                            <p className='adoptionStage'>待送養人簽署並回傳切結書後，就完成領養手續了！</p>
-                                        }
-                                        {item.adoptionStage === 4 && item.adopterID === auth.uid &&
-                                            <p className='adoptionStage' style={{color:'rgb(23, 156, 154)'}}>定期與原飼主分享近況</p>
-                                        }
+                                        </p>
+                                    }
+                                    {item.adoptionStage === 3 && item.preAdopterStage3 === auth.uid &&
+                                        <p className='adoptionStage'>待送養人簽署並回傳切結書後，就完成領養手續了！</p>
+                                    }
+                                    {item.adoptionStage === 4 && item.adopterID === auth.uid &&
+                                        <p className='adoptionStage' style={{ color: 'rgb(23, 156, 154)' }}>定期與原飼主分享近況</p>
+                                    }
+                                    {item.adoptionStage === 4 && item.adopterID !== auth.uid &&
+                                        <p className='adoptionStage'>{item.nickName}已經找到家，再看看其他毛孩吧<span onClick={()=>this.removeFromAdoptionList(project.messageID)}>從清單移除</span></p>
+                                    }
                                 </EachPetContainer>
                             )
                         })}

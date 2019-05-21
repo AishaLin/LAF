@@ -16,19 +16,11 @@ const adpMessageReducer = (state = initState, action) => {
             };
         case 'REQUEST_AFFIDAVIT':
             return state;
-        case 'REQUEST_AFFIDAVIT_ERROR':
-            return state;
         case 'RETURN_AFFIDAVIT':
-            return state;
-        case 'RETURN_AFFIDAVIT_ERROR':
             return state;
         case 'CLOSE_CASE':
             return state;
-        case 'CLOSE_CASE_ERROR':
-            return state;
         case 'CANCEL_PREADOPTER':
-            return state;
-        case 'CANCEL_PREADOPTER_ERROR':
             return state;
         default:
             return state

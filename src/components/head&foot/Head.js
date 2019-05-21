@@ -72,6 +72,9 @@ const HeadContent = styled.div`
     :hover {
       background-color: rgb(199, 75, 22, 0.9);
     }
+    @media ${device.laptop} {
+      display: none;
+    }
   }
   .menuIcon_mobile {
     position: fixed;
@@ -182,7 +185,9 @@ class Head extends Component {
     return (
       <HeadContent>
         <Logo><Link to='/'>Laf</Link></Logo>
-        {this.state.windowWidth > 1024 && <div className="scrollToTop" onClick={this.scrollToTop}>back to top.</div>}
+        <div className="scrollToTop" onClick={this.scrollToTop}>back to top.</div>
+
+        {/* {this.state.windowWidth > 1024 && <div className="scrollToTop" onClick={this.scrollToTop}>back to top.</div>} */}
         {this.state.windowWidth > 768 && Authlinks_web}
         {this.state.windowWidth > 425 && this.state.windowWidth <= 768 && <SignedInLinks_web/>}
         {this.state.windowWidth > 425 &&

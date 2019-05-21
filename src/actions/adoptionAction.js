@@ -1,9 +1,10 @@
 import firebase from "../config/fbConfig"
 
+const db = firebase.firestore();
+
 //領養1－通知送養人(送出領養人基本資訊至firebase)
 export const sendAdoptMessage = (sendmessage) => {
     return async (dispatch) => {
-        const db = firebase.firestore();
         let name = [];
         db.collection('projects').doc(sendmessage.project).update({ adoptionStage: 1 })
         await db.collection('users').doc(sendmessage.requester).get()
@@ -32,7 +33,6 @@ export const sendAdoptMessage = (sendmessage) => {
 //領養2－送養人要求領養人簽署切結書
 export const requestAffidavit = (changeToStage2) => {
     return (dispatch) => {
-        const db = firebase.firestore();
         db.collection('projects').doc(changeToStage2.project).update({
             adoptionStage: 2,
             preAdopter: changeToStage2.preAdopter,
@@ -43,7 +43,6 @@ export const requestAffidavit = (changeToStage2) => {
         }).then(() => {
             location.reload()
         }).catch((err) => {
-            dispatch({ type: 'REQUEST_AFFIDAVIT_ERROR', err });
             console.log(err)
         })
     }
@@ -53,7 +52,6 @@ export const requestAffidavit = (changeToStage2) => {
 export const returnAffidavit = (changeToStage3) => {
     return async (dispatch) => {
         let affidavitNumber = changeToStage3.projectID + '_' + changeToStage3.fosterID + '_' + changeToStage3.adopterID
-        const db = firebase.firestore();
         await db.collection('projects').doc(changeToStage3.projectID).update({
             adoptionStage: 3,
             preAdopterStage3: changeToStage3.adopterID,
@@ -68,7 +66,6 @@ export const returnAffidavit = (changeToStage3) => {
         }).then(() => {
             window.location.hash = `/memberprofile/mypetsList`;
         }).catch((err) => {
-            dispatch({ type: 'RETURN_AFFIDAVIT_ERROR', err });
             console.log("error message", err)
         })
     }
@@ -77,7 +74,6 @@ export const returnAffidavit = (changeToStage3) => {
 //領養4－結案
 export const approveAffidavit = (affidavitData, projectID) => {
     return async (dispatch) => {
-        const db = firebase.firestore();
         await db.collection('projects').doc(projectID).update({
             adoptionStage: 4,
             adopterID: affidavitData.item.adopterID,
@@ -96,7 +92,6 @@ export const approveAffidavit = (affidavitData, projectID) => {
         }).then(() => {
             window.location.hash = `/memberprofile/closingcaselist`;
         }).catch((err) => {
-            dispatch({ type: 'CLOSE_CASE_ERROR', err });
             console.log("error message!!!", err)
         })
     }
@@ -105,7 +100,6 @@ export const approveAffidavit = (affidavitData, projectID) => {
 //取消領養人簽署程序
 export const cancelPreAdopter = (project) => {
     return async (dispatch) => {
-        const db = firebase.firestore();
         await db.collection('projects').doc(project.id).update({
             adoptionStage: 1,
             preAdopterStage3: '',
@@ -125,7 +119,6 @@ export const cancelPreAdopter = (project) => {
             }).then(() => {
                 location.reload();
             }).catch((err) => {
-                dispatch({ type: 'CANCEL_PREADOPTER_ERROR', err });
                 console.log("error message", err)
             })
     }

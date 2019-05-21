@@ -185,7 +185,7 @@ class App extends React.Component {
                             <Link to="/memberprofile/closingcaselist" onClick={this.openNav} >媒合成功清單</Link>
                             <a className="logout" onClick={this.signOut} >登出</a>
                         </div>
-                        <div onClick={this.openNav} style={{ flexGrow: '1' }}></div>
+                        <div onClick={this.openNav} style={{ flexGrow: '1', backgroundColor: 'rgb(41, 41, 41, 0.5)' }}></div>
                     </SideNavForMember>
                 }
                 {this.state.windowWidth <= 425 &&

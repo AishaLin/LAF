@@ -10,6 +10,7 @@ import Affidavit_pdf from '../../components/adoption/Affidavit_pdf'
 import AdoptionMessage from '../adoption/AdoptionMessage';
 import Loader from '../head&foot/Loader';
 import { device } from "../../media queries/deviceName";
+import firebase from "../../config/fbConfig";
 
 const ProjectDetailContainer = styled.section`
   width: 80vw;
@@ -152,7 +153,27 @@ const DetailInformation = styled.section`
 
 class ProjectDetails extends Component {
   state = {
-    messagePopup: false
+    messagePopup: false,
+    sentMessageOrNot: null,
+  }
+  componentDidMount() {
+    if (this.props.auth.uid) {
+      this.checkMessageSentOrNot(this.props.auth.uid);
+    } else {
+      location.reload()
+    }
+  }
+  checkMessageSentOrNot = (userid) => {
+    const db = firebase.firestore();
+    const projectID = location.hash.split("/")[2]
+    db.collection('adoptionMessage').where("requester", "==", userid).where("project", '==', projectID).orderBy('createdAt').get()
+      .then(message => {
+        console.log('uuuuuuu', message.empty)
+        this.setState({
+          sentMessageOrNot: message.empty
+        })
+      })
+      .catch(err => console.log("errorrrrrr", err))
   }
   togglePopup = () => {
     this.setState(prevState => ({
@@ -168,8 +189,6 @@ class ProjectDetails extends Component {
       for (let i = 0; i < 5; i++) {
         time = time + detailtime[i] + " "
       }
-
-      // if (!auth.uid) return <Redirect to='/signin' />
       return (
         <ProjectDetailContainer>
           {this.state.messagePopup ? <AdoptionMessage togglePopup={this.togglePopup.bind(this)} project={project} /> : null}
@@ -203,7 +222,8 @@ class ProjectDetails extends Component {
               <div className='item'><div className='mark' >✱</div><div>認養條件：{project.requirement}</div></div>
               <div className='item'><div className='mark' >✱</div><div>聯絡方式：{project.connectMethods}</div></div>
               <div className='sendMessage_btn'>
-                {project.adoptionStage !== 4 && <button onClick={this.togglePopup}>與送養人聯繫</button>}
+                {project.adoptionStage !== 4 && this.state.sentMessageOrNot && <button onClick={this.togglePopup}>與送養人聯繫</button>}
+                {project.adoptionStage !== 4 && !this.state.sentMessageOrNot && this.state.sentMessageOrNot!==null && <p className='successHint'>您已發出領養通知，請與送養人聯繫！</p>}
                 {project.adoptionStage === 4 && <p className='successHint'>恭喜 {project.nickName} 找到他的長期飯票了！</p>}
               </div>
             </DetailInformation>
