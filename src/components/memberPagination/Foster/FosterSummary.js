@@ -58,6 +58,7 @@ const FosterSummaryContent = styled.div`
             position: absolute;
             bottom: 0;
             display: flex;
+            flex-wrap: wrap;
             width: 100%;
             div {
                 flex-grow: 1;
@@ -66,6 +67,10 @@ const FosterSummaryContent = styled.div`
                 background-color: rgb(252, 225, 150, 0.4);
                 padding: 1px 2px;
                 border-radius: 3px;
+            }
+            button {
+                cursor: pointer;
+                font-size: 14px;
             }
         }
     }

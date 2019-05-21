@@ -60,6 +60,9 @@ const EachPetContainer = styled.section`
         span{
             cursor: pointer;
             color: rgb(23, 156, 154);
+            :hover{
+                border-bottom: 1px solid rgb(23, 156, 154);
+            }
         }
     }
 `;
@@ -128,9 +131,9 @@ class MyPetsList extends Component {
                                         <p className='adoptionStage'>請與送養人聯繫接洽<br/>接洽確認後送養人會發出切結書邀請</p>
                                     }
                                     {item.adoptionStage === 2 && item.preAdopter === auth.uid &&
-                                        <p className='adoptionStage'>送養人已發出簽署切結書邀請
+                                        <p className='adoptionStage'>飼主已發出簽署切結書邀請
                                                 <Link to={'/edit_affidavit' + `?project=${project.id}&foster=${item.authorID}&adopter=${auth.uid}`} >
-                                                查閱切結書內容
+                                                <span>查閱切結書內容</span>
                                                 </Link>
                                         </p>
                                     }
@@ -138,10 +141,10 @@ class MyPetsList extends Component {
                                         <p className='adoptionStage'>待送養人簽署並回傳切結書後，就完成領養手續了！</p>
                                     }
                                     {item.adoptionStage === 4 && item.adopterID === auth.uid &&
-                                        <p className='adoptionStage' style={{ color: 'rgb(23, 156, 154)' }}>定期與原飼主分享近況</p>
+                                        <p className='adoptionStage' style={{ color: 'rgb(23, 156, 154)' }}>已認養成功<br/>請定期與原飼主分享近況喔</p>
                                     }
                                     {item.adoptionStage === 4 && item.adopterID !== auth.uid &&
-                                        <p className='adoptionStage'>{item.nickName}已經找到家，再看看其他毛孩吧<span onClick={()=>this.removeFromAdoptionList(project.messageID)}>從清單移除</span></p>
+                                        <p className='adoptionStage'>{item.nickName}已經找到家，再看看其他毛孩吧 <span onClick={()=>this.removeFromAdoptionList(project.messageID)}>從清單移除</span></p>
                                     }
                                 </EachPetContainer>
                             )

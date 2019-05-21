@@ -42,6 +42,10 @@ const MainContainer = styled.div`
 const AffidavitContent = styled.div`
     overflow: scroll;
     margin: 50px auto;
+    input {
+        font-size: 14px;
+        border: 1px solid rgb(203, 203, 203, 0.5);
+    }
     .overContainer {
         width: 900px;
         height: 1200px;
