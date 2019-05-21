@@ -6,7 +6,6 @@ import MyPetsSummary from './MyPetsSummary';
 import { Link, Redirect } from "react-router-dom";
 import Loader from "../../head&foot/Loader";
 import { device } from "../../../media queries/deviceName";
-import { cancelPreAdopter } from "../../../actions/adoptionAction";
 
 const MyPetsListContainer = styled.div`
     display: flex;
@@ -43,7 +42,7 @@ const EachPetContainer = styled.section`
     }
     @media ${device.mobileL} {
         width: 80%;
-        height: 80vw;
+        height: 88vw;
         font-size: 14px;
     }
     :hover {
@@ -126,7 +125,7 @@ class MyPetsList extends Component {
                                         <MyPetsSummary project={project} index={project.id} />
                                     </Link>
                                     {item.adoptionStage !== 4 && item.preAdopter !== auth.uid &&
-                                        <p className='adoptionStage'>請與送養人聯繫接洽</p>
+                                        <p className='adoptionStage'>請與送養人聯繫接洽<br/>接洽確認後送養人會發出切結書邀請</p>
                                     }
                                     {item.adoptionStage === 2 && item.preAdopter === auth.uid &&
                                         <p className='adoptionStage'>送養人已發出簽署切結書邀請
@@ -166,5 +165,4 @@ const mapStateToProps = (state) => {
         auth: state.firebase.auth
     }
 }
-
 export default connect(mapStateToProps, null)(MyPetsList);

@@ -1,12 +1,3 @@
-# LAF
-<table>
-<tr>
-<td>
-  
-</td>
-</tr>
-</table>
-
 <p align=center>
 <img src="./screenshot/logo.png"/>
   <br/>
@@ -14,9 +5,7 @@ An Platform for Pet Adoption with React, Redux and Router.<br/>  <br/>
 </p>
 
 Demo link :  https://aishalin.github.io/LAF/
-You can use the following demo account, or sign up for a new account.
-account: demo@gmail.com
-password: 123456
+
 
 ## Technologies
 
@@ -34,6 +23,9 @@ password: 123456
 
 Users can sign up and login by email and password. 
 
+### Home page
+
+### ![post](https://raw.github.com/AishaLin/LAF/master/screenshot/home_page.png)
 
 ### Upload file and post information
 
@@ -46,10 +38,14 @@ Users can post pet's information.
 
 Including pet's photo, nickname, age, gender. 
 
+### ![post](https://raw.github.com/AishaLin/LAF/master/screenshot/dashboard.png)
+
 
 ### Adoptor raises the need for adoption
 
 Users who want to adopt pet can offer foster contact methods. 
+
+### ![post](https://raw.github.com/AishaLin/LAF/master/screenshot/sendMessage.png)
 
 
 ### After adopter interact with pet, foster send affidavit requestto adopter 
@@ -66,7 +62,7 @@ Users who want to adopt pet can offer foster contact methods.
 
 ### Both foster and adopter can manage their adoption process with member page
 
-Users can sign up and login by email and password. 
+
 
 
 
