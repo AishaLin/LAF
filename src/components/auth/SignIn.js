@@ -60,8 +60,8 @@ const InputArea = styled.div`
 
 class SignIn extends Component {
     state = {
-        email: '',
-        password: ''
+        email: 'demo@gmail.com',
+        password: '123456'
     }
     handleChange = (e) => {
         this.setState({
@@ -80,11 +80,11 @@ class SignIn extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div className="inputField">
                         <label htmlFor="email">電子信箱</label>
-                        <input type="email" id="email" onChange={this.handleChange} />
+                        <input type="email" id="email" onChange={this.handleChange} value={this.state.email}/>
                     </div>
                     <div className="inputField">
                         <label htmlFor="password">密碼</label>
-                        <input type="password" id="password" onChange={this.handleChange} />
+                        <input type="password" id="password" onChange={this.handleChange}  value={this.state.password}/>
                     </div>
                     <div className="inputField">
                         <button className="confirmBtn">確認</button>
