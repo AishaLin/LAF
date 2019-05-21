@@ -16,7 +16,7 @@ Demo link :  https://aishalin.github.io/LAF/
 * Version Control with Git/Github
 
 
-## Features
+## Features & process
 
 ### Member managment
 
@@ -47,19 +47,17 @@ Users who want to adopt pet can offer foster contact methods.
 ### ![sendMessage](https://raw.github.com/AishaLin/LAF/master/screenshot/sendMessage.png)
 
 
-### After adopter interact with pet, foster send affidavit requestto adopter 
+### After adopter interact with pet, foster send affidavit request to adopter 
+Then adopter sign the affidavit and send return.
+After foster confirm the affidavit and sign, successful match!
 
 ### ![affidavitRequest](https://raw.github.com/AishaLin/LAF/master/screenshot/affidavitRequest.png)
 
 
-### Adopter sign the affidavit and send return.
- 
-### Foster confirm the affidavit and sign, successful match!
-
 ### Both foster and adopter can manage their adoption process with member page
 
 ### ![list](https://raw.github.com/AishaLin/LAF/master/screenshot/list.png)
-
+### ![list](https://raw.github.com/AishaLin/LAF/master/screenshot/list2.png)
 
 
 ## To-do
