@@ -325,8 +325,12 @@ class CreateProject extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        if (!this.state.fileName) {
-            return alert('請上傳一張照片')
+        let fileName = !this.state.fileName
+        let connectMethods = !this.state.connectMethods
+        let publicationCategory = !this.state.publicationCategory
+        let reason = !this.state.reason
+        if (fileName || connectMethods || publicationCategory || reason) {
+            return alert('刊登種類、送養原因、及聯絡方式為必填，並須上傳一張照片')
         } else {
             this.setState({
                 isLoading: true
