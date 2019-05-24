@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const BouncingLoader = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 100px;
     @keyframes bouncing-loader {
         to {
             opacity: 0.1;

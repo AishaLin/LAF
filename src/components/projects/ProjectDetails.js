@@ -226,7 +226,7 @@ class ProjectDetails extends Component {
               <div className='sendMessage_btn'>
                 {project.adoptionStage !== 4 && this.state.sentMessageOrNot === null && <Loader />}
                 {project.adoptionStage !== 4 && this.state.sentMessageOrNot === "nonLogin" && <button onClick={this.togglePopup}>與送養人聯繫</button>}
-                {project.adoptionStage !== 4 && this.state.sentMessageOrNot && <button onClick={this.togglePopup}>與送養人聯繫</button>}
+                {project.adoptionStage !== 4 && this.state.sentMessageOrNot && this.state.sentMessageOrNot !== "nonLogin" && <button onClick={this.togglePopup}>與送養人聯繫</button>}
                 {project.adoptionStage !== 4 && !this.state.sentMessageOrNot && this.state.sentMessageOrNot !== null && <p className='successHint'>您已發出領養通知，請與送養人聯繫！</p>}
                 {project.adoptionStage === 4 && <p className='successHint'>恭喜 {project.nickName} 找到他的長期飯票了！</p>}
               </div>
