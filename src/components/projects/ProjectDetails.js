@@ -183,6 +183,7 @@ class ProjectDetails extends Component {
   render() {
     const { project, auth } = this.props;
     console.log(project)
+    if (!auth.uid) return <Redirect to='/authentication/signin' />
     if (project) {
       const detailtime = project.createdAt.toDate().toString().split(" ")
       let time = "";
