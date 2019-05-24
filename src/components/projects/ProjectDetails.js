@@ -114,6 +114,7 @@ const ProjectDetailContainer = styled.section`
         font-size: 20px;
         border: none;
         color: #FFFFFF;
+        cursor: pointer;
         :hover {
           background-color: rgb(23, 156, 154, 0.85);
         }
@@ -157,23 +158,25 @@ class ProjectDetails extends Component {
     sentMessageOrNot: null,
   }
   componentDidMount() {
-    if (this.props.auth.uid) {
-      this.checkMessageSentOrNot(this.props.auth.uid);
-    } else {
-      location.reload()
-    }
+    this.checkMessageSentOrNot(this.props.auth.uid);
   }
   checkMessageSentOrNot = (userid) => {
-    const db = firebase.firestore();
-    const projectID = location.hash.split("/")[2]
-    db.collection('adoptionMessage').where("requester", "==", userid).where("project", '==', projectID).orderBy('createdAt').get()
-      .then(message => {
-        console.log('uuuuuuu', message.empty)
-        this.setState({
-          sentMessageOrNot: message.empty
+    if (this.props.auth.uid) {
+      const db = firebase.firestore();
+      const projectID = location.hash.split("/")[2]
+      db.collection('adoptionMessage').where("requester", "==", userid).where("project", '==', projectID).orderBy('createdAt').get()
+        .then(message => {
+          this.setState({
+            sentMessageOrNot: message.empty
+          })
         })
+        .catch(err => console.log("errorrrrrr", err))
+    } else {
+      this.setState({
+        sentMessageOrNot: "nonLogin"
       })
-      .catch(err => console.log("errorrrrrr", err))
+    }
+
   }
   togglePopup = () => {
     this.setState(prevState => ({
@@ -182,8 +185,6 @@ class ProjectDetails extends Component {
   }
   render() {
     const { project, auth } = this.props;
-    console.log(project)
-    if (!auth.uid) return <Redirect to='/authentication/signin' />
     if (project) {
       const detailtime = project.createdAt.toDate().toString().split(" ")
       let time = "";
@@ -223,8 +224,10 @@ class ProjectDetails extends Component {
               <div className='item'><div className='mark' >✱</div><div>認養條件：{project.requirement}</div></div>
               <div className='item'><div className='mark' >✱</div><div>聯絡方式：{project.connectMethods}</div></div>
               <div className='sendMessage_btn'>
+                {project.adoptionStage !== 4 && this.state.sentMessageOrNot === null && <Loader />}
+                {project.adoptionStage !== 4 && this.state.sentMessageOrNot === "nonLogin" && <button onClick={this.togglePopup}>與送養人聯繫</button>}
                 {project.adoptionStage !== 4 && this.state.sentMessageOrNot && <button onClick={this.togglePopup}>與送養人聯繫</button>}
-                {project.adoptionStage !== 4 && !this.state.sentMessageOrNot && this.state.sentMessageOrNot!==null && <p className='successHint'>您已發出領養通知，請與送養人聯繫！</p>}
+                {project.adoptionStage !== 4 && !this.state.sentMessageOrNot && this.state.sentMessageOrNot !== null && <p className='successHint'>您已發出領養通知，請與送養人聯繫！</p>}
                 {project.adoptionStage === 4 && <p className='successHint'>恭喜 {project.nickName} 找到他的長期飯票了！</p>}
               </div>
             </DetailInformation>
